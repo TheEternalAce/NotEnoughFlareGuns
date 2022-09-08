@@ -1,0 +1,14 @@
+Flare Gun Factory (NEFG) adds a bunch of flare guns, that's it.
+
+Changelog:
+
+	v0.5.1
+Solar Storm will not be loaded if Shards of Atheria is installed
+
+	v0.5
+Increased drop rate for Rusted Caller from 1/100 to 1/80
+Moved Changelog back to description
+Projectiles from Solar Flares and Aqua Flares now deal ranged damage
+Removed Recipe for Azul Flame and made it able to be found in locked dungeon chests
+
+Previous changelogs were lost due to the Discord server being deleted

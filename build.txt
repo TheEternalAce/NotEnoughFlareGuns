@@ -1,0 +1,3 @@
+displayName = Flare Gun Factory (NEFG)
+author = TheEternalAce
+version = 0.5
