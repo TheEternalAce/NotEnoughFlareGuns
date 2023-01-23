@@ -22,10 +22,9 @@ namespace NotEnoughFlareGuns.Items.FlareGuns.Hardmode
 			// Common Properties
 			Item.width = 48; // Hitbox width of the item.
 			Item.height = 24; // Hitbox height of the item.
-			Item.scale = 0.75f;
 			Item.rare = ItemRarityID.LightRed; // The color that the item's name will be in-game.
 
-			Item.DefaultToFlareGun(26, 8, true);
+			Item.DefaultToFlareGun(26, 8, autoReuse: true);
 			Item.useAnimation = 16;
 			Item.reuseDelay = 18;
 			Item.consumeAmmoOnLastShotOnly = true;

@@ -1,3 +1,6 @@
-displayName = Flare Gun Factory (NEFG)
+displayName = Infernal Arson-al
 author = TheEternalAce
-version = 0.5
+version = 0.5.1
+homepage = https://forums.terraria.org/index.php?threads/infernal-arson-al.117453/
+buildIgnore = InfernalArson-alSprites.ase, Pallets/*
+modReferences = SubworldLibrary, StructureHelper

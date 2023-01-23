@@ -1,22 +1,21 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using NotEnoughFlareGuns.Globals;
 using Terraria;
-using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace NotEnoughFlareGuns.Projectiles
+namespace NotEnoughFlareGuns.Projectiles.Flares
 {
-    public class AquaFlare : ModProjectile
+    public class Vileflare : ModProjectile
     {
-        int rainTimer;
-
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Aqua Flare"); // The English name of the projectile
-            ProjectileID.Sets.TrailCacheLength[Projectile.type] = 5; // The length of old position to be recorded
-            ProjectileID.Sets.TrailingMode[Projectile.type] = 0; // The recording mode
+            DisplayName.SetDefault("Vileflare"); // The English name of the projectile
+            //ProjectileID.Sets.TrailCacheLength[Projectile.type] = 5; // The length of old position to be recorded
+            //ProjectileID.Sets.TrailingMode[Projectile.type] = 0; // The recording mode
+            NEFGlobalProjectile.Flare.Add(Type);
         }
 
         public override void SetDefaults()
@@ -39,23 +38,6 @@ namespace NotEnoughFlareGuns.Projectiles
             AIType = ProjectileID.BlueFlare; // Act exactly like default Flare
         }
 
-        public override void AI()
-        {
-            Vector2 direction = new Vector2(0, 1);
-            Vector2 velocity = direction * 2;
-
-            if (Projectile.velocity != Vector2.Zero)
-                rainTimer++;
-
-            if (rainTimer > 20)
-            {
-                Projectile rain = Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), Projectile.position, velocity, ProjectileID.WaterStream, Projectile.damage, 0, Main.myPlayer);
-                rain.DamageType = DamageClass.Ranged;
-
-                rainTimer = 0;
-            }
-        }
-
         public override bool PreDraw(ref Color lightColor)
         {
             Main.instance.LoadProjectile(Projectile.type);
@@ -65,12 +47,17 @@ namespace NotEnoughFlareGuns.Projectiles
             Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, Projectile.height * 0.5f);
             for (int k = 0; k < Projectile.oldPos.Length; k++)
             {
-                Vector2 drawPos = (Projectile.oldPos[k] - Main.screenPosition) + drawOrigin + new Vector2(0f, Projectile.gfxOffY);
+                Vector2 drawPos = Projectile.oldPos[k] - Main.screenPosition + drawOrigin + new Vector2(0f, Projectile.gfxOffY);
                 Color color = Projectile.GetAlpha(lightColor) * ((Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length);
                 Main.EntitySpriteDraw(texture, drawPos, null, color, Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None, 0);
             }
 
             return true;
+        }
+
+        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        {
+            target.AddBuff(BuffID.Venom, 600);
         }
     }
 }

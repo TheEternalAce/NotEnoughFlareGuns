@@ -20,7 +20,7 @@ namespace NotEnoughFlareGuns.Items.FlareGuns.PreHardmode
 			// Common Properties
 			Item.width = 52; // Hitbox width of the item.
 			Item.height = 28; // Hitbox height of the item.
-			Item.scale = 0.75f;
+			Item.scale = 1f;
 			Item.rare = ItemRarityID.Orange; // The color that the item's name will be in-game.
 
 			Item.DefaultToFlareGun(18, 18);
@@ -47,7 +47,7 @@ namespace NotEnoughFlareGuns.Items.FlareGuns.PreHardmode
 		{
 			if (type == ProjectileID.Flare && Main.rand.NextFloat() > .33f)
 			{
-				type = ModContent.ProjectileType<Projectiles.PoisonFlare>();
+				type = ModContent.ProjectileType<Projectiles.Flares.PoisonFlare>();
 			}
 		}
 	}

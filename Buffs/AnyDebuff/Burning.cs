@@ -1,7 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
-using NotEnoughFlareGuns.Projectiles;
+using NotEnoughFlareGuns.Projectiles.Flares;
 using Terraria;
 using Terraria.Audio;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -24,7 +25,8 @@ namespace NotEnoughFlareGuns.Buffs.AnyDebuff
             player.GetModPlayer<BurningPlayer>().playerBurning = true;
             if (player.buffTime[buffIndex] == 0)
             {
-                Projectile.NewProjectile(player.GetSource_OnHit(player), player.Center, Vector2.Zero, ModContent.ProjectileType<ScorchShotExplosion>(), 20, 1f);
+                Projectile.NewProjectile(player.GetSource_OnHit(player), player.Center, Vector2.Zero,
+                    ModContent.ProjectileType<ScorchShotExplosion>(), 20, 1f);
                 SoundEngine.PlaySound(SoundID.Item20);
             }
         }
@@ -34,7 +36,8 @@ namespace NotEnoughFlareGuns.Buffs.AnyDebuff
             npc.GetGlobalNPC<BurningNPC>().npcBurning = true;
             if (npc.buffTime[buffIndex] == 0)
             {
-                Projectile.NewProjectile(npc.GetSource_OnHit(npc), npc.Center, Vector2.Zero, ModContent.ProjectileType<ScorchShotExplosion>(), 20, 1f, Main.myPlayer);
+                Projectile.NewProjectile(npc.GetSource_OnHit(npc), npc.Center, Vector2.Zero,
+                    ModContent.ProjectileType<ScorchShotExplosion>(), 20, 1f, Main.myPlayer);
                 SoundEngine.PlaySound(SoundID.Item20);
             }
         }
@@ -61,6 +64,14 @@ namespace NotEnoughFlareGuns.Buffs.AnyDebuff
                 }
                 // lifeRegen is measured in 1/2 life per second. Therefore, this effect causes 8 life lost per second.
                 npc.lifeRegen -= 16;
+            }
+        }
+
+        public override void DrawEffects(NPC npc, ref Color drawColor)
+        {
+            if (npcBurning && Main.rand.NextBool(5))
+            {
+                Dust.NewDust(npc.position, npc.width, npc.height, DustID.Torch, 1, 1, 0, default, 2.5f);
             }
         }
     }
@@ -90,6 +101,14 @@ namespace NotEnoughFlareGuns.Buffs.AnyDebuff
                 Player.lifeRegenTime = 0;
                 // lifeRegen is measured in 1/2 life per second. Therefore, this effect causes 8 life lost per second
                 Player.lifeRegen -= 16;
+            }
+        }
+
+        public override void DrawEffects(PlayerDrawSet drawInfo, ref float r, ref float g, ref float b, ref float a, ref bool fullBright)
+        {
+            if (playerBurning && Main.rand.NextBool(5))
+            {
+                Dust.NewDust(Player.position, Player.width, Player.height, DustID.Torch, 1, 1, 0, default, 2.5f);
             }
         }
     }

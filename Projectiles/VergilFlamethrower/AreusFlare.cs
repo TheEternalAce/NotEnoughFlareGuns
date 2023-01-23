@@ -1,19 +1,21 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using NotEnoughFlareGuns.Globals;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace NotEnoughFlareGuns.Projectiles
+namespace NotEnoughFlareGuns.Projectiles.VergilFlamethrower
 {
-    public class Vileflare : ModProjectile
+    public class AreusFlare : ModProjectile
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Vileflare"); // The English name of the projectile
-            //ProjectileID.Sets.TrailCacheLength[Projectile.type] = 5; // The length of old position to be recorded
-            //ProjectileID.Sets.TrailingMode[Projectile.type] = 0; // The recording mode
+            DisplayName.SetDefault("Areus Flare"); // The English name of the projectile
+            ProjectileID.Sets.TrailCacheLength[Projectile.type] = 5; // The length of old position to be recorded
+            ProjectileID.Sets.TrailingMode[Projectile.type] = 0; // The recording mode
+            NEFGlobalProjectile.Flare.Add(Type);
         }
 
         public override void SetDefaults()
@@ -32,6 +34,8 @@ namespace NotEnoughFlareGuns.Projectiles
             Projectile.tileCollide = true; // Can the projectile collide with tiles?
             Projectile.extraUpdates = 0; // Set to above 0 if you want the projectile to update multiple time in a frame
             Projectile.netImportant = true;
+            Projectile.usesLocalNPCImmunity = true;
+            Projectile.localNPCHitCooldown = 10;
 
             AIType = ProjectileID.BlueFlare; // Act exactly like default Flare
         }
@@ -45,7 +49,7 @@ namespace NotEnoughFlareGuns.Projectiles
             Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, Projectile.height * 0.5f);
             for (int k = 0; k < Projectile.oldPos.Length; k++)
             {
-                Vector2 drawPos = (Projectile.oldPos[k] - Main.screenPosition) + drawOrigin + new Vector2(0f, Projectile.gfxOffY);
+                Vector2 drawPos = Projectile.oldPos[k] - Main.screenPosition + drawOrigin + new Vector2(0f, Projectile.gfxOffY);
                 Color color = Projectile.GetAlpha(lightColor) * ((Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length);
                 Main.EntitySpriteDraw(texture, drawPos, null, color, Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None, 0);
             }
@@ -55,7 +59,28 @@ namespace NotEnoughFlareGuns.Projectiles
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
-            target.AddBuff(BuffID.Venom, 600);
+            if (ModLoader.TryGetMod("ShardsOfAtheria", out Mod shards))
+            {
+                target.AddBuff(shards.Find<ModBuff>("ElectricShock").Type, 600);
+                if ((bool)shards.Call("overcharged", Projectile, null))
+                {
+                    shards.Call("invoke", "callStorm", Projectile, 5);
+                }
+            }
+        }
+
+        public override bool OnTileCollide(Vector2 oldVelocity)
+        {
+            ModLoader.TryGetMod("ShardsOfAtheria", out Mod shards);
+            if (shards != null)
+            {
+                if ((bool)shards.Call("overcharged", Projectile, null))
+                {
+                    shards.Call("invoke", "callStorm", Projectile, 5);
+                    shards.Call("overcharged", Projectile, false);
+                }
+            }
+            return base.OnTileCollide(oldVelocity);
         }
     }
 }

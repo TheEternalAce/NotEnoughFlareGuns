@@ -17,7 +17,7 @@ namespace NotEnoughFlareGuns.Items.Flares
 			Item.width = 10;
 			Item.height = 22;
 
-			Item.DefaultToFlare(12, 0, ModContent.ProjectileType<Projectiles.HighVelocityFlare>());
+			Item.DefaultToFlare(12, 0, ModContent.ProjectileType<Projectiles.Flares.HighVelocityFlare>());
 
 			Item.value = Item.sellPrice(copper: 8);
 			Item.rare = ItemRarityID.Green;

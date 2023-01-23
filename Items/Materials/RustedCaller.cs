@@ -1,6 +1,5 @@
 ﻿using Terraria;
 using Terraria.ID;
-using Terraria.GameContent.Creative;
 using Terraria.ModLoader;
 
 namespace NotEnoughFlareGuns.Items.Materials
@@ -19,7 +18,7 @@ namespace NotEnoughFlareGuns.Items.Materials
             Item.height = 30;
             Item.rare = ItemRarityID.Yellow;
 
-            Item.maxStack = 1;
+            Item.maxStack = 9999;
             Item.value = Item.buyPrice(gold: 1);
         }
     }

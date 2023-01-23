@@ -13,7 +13,7 @@ Mods: {
 			AzulFlame: Azul Flame
 			BloodFlareGun: Bloodflare Gun
 			DarkSignal: Dark Signal
-			Revoflare: Revoflare
+			Revolnade: Revolnade
 			ScorchShot: Scorch Shot
 			SkillShot: Skill Shot
 			Sparkler: Sparkler
@@ -28,10 +28,17 @@ Mods: {
 			TrueDarkSignal: True Dark Signal
 			TrueHallowedFlareGun: True Hallowed Flare Gun
 
+			# HM Flamethrowers
+			VergilFlamethrower: Approaching Storm
+
 			# Flare
 			HighVelocityFlare: High Velocity Flare
-			UnlimitedFlare: Unlimited Flare
-			UnlimitedBlueFlare: Unlimited Blue Flare
+			UnlimitedFlare: Unlimited Flare Box
+			UnlimitedBlueFlare: Unlimited Blue Flare Box
+
+			HeatResistantPlastic: Heat Resistant Plastic
+
+			Blacklight: Blacklight
 
 			FactorySoulCrystal: "'Soul Crystal (The Factory)'"
 		}
@@ -68,9 +75,20 @@ Mods: {
 				'''
 			TerraFlame: Fires a random flare based on flare guns used to make this
 
+			# HM Flamethrower
+			VergilFlamethrower: "'Now I'm feeling motivated!'"
+
 			# Flare
 			UnlimitedFlare: Never run out of Flares
 			UnlimitedBlueFlare: Never run out of Blue Flares
+
+			HeatResistantPlastic: "'Plastic that is less likely to melt at moderately high temperatures'"
+
+			Blacklight:
+				'''
+				'It consumes the light...'
+				Destroys all flares you own
+				'''
 
 			FactorySoulCrystal:
 				'''
@@ -81,6 +99,8 @@ Mods: {
 				Attacks inflict 'Hellfire'
 				'''
 		}
+		
+		BlacklightDestroy: Destroyed {0} flares.
 
 		BuffName: {
 			# Any debuff

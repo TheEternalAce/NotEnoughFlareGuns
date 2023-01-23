@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using NotEnoughFlareGuns.Globals;
-using NotEnoughFlareGuns.Projectiles;
+using NotEnoughFlareGuns.Projectiles.Flares;
 using NotEnoughFlareGuns.Utilities;
 using Terraria;
 using Terraria.ID;
@@ -8,7 +8,7 @@ using Terraria.ModLoader;
 
 namespace NotEnoughFlareGuns.Items.FlareGuns.Hardmode
 {
-	public class SolarStorm : ModItem
+    public class SolarStorm : ModItem
 	{
 		public override void SetStaticDefaults()
 		{
@@ -21,10 +21,9 @@ namespace NotEnoughFlareGuns.Items.FlareGuns.Hardmode
 			// Common Properties
 			Item.width = 40; // Hitbox width of the item.
 			Item.height = 22; // Hitbox height of the item.
-			Item.scale = 0.75f;
 			Item.rare = ItemRarityID.Expert; // The color that the item's name will be in-game.
 
-			Item.DefaultToFlareGun(150, 10, true);
+			Item.DefaultToFlareGun(150, 10, autoReuse: true);
 		}
 
 		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)

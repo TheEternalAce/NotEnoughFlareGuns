@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using NotEnoughFlareGuns.Globals;
+using NotEnoughFlareGuns.Projectiles.Flares;
 using NotEnoughFlareGuns.Utilities;
 using Terraria;
 using Terraria.ID;
@@ -21,7 +22,7 @@ namespace NotEnoughFlareGuns.Items.FlareGuns.Hardmode
 			// Common Properties
 			Item.width = 60; // Hitbox width of the item.
 			Item.height = 28; // Hitbox height of the item.
-			Item.scale = 0.75f;
+			Item.scale = 0.8f;
 			Item.rare = ItemRarityID.Yellow; // The color that the item's name will be in-game.
 
 			Item.DefaultToFlareGun(90, 18);
@@ -48,9 +49,9 @@ namespace NotEnoughFlareGuns.Items.FlareGuns.Hardmode
 		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
 		{
 			// Here we randomly set type to either the original (as defined by the ammo), a vanilla projectile, or a mod projectile.
-			type = Main.rand.Next(new int[] { type, ModContent.ProjectileType<Projectiles.ShadowFlare>(), ModContent.ProjectileType<Projectiles.Vileflare>(),
-				ModContent.ProjectileType<Projectiles.Bloodflare>(), ModContent.ProjectileType<Projectiles.PoisonFlare>(),
-				ModContent.ProjectileType<Projectiles.AquaFlare>(), ModContent.ProjectileType<Projectiles.Blazer>() });
+			type = Main.rand.Next(new int[] { type, ModContent.ProjectileType<ShadowFlare>(), ModContent.ProjectileType<Vileflare>(),
+				ModContent.ProjectileType<Bloodflare>(), ModContent.ProjectileType<PoisonFlare>(),
+				ModContent.ProjectileType<AquaFlare>(), ModContent.ProjectileType<Blazer>() });
 		}
 	}
 }

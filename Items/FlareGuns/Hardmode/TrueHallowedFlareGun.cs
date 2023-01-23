@@ -20,7 +20,6 @@ namespace NotEnoughFlareGuns.Items.FlareGuns.Hardmode
 			// Common Properties
 			Item.width = 74; // Hitbox width of the item.
 			Item.height = 42; // Hitbox height of the item.
-			Item.scale = 0.75f;
 			Item.rare = ItemRarityID.Yellow; // The color that the item's name will be in-game.
 
 			Item.DefaultToFlareGun(66, 10);
@@ -30,7 +29,7 @@ namespace NotEnoughFlareGuns.Items.FlareGuns.Hardmode
 		public override void AddRecipes()
 		{
 			CreateRecipe()
-				.AddIngredient(ModContent.ItemType<Items.FlareGuns.Hardmode.HallowedFlareGun>())
+				.AddIngredient(ModContent.ItemType<HallowedFlareGun>())
 				.AddIngredient(ItemID.ChlorophyteBar, 12)
 				.AddTile(TileID.MythrilAnvil)
 				.Register();

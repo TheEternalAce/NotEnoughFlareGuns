@@ -6,9 +6,9 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace NotEnoughFlareGuns
+namespace NotEnoughFlareGuns.Systems
 {
-    public class TheFactory : ModSystem
+    public class NEFGWorld : ModSystem
     {
         public override void PostWorldGen()
         {

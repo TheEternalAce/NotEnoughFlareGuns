@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using NotEnoughFlareGuns.Globals;
 using NotEnoughFlareGuns.Items.Materials;
+using NotEnoughFlareGuns.Projectiles.Flares;
 using NotEnoughFlareGuns.Utilities;
 using Terraria;
 using Terraria.ID;
@@ -21,7 +22,6 @@ namespace NotEnoughFlareGuns.Items.FlareGuns.PreHardmode
 			// Common Properties
 			Item.width = 60; // Hitbox width of the item.
 			Item.height = 28; // Hitbox height of the item.
-			Item.scale = 0.75f;
 			Item.rare = ItemRarityID.Orange; // The color that the item's name will be in-game.
 
 			Item.DefaultToFlareGun(24, 28);
@@ -48,7 +48,7 @@ namespace NotEnoughFlareGuns.Items.FlareGuns.PreHardmode
 		{
 			if (type == ProjectileID.Flare)
 			{
-				type = ModContent.ProjectileType<Projectiles.Blazer>();
+				type = ModContent.ProjectileType<Blazer>();
 			}
 		}
 	}

@@ -12,11 +12,22 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Items\Flamethrowers\Hardmode\" />
-    <Folder Include="Items\Flamethrowers\PostMoonLord\" />
     <Folder Include="Items\Flamethrowers\PreHardmode\" />
     <Folder Include="Items\FlareGuns\PostMoonLord\" />
     <Folder Include="Items\Launchers\Hardmode\" />
     <Folder Include="Items\Launchers\PostMoonLord\" />
-    <Folder Include="Items\Launchers\PreHardmode\" />
+    <Folder Include="Items\Placable\" />
+    <Folder Include="Pallets\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="StructureHelper">
+      <HintPath>..\ModAssemblies\StructureHelper_v2.0.10.dll</HintPath>
+    </Reference>
+    <Reference Include="SubworldLibrary">
+      <HintPath>..\ModAssemblies\SubworldLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="WebmilioCommons">
+      <HintPath>..\ModAssemblies\WebmilioCommons_v0.5.dll</HintPath>
+    </Reference>
   </ItemGroup>
 </Project>

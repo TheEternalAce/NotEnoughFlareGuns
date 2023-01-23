@@ -1,20 +1,21 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using NotEnoughFlareGuns.Buffs.AnyDebuff;
+using NotEnoughFlareGuns.Globals;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace NotEnoughFlareGuns.Projectiles
+namespace NotEnoughFlareGuns.Projectiles.Flares
 {
-    public class Blazer : ModProjectile
+    public class PoisonFlare : ModProjectile
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Blazer"); // The English name of the projectile
+            DisplayName.SetDefault("Poison Flare"); // The English name of the projectile
             //ProjectileID.Sets.TrailCacheLength[Projectile.type] = 5; // The length of old position to be recorded
             //ProjectileID.Sets.TrailingMode[Projectile.type] = 0; // The recording mode
+            NEFGlobalProjectile.Flare.Add(Type);
         }
 
         public override void SetDefaults()
@@ -46,7 +47,7 @@ namespace NotEnoughFlareGuns.Projectiles
             Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, Projectile.height * 0.5f);
             for (int k = 0; k < Projectile.oldPos.Length; k++)
             {
-                Vector2 drawPos = (Projectile.oldPos[k] - Main.screenPosition) + drawOrigin + new Vector2(0f, Projectile.gfxOffY);
+                Vector2 drawPos = Projectile.oldPos[k] - Main.screenPosition + drawOrigin + new Vector2(0f, Projectile.gfxOffY);
                 Color color = Projectile.GetAlpha(lightColor) * ((Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length);
                 Main.EntitySpriteDraw(texture, drawPos, null, color, Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None, 0);
             }
@@ -54,16 +55,9 @@ namespace NotEnoughFlareGuns.Projectiles
             return true;
         }
 
-        public override void OnHitPlayer(Player target, int damage, bool crit)
-        {
-            if (!target.HasBuff(ModContent.BuffType<Burning>()))
-                target.AddBuff(ModContent.BuffType<Burning>(), 600);
-        }
-
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
-            if (!target.HasBuff(ModContent.BuffType<Burning>()))
-                target.AddBuff(ModContent.BuffType<Burning>(), 600);
+            target.AddBuff(BuffID.Poisoned, 600);
         }
     }
 }

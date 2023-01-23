@@ -1,7 +1,6 @@
-﻿using Microsoft.Xna.Framework;
-using NotEnoughFlareGuns.Buffs.AnyDebuff;
-using NotEnoughFlareGuns.Items.FlareGuns.Hardmode;
+﻿using NotEnoughFlareGuns.Items.FlareGuns.Hardmode;
 using NotEnoughFlareGuns.Items.FlareGuns.PreHardmode;
+using NotEnoughFlareGuns.Items.Launchers.PreHardmode;
 using NotEnoughFlareGuns.Items.Materials;
 using Terraria;
 using Terraria.GameContent.ItemDropRules;
@@ -31,7 +30,7 @@ namespace NotEnoughFlareGuns.Globals
             }
             if (type == NPCID.TravellingMerchant && WorldGen.shadowOrbSmashed)
             {
-                shop.item[nextSlot].SetDefaults(ModContent.ItemType<Revoflare>());
+                shop.item[nextSlot].SetDefaults(ModContent.ItemType<Revolnade>());
                 nextSlot++;
             }
         }
@@ -58,12 +57,6 @@ namespace NotEnoughFlareGuns.Globals
             {
                 npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<SkillShot>(), 6));
             }
-        }
-
-        public override void DrawEffects(NPC npc, ref Color drawColor)
-        {
-            if (npc.HasBuff(ModContent.BuffType<Burning>()) && Main.rand.NextBool(3))
-                Dust.NewDust(npc.position, npc.width, npc.height, DustID.Torch, 1, 1, 0, default, 2.5f);
         }
     }
 }

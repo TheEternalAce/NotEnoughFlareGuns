@@ -1,6 +1,8 @@
 ﻿using NotEnoughFlareGuns.Buffs.PlayerBuff;
 using NotEnoughFlareGuns.Items;
+using SubworldLibrary;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -72,6 +74,11 @@ namespace NotEnoughFlareGuns
             {
                 target.AddBuff(BuffID.OnFire3, 600);
             }
+        }
+
+        public override void Kill(double damage, int hitDirection, bool pvp, PlayerDeathReason damageSource)
+        {
+            SubworldSystem.Exit();
         }
     }
 }

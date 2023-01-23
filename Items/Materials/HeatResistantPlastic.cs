@@ -1,5 +1,4 @@
 ﻿using Terraria;
-using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -9,7 +8,6 @@ namespace NotEnoughFlareGuns.Items.Materials
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("'Plastic that is less likely to melt at moderately high temperatures'");
             SacrificeTotal = 30;
         }
 
@@ -19,7 +17,7 @@ namespace NotEnoughFlareGuns.Items.Materials
             Item.height = 32;
             Item.rare = ItemRarityID.White;
 
-            Item.maxStack = 999;
+            Item.maxStack = 9999;
             Item.value = Item.buyPrice(copper: 50);
         }
     }

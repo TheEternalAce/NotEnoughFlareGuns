@@ -1,12 +1,18 @@
-Flare Gun Factory (NEFG) adds a bunch of flare guns, that's it. (For now)
+Infernal Arson-al is a mod that expands more on the fire theme, adding flamethrowers, rocket launchers and even flare guns and other fire-themed equipment.
 
 Changelog:
 
 	v0.5.1
 Solar Storm will not be loaded if Shards of Atheria is installed
 Added flavor text to Skill Shot
+Added Blacklight
+Added WikiThis implementation
+Increased basic Flare Gun damage from 1 to 12
 Increased drop rate for Rusted Caller from 1/80 to 1/20
+Increased max stack size of Heat Resistant Plastic and Rusted Caller from 999 and 1 to 9999
 Rusted Caller also drops from Creature From the Deep at 1/20 chance
+Updated sprites for Azul Flame, Clockwork Flare Gun, Dark Signal, Hallowed Flare Gun, Scorch Shot, Spore Flare, Terraflame, True Dark Signal and True Hallowed Flare Gun
+Updated Revoflare sprite and renamed Revoflare to Revolnade
 
 	v0.5
 Increased drop rate for Rusted Caller from 1/100 to 1/80
