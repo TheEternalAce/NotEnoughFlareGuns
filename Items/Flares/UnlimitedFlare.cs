@@ -1,31 +1,26 @@
-﻿using Terraria;
-using Terraria.GameContent.Creative;
+﻿using NotEnoughFlareGuns.Utilities;
+using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace NotEnoughFlareGuns.Items.Flares
 {
-    public class UnlimitedFlare : ModItem
+	public class UnlimitedFlare : ModItem
 	{
 		public override void SetStaticDefaults()
 		{
-			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 99;
+			SacrificeTotal = 99;
 		}
 
 		public override void SetDefaults()
 		{
-			Item.damage = 1; // The damage for projectiles isn't actually 12, it actually is the damage combined with the projectile and the item together.
-			Item.DamageType = DamageClass.Ranged;
 			Item.width = 10;
 			Item.height = 22;
-			Item.maxStack = 1;
-			Item.consumable = false; // This marks the item as consumable, making it automatically be consumed when it's used as ammunition, or something else, if possible.
-			Item.knockBack = 1.5f;
+
+			Item.DefaultToFlare(1, 0, ProjectileID.Flare, false);
+
 			Item.value = Item.sellPrice(gold: 1);
 			Item.rare = ItemRarityID.White;
-			Item.shoot = ProjectileID.Flare; // The projectile that weapons fire when using this item as ammunition.
-			Item.shootSpeed = 6f; // The speed of the projectile.
-			Item.ammo = AmmoID.Flare; // The ammo class this ammo belongs to.
 		}
 
 		// Please see Content/ExampleRecipes.cs for a detailed explanation of recipe creation.

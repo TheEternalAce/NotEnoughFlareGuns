@@ -3,14 +3,14 @@ using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace NotEnoughFlareGuns.Items
+namespace NotEnoughFlareGuns.Items.Materials
 {
     public class HeatResistantPlastic : ModItem
     {
         public override void SetStaticDefaults()
         {
             Tooltip.SetDefault("'Plastic that is less likely to melt at moderately high temperatures'");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 30;
+            SacrificeTotal = 30;
         }
 
         public override void SetDefaults()

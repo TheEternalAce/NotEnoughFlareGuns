@@ -11,6 +11,12 @@
     <PackageReference Include="tModLoader.CodeAssist" Version="0.1.*" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Items\Flamethrowers\Hardmode\" />
+    <Folder Include="Items\Flamethrowers\PostMoonLord\" />
+    <Folder Include="Items\Flamethrowers\PreHardmode\" />
     <Folder Include="Items\FlareGuns\PostMoonLord\" />
+    <Folder Include="Items\Launchers\Hardmode\" />
+    <Folder Include="Items\Launchers\PostMoonLord\" />
+    <Folder Include="Items\Launchers\PreHardmode\" />
   </ItemGroup>
 </Project>

@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using NotEnoughFlareGuns.Buffs.AnyDebuff;
 using Terraria;
-using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -73,7 +73,7 @@ namespace NotEnoughFlareGuns.Projectiles
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
-            target.AddBuff(ModContent.BuffType<Buffs.Burning>(), 600);
+            target.AddBuff(ModContent.BuffType<Burning>(), 600);
             target.AddBuff(BuffID.OnFire3, 600);
             target.AddBuff(BuffID.Ichor, 600);
         }

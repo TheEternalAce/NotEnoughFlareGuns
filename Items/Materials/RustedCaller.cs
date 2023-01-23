@@ -3,14 +3,14 @@ using Terraria.ID;
 using Terraria.GameContent.Creative;
 using Terraria.ModLoader;
 
-namespace NotEnoughFlareGuns.Items
+namespace NotEnoughFlareGuns.Items.Materials
 {
     public class RustedCaller : ModItem
     {
         public override void SetStaticDefaults()
         {
             Tooltip.SetDefault("'It's so worn and rusted it's useless..?'");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 100;
+            SacrificeTotal = 100;
         }
 
         public override void SetDefaults()
