@@ -1,8 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
+using NotEnoughFlareGuns.Globals;
 using Terraria;
-using Terraria.Audio;
 using Terraria.DataStructures;
-using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -12,10 +11,8 @@ namespace NotEnoughFlareGuns.Items.FlareGuns.PreHardmode
 	{
 		public override void SetStaticDefaults()
 		{
-			Tooltip.SetDefault("'The base of every flare gun'\n" +
-				"'Pull hard on the string and you might get a spark'");
-
-			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+			SacrificeTotal = 1;
+			NEFGlobalItem.FlareGuns.Add(Type);
 		}
 
 		public override void SetDefaults()
@@ -42,7 +39,6 @@ namespace NotEnoughFlareGuns.Items.FlareGuns.PreHardmode
 			// Gun Properties
 			Item.shoot = ProjectileID.Spark; // For some reason, all the guns in the vanilla source have this.
 			Item.shootSpeed = 8f; // The speed of the projectile (measured in pixels per frame.)
-			//Item.useAmmo = AmmoID.Flare; // The "ammo Id" of the ammo item that this weapon uses. Ammo IDs are magic numbers that usually correspond to the item id of one item that most commonly represent the ammo type.
 		}
 
 		// Please see Content/ExampleRecipes.cs for a detailed explanation of recipe creation.
@@ -62,11 +58,11 @@ namespace NotEnoughFlareGuns.Items.FlareGuns.PreHardmode
 			return new Vector2(2f, -2f);
 		}
 
-        public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
+		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
 		{
 			if (Main.rand.NextFloat() > .33)
 				return true;
 			else return false;
 		}
-    }
+	}
 }

@@ -1,19 +1,18 @@
 ﻿using Microsoft.Xna.Framework;
-using NotEnoughFlareGuns.Items.FlareGuns.PreHardmode;
 using NotEnoughFlareGuns.Projectiles;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace NotEnoughFlareGuns.Buffs
+namespace NotEnoughFlareGuns.Buffs.AnyDebuff
 {
     public class Burning : ModBuff
     {
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Burning"); // Buff display name
-            Description.SetDefault("Lossing life"); // Buff description
+            Description.SetDefault("Losing life"); // Buff description
             Main.debuff[Type] = true;  // Is it a debuff?
             Main.pvpBuff[Type] = true; // Players can give other players buffs, which are listed as pvpBuff
             Main.buffNoSave[Type] = true; // It means the buff won't save when you exit the world

@@ -2,7 +2,7 @@
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace NotEnoughFlareGuns.Buffs
+namespace NotEnoughFlareGuns.Buffs.AnyDebuff
 {
     public class BloodBoil : ModBuff
     {

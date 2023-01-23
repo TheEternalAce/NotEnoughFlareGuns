@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using NotEnoughFlareGuns.Buffs.AnyDebuff;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.ID;
@@ -55,7 +56,7 @@ namespace NotEnoughFlareGuns.Projectiles
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
-            target.AddBuff(ModContent.BuffType<Buffs.BloodBoil>(), 600);
+            target.AddBuff(ModContent.BuffType<BloodBoil>(), 600);
         }
     }
 }

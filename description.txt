@@ -1,9 +1,12 @@
-Flare Gun Factory (NEFG) adds a bunch of flare guns, that's it.
+Flare Gun Factory (NEFG) adds a bunch of flare guns, that's it. (For now)
 
 Changelog:
 
 	v0.5.1
 Solar Storm will not be loaded if Shards of Atheria is installed
+Added flavor text to Skill Shot
+Increased drop rate for Rusted Caller from 1/80 to 1/20
+Rusted Caller also drops from Creature From the Deep at 1/20 chance
 
 	v0.5
 Increased drop rate for Rusted Caller from 1/100 to 1/80
