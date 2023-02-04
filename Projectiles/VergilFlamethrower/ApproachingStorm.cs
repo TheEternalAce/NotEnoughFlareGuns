@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using MMZeroElements;
 using ReLogic.Content;
 using System;
 using System.Collections.Generic;
@@ -16,6 +17,12 @@ namespace NotEnoughFlareGuns.Projectiles.VergilFlamethrower
         float chargeToAdd = 0.1f;
         public static Asset<Texture2D> glowmask;
 
+        int fireTimer = 0;
+        int fireTimerMax = 4;
+
+        int consumeAmmoTimer = 0;
+        int consumeAmmoTimerMax = 20;
+
         public override void Load()
         {
             glowmask = ModContent.Request<Texture2D>(Texture + "_Glow");
@@ -26,12 +33,6 @@ namespace NotEnoughFlareGuns.Projectiles.VergilFlamethrower
             glowmask = null;
         }
 
-        int fireTimer = 0;
-        int fireTimerMax = 4;
-
-        int consumeAmmoTimer = 0;
-        int consumeAmmoTimerMax = 20;
-
         public override void SetDefaults()
         {
             Projectile.width = 20;
@@ -39,6 +40,7 @@ namespace NotEnoughFlareGuns.Projectiles.VergilFlamethrower
             Projectile.aiStyle = -1;
             Projectile.tileCollide = false;
             Projectile.hide = true; //aiStyle 20 assigns heldProj
+            ProjectileElements.Electric.Add(Type);
         }
 
         public override void AI()
@@ -52,6 +54,7 @@ namespace NotEnoughFlareGuns.Projectiles.VergilFlamethrower
             bool canShoot = player.channel && player.HasAmmo(player.inventory[player.selectedItem]) && !player.noItems && !player.CCed && ++fireTimer == fireTimerMax;
             KnockBack = player.GetWeaponKnockback(player.inventory[player.selectedItem], KnockBack);
             bool consumeAmmo = ++consumeAmmoTimer == consumeAmmoTimerMax;
+            player.heldProj = Projectile.whoAmI;
             if (canShoot)
             {
                 player.PickAmmo(player.inventory[player.selectedItem], out projToShoot, out speed, out Damage, out KnockBack, out var usedAmmoItemId);

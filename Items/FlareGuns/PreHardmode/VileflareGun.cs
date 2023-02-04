@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using MMZeroElements;
 using NotEnoughFlareGuns.Globals;
 using NotEnoughFlareGuns.Items.Materials;
 using NotEnoughFlareGuns.Utilities;
@@ -14,6 +15,7 @@ namespace NotEnoughFlareGuns.Items.FlareGuns.PreHardmode
 		{
 			SacrificeTotal = 1;
 			NEFGlobalItem.FlareGuns.Add(Type);
+			ProjectileElements.Fire.Add(Type);
 		}
 
 		public override void SetDefaults()

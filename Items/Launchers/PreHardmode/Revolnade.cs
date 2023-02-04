@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using MMZeroElements;
 using NotEnoughFlareGuns.Utilities;
 using Terraria;
 using Terraria.ID;
@@ -11,6 +12,7 @@ namespace NotEnoughFlareGuns.Items.Launchers.PreHardmode
         public override void SetStaticDefaults()
         {
             SacrificeTotal = 1;
+            ProjectileElements.Fire.Add(Type);
         }
 
         public override void SetDefaults()

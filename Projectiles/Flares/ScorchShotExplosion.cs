@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using MMZeroElements;
+using NotEnoughFlareGuns.Globals;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -12,6 +13,8 @@ namespace NotEnoughFlareGuns.Projectiles.Flares
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Scorch Shot Explosion"); // Name of the projectile. It can be appear in chat
+            NEFGlobalProjectile.Flare.Add(Type);
+            ProjectileElements.Fire.Add(Type);
         }
 
         // Setting the default parameters of the projectile

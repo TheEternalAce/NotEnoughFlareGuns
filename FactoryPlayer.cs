@@ -1,5 +1,6 @@
 ﻿using NotEnoughFlareGuns.Buffs.PlayerBuff;
 using NotEnoughFlareGuns.Items;
+using NotEnoughFlareGuns.Utilities;
 using SubworldLibrary;
 using Terraria;
 using Terraria.DataStructures;
@@ -14,6 +15,7 @@ namespace NotEnoughFlareGuns
         double totalDamageTaken;
         bool factorySoul;
         public bool coreOverheat;
+        public int sceneInvulnerability = 0;
 
         public override void ResetEffects()
         {
@@ -22,6 +24,10 @@ namespace NotEnoughFlareGuns
                 factorySoul = (bool)shards.Call("checkHasSoulCrystal", Player, ModContent.ItemType<FactorySoulCrystal>());
             }
             coreOverheat = false;
+            if (sceneInvulnerability > 0)
+            {
+                sceneInvulnerability--;
+            }
         }
 
         public override void Initialize()
@@ -42,6 +48,15 @@ namespace NotEnoughFlareGuns
                     Player.moveSpeed += 0.05f;
                 }
             }
+        }
+
+        public override bool PreHurt(bool pvp, bool quiet, ref int damage, ref int hitDirection, ref bool crit, ref bool customDamage, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource, ref int cooldownCounter)
+        {
+            if (sceneInvulnerability > 0)
+            {
+                return false;
+            }
+            return base.PreHurt(pvp, quiet, ref damage, ref hitDirection, ref crit, ref customDamage, ref playSound, ref genGore, ref damageSource, ref cooldownCounter);
         }
 
         public override void PostHurt(bool pvp, bool quiet, double damage, int hitDirection, bool crit, int cooldownCounter)
@@ -76,9 +91,15 @@ namespace NotEnoughFlareGuns
             }
         }
 
-        public override void Kill(double damage, int hitDirection, bool pvp, PlayerDeathReason damageSource)
+        public override void OnRespawn(Player player)
         {
             SubworldSystem.Exit();
+        }
+
+        public override void ModifyScreenPosition()
+        {
+            ModContent.GetInstance<CameraFocus>().UpdateScreen(this);
+            Main.screenPosition = Main.screenPosition.Floor();
         }
     }
 }

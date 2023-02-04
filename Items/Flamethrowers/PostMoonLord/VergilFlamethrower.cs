@@ -1,4 +1,5 @@
-﻿using NotEnoughFlareGuns.Globals;
+﻿using MMZeroElements;
+using NotEnoughFlareGuns.Globals;
 using NotEnoughFlareGuns.Projectiles.VergilFlamethrower;
 using NotEnoughFlareGuns.Systems;
 using NotEnoughFlareGuns.Utilities;
@@ -17,6 +18,8 @@ namespace NotEnoughFlareGuns.Items.Flamethrowers.PostMoonLord
         {
             SacrificeTotal = 1;
             NEFGlobalItem.Flamethrowers.Add(Type);
+            ProjectileElements.Fire.Add(Type);
+            ProjectileElements.Electric.Add(Type);
         }
 
         public override void SetDefaults()

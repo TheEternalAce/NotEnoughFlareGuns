@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using MMZeroElements;
 using Terraria;
 using Terraria.Localization;
 using Terraria.ModLoader;
@@ -12,6 +13,7 @@ namespace NotEnoughFlareGuns.Projectiles.VergilFlamethrower
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault(Language.GetTextValue(LocalizationPath.ProjectileName + Name));
+            ProjectileElements.Electric.Add(Type);
         }
 
         public override void SetDefaults()

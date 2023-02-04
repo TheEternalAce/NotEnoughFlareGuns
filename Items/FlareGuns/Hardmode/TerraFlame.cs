@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using MMZeroElements;
 using NotEnoughFlareGuns.Globals;
 using NotEnoughFlareGuns.Items.Materials;
 using NotEnoughFlareGuns.Projectiles.Flares;
@@ -9,12 +10,15 @@ using Terraria.ModLoader;
 
 namespace NotEnoughFlareGuns.Items.FlareGuns.Hardmode
 {
-    public class TerraFlame : ModItem
+	public class TerraFlame : ModItem
 	{
 		public override void SetStaticDefaults()
 		{
 			SacrificeTotal = 1;
 			NEFGlobalItem.FlareGuns.Add(Type);
+			ProjectileElements.Fire.Add(Type);
+			ProjectileElements.Ice.Add(Type);
+			ProjectileElements.Electric.Add(Type);
 		}
 
 		public override void SetDefaults()

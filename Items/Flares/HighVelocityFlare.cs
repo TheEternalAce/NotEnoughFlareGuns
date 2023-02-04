@@ -1,4 +1,5 @@
-﻿using NotEnoughFlareGuns.Utilities;
+﻿using MMZeroElements;
+using NotEnoughFlareGuns.Utilities;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -10,6 +11,7 @@ namespace NotEnoughFlareGuns.Items.Flares
 		public override void SetStaticDefaults()
 		{
 			SacrificeTotal = 99;
+			ProjectileElements.Fire.Add(Type);
 		}
 
 		public override void SetDefaults()

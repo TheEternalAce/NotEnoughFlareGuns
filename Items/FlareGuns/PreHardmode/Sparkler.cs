@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using MMZeroElements;
 using NotEnoughFlareGuns.Globals;
 using Terraria;
 using Terraria.DataStructures;
@@ -13,6 +14,7 @@ namespace NotEnoughFlareGuns.Items.FlareGuns.PreHardmode
 		{
 			SacrificeTotal = 1;
 			NEFGlobalItem.FlareGuns.Add(Type);
+			ProjectileElements.Fire.Add(Type);
 		}
 
 		public override void SetDefaults()

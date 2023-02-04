@@ -1,4 +1,5 @@
-﻿using NotEnoughFlareGuns.Items.FlareGuns.PreHardmode;
+﻿using NotEnoughFlareGuns.Globals;
+using NotEnoughFlareGuns.Items.FlareGuns.PreHardmode;
 using NotEnoughFlareGuns.Items.Materials;
 using NotEnoughFlareGuns.Tiles;
 using NotEnoughFlareGuns.Utilities;
@@ -10,6 +11,22 @@ namespace NotEnoughFlareGuns.Systems
 {
     public class NEFGWorld : ModSystem
     {
+        public override void PostUpdateEverything()
+        {
+            if (Main.projectile[999] != null)
+            {
+                for (int i = 0; i < Main.maxProjectiles; i++)
+                {
+                    Projectile flare = Main.projectile[i];
+                    if (NEFGlobalProjectile.Flare.Contains(flare.type))
+                    {
+                        flare.Kill();
+                        flare = null;
+                    }
+                }
+            }
+        }
+
         public override void PostWorldGen()
         {
             for (int k = 0; k < Main.maxChests; k++)

@@ -16,10 +16,12 @@
     <Folder Include="Items\FlareGuns\PostMoonLord\" />
     <Folder Include="Items\Launchers\Hardmode\" />
     <Folder Include="Items\Launchers\PostMoonLord\" />
-    <Folder Include="Items\Placable\" />
     <Folder Include="Pallets\" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="MMZeroElements">
+      <HintPath>..\ModAssemblies\MMZeroElements_v0.1.dll</HintPath>
+    </Reference>
     <Reference Include="StructureHelper">
       <HintPath>..\ModAssemblies\StructureHelper_v2.0.10.dll</HintPath>
     </Reference>

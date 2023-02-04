@@ -3,4 +3,4 @@ author = TheEternalAce
 version = 0.5.1
 homepage = https://forums.terraria.org/index.php?threads/infernal-arson-al.117453/
 buildIgnore = InfernalArson-alSprites.ase, Pallets/*
-modReferences = SubworldLibrary, StructureHelper
+modReferences = SubworldLibrary, StructureHelper, MMZeroElements

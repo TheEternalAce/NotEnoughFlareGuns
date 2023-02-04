@@ -15,6 +15,7 @@ namespace NotEnoughFlareGuns.Items.FlareGuns.Hardmode
 			Tooltip.SetDefault("Fires a random flare based on flare guns used to make this");
 			SacrificeTotal = 1;
 			NEFGlobalItem.FlareGuns.Add(Type);
+			ProjectileElements.Fire.Add(Type);
 		}
 
 		public override void SetDefaults()
