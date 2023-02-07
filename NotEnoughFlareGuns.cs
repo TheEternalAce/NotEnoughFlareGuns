@@ -1,7 +1,11 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using NotEnoughFlareGuns.Items;
+using NotEnoughFlareGuns.Items.Placable;
+using NotEnoughFlareGuns.NPCs.TheFactoryOnslaught;
+using NotEnoughFlareGuns.Systems;
 using StructureHelper;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.Localization;
@@ -72,6 +76,22 @@ namespace NotEnoughFlareGuns
             {
                 shards.Call("addColoredNecronomiconEntry", "Not Enough Flare Guns", "The Factory Onslaught",
                     Language.GetTextValue("Mods.NotEnoughFlareGuns.ItemTooltip.FactorySoulCrystal"), Color.Red, ModContent.ItemType<FactorySoulCrystal>());
+            }
+            if (ModLoader.TryGetMod("BossChecklist", out Mod checklist))
+            {
+                List<int> enemyList = new List<int>()
+                {
+                    ModContent.NPCType<SoulstoneCore>(),
+                    ModContent.NPCType<PlasmaTurret>(),
+                };
+
+                List<int> collection = new List<int>()
+                {
+                };
+
+                checklist.Call("AddEvent", this, "$Mods.NotEnoughFlareGuns.NPCName.SoulstoneCore", enemyList, 11.5f,
+                    DownedSystem.downedFactoryEvent, () => true, collection, ModContent.ItemType<SoulstoneKeys>(),
+                    $"Use [i:{ModContent.ItemType<SoulstoneKeys>()} and interact with the [i:{ModContent.ItemType<OnslaughtTerminalItem>()}]");
             }
         }
     }

@@ -39,6 +39,7 @@ Mods: {
 			HeatResistantPlastic: Heat Resistant Plastic
 
 			Blacklight: Blacklight
+			SoulstoneKeys: Soulstone Keys
 
 			FactorySoulCrystal: "'Soul Crystal (The Factory)'"
 		}
@@ -89,6 +90,7 @@ Mods: {
 				'It consumes the light...'
 				Destroys all flares you own
 				'''
+			SoulstoneKeys: "Grants access to the Norman Industries Factory"
 
 			FactorySoulCrystal:
 				'''
@@ -128,6 +130,12 @@ Mods: {
 
 		NPCName: {
 			SoulstoneCore: The Soulstone Core
+			PlasmaTurret: Plasma Turret
+		}
+
+		NPCBestiary: {
+			SoulstoneCore: ""
+			PlasmaTurret: ""
 		}
 	}
 }

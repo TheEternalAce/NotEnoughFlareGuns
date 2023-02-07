@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using MMZeroElements;
 using NotEnoughFlareGuns.Projectiles.TheFactoryOnslaught;
+using NotEnoughFlareGuns.Systems;
 using NotEnoughFlareGuns.Utilities;
 using Terraria;
 using Terraria.Audio;
@@ -107,6 +108,10 @@ namespace NotEnoughFlareGuns.NPCs.TheFactoryOnslaught
                 if (NPC.downedGolemBoss)
                 {
                     //turretType = ModContent.NPCType<IonTurret>()
+                }
+                else if (DownedSystem.factoryDefeatAmount == 3)
+                {
+                    //turretType = ModContent.NPCType<PhotonTurret>()
                 }
                 switch (attackType)
                 {
@@ -248,6 +253,12 @@ namespace NotEnoughFlareGuns.NPCs.TheFactoryOnslaught
                 NPC.NewNPC(NPC.GetSource_FromThis(), x, y, type);
                 NPC.NewNPC(NPC.GetSource_FromThis(), x2, y, type);
             }
+        }
+
+        public override void OnKill()
+        {
+            NPC.SetEventFlagCleared(ref DownedSystem.downedFactoryEvent, -1);
+            DownedSystem.factoryDefeatAmount++;
         }
 
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
