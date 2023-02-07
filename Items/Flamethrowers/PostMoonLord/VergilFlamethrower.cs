@@ -18,8 +18,8 @@ namespace NotEnoughFlareGuns.Items.Flamethrowers.PostMoonLord
         {
             SacrificeTotal = 1;
             NEFGlobalItem.Flamethrowers.Add(Type);
-            ProjectileElements.Fire.Add(Type);
-            ProjectileElements.Electric.Add(Type);
+            WeaponElements.Fire.Add(Type);
+            WeaponElements.Electric.Add(Type);
         }
 
         public override void SetDefaults()

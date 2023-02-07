@@ -16,7 +16,7 @@ namespace NotEnoughFlareGuns.Items.FlareGuns.PreHardmode
 		{
 			SacrificeTotal = 1;
 			NEFGlobalItem.FlareGuns.Add(Type);
-			ProjectileElements.Fire.Add(Type);
+			WeaponElements.Fire.Add(Type);
 		}
 
 		public override void SetDefaults()

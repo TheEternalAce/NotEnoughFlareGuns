@@ -11,7 +11,7 @@ namespace NotEnoughFlareGuns.Items.Flares
 		public override void SetStaticDefaults()
 		{
 			SacrificeTotal = 99;
-			ProjectileElements.Fire.Add(Type);
+			WeaponElements.Fire.Add(Type);
 		}
 
 		public override void SetDefaults()

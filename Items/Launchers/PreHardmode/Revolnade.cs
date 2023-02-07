@@ -12,7 +12,7 @@ namespace NotEnoughFlareGuns.Items.Launchers.PreHardmode
         public override void SetStaticDefaults()
         {
             SacrificeTotal = 1;
-            ProjectileElements.Fire.Add(Type);
+            WeaponElements.Fire.Add(Type);
         }
 
         public override void SetDefaults()
