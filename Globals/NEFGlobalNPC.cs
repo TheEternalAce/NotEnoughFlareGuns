@@ -1,7 +1,8 @@
-﻿using NotEnoughFlareGuns.Items.FlareGuns.Hardmode;
-using NotEnoughFlareGuns.Items.FlareGuns.PreHardmode;
-using NotEnoughFlareGuns.Items.Launchers.PreHardmode;
+﻿using NotEnoughFlareGuns.Items.Accessories;
 using NotEnoughFlareGuns.Items.Materials;
+using NotEnoughFlareGuns.Items.Weapons.Ranged.FlareGuns.Hardmode;
+using NotEnoughFlareGuns.Items.Weapons.Ranged.FlareGuns.PreHardmode;
+using NotEnoughFlareGuns.Items.Weapons.Ranged.Launchers.PreHardmode;
 using Terraria;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
@@ -26,6 +27,11 @@ namespace NotEnoughFlareGuns.Globals
                     }
                 }
                 shop.item[nextSlot].SetDefaults(ModContent.ItemType<HeatResistantPlastic>());
+                nextSlot++;
+            }
+            if (type == NPCID.Steampunker)
+            {
+                shop.item[nextSlot].SetDefaults(ModContent.ItemType<PressurizedNozzle>());
                 nextSlot++;
             }
             if (type == NPCID.TravellingMerchant && WorldGen.shadowOrbSmashed)

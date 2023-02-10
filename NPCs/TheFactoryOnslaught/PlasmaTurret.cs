@@ -14,7 +14,8 @@ namespace NotEnoughFlareGuns.NPCs.TheFactoryOnslaught
     public class PlasmaTurret : ModNPC
     {
         int fireTimer;
-        int fireTimerMax = 120;
+        int fireTimerMax = 60;
+        int fireTimerCooldown = 60;
 
         public override void SetStaticDefaults()
         {
@@ -46,17 +47,29 @@ namespace NotEnoughFlareGuns.NPCs.TheFactoryOnslaught
             NPC.DeathSound = SoundID.NPCDeath14;
         }
 
+        public override bool CheckActive()
+        {
+            return !NPC.AnyNPCs(ModContent.NPCType<SoulstoneCore>());
+        }
+
         public override void AI()
         {
             NPC.TargetClosest();
             Player player = Main.player[NPC.target];
-            if (++fireTimer >= fireTimerMax)
+            fireTimer++;
+            if (fireTimer <= fireTimerMax)
             {
-                Vector2 vector = player.Center - NPC.Center;
-                vector.Normalize();
-                Projectile.NewProjectileDirect(NPC.GetSource_FromThis(), NPC.Center, vector * 32f,
-                    ModContent.ProjectileType<PlasmaLaser>(), 14, 3, Main.myPlayer);
-                SoundEngine.PlaySound(SoundID.Item33);
+                if (fireTimer % 20 == 0)
+                {
+                    Vector2 vector = player.Center - NPC.Center;
+                    vector.Normalize();
+                    Projectile.NewProjectileDirect(NPC.GetSource_FromThis(), NPC.Center, vector * 32f,
+                        ModContent.ProjectileType<PlasmaLaser>(), 14, 3, Main.myPlayer);
+                    SoundEngine.PlaySound(SoundID.Item33);
+                }
+            }
+            else if (fireTimer >= fireTimerMax + fireTimerCooldown)
+            {
                 fireTimer = 0;
             }
         }
@@ -64,7 +77,7 @@ namespace NotEnoughFlareGuns.NPCs.TheFactoryOnslaught
         public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
             Player player = Main.player[NPC.target];
-            Asset<Texture2D> gun = ModContent.Request<Texture2D>(Texture + "Gun");
+            Asset<Texture2D> gun = ModContent.Request<Texture2D>(Texture + "_Gun");
             Rectangle rect = new(0, 0, 78, 38);
             SpriteEffects spriteEffects = SpriteEffects.None;
             Vector2 offset = new(-24, -12);

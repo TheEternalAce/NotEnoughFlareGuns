@@ -1,6 +1,6 @@
 ﻿using NotEnoughFlareGuns.Globals;
-using NotEnoughFlareGuns.Items.FlareGuns.PreHardmode;
 using NotEnoughFlareGuns.Items.Materials;
+using NotEnoughFlareGuns.Items.Weapons.Ranged.FlareGuns.PreHardmode;
 using NotEnoughFlareGuns.Tiles;
 using NotEnoughFlareGuns.Utilities;
 using Terraria;
@@ -13,15 +13,14 @@ namespace NotEnoughFlareGuns.Systems
     {
         public override void PostUpdateEverything()
         {
-            if (Main.projectile[999] != null)
+            if (Main.projectile[999].type != ProjectileID.None)
             {
                 for (int i = 0; i < Main.maxProjectiles; i++)
                 {
                     Projectile flare = Main.projectile[i];
-                    if (NEFGlobalProjectile.Flare.Contains(flare.type))
+                    if (NEFGlobalProjectile.Flare.Contains(flare.type) && flare.active)
                     {
                         flare.Kill();
-                        flare = null;
                     }
                 }
             }

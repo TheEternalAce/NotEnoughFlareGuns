@@ -1,6 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MMZeroElements;
+using NotEnoughFlareGuns.Items.Accessories.Backtanks;
+using NotEnoughFlareGuns.Utilities;
 using ReLogic.Content;
 using System;
 using System.Collections.Generic;
@@ -48,7 +50,7 @@ namespace NotEnoughFlareGuns.Projectiles.VergilFlamethrower
             ModifiedDrillAI();
             Player player = Main.player[Projectile.owner];
             int projToShoot = ProjectileID.Flames;
-            float speed = 14f;
+            float speed = 8f;
             int Damage = player.GetWeaponDamage(player.inventory[player.selectedItem]);
             float KnockBack = player.inventory[player.selectedItem].knockBack;
             bool canShoot = player.channel && player.HasAmmo(player.inventory[player.selectedItem]) && !player.noItems && !player.CCed && ++fireTimer == fireTimerMax;
@@ -57,6 +59,7 @@ namespace NotEnoughFlareGuns.Projectiles.VergilFlamethrower
             player.heldProj = Projectile.whoAmI;
             if (canShoot)
             {
+
                 player.PickAmmo(player.inventory[player.selectedItem], out projToShoot, out speed, out Damage, out KnockBack, out var usedAmmoItemId);
                 Item gel = player.inventory[player.FindItem(usedAmmoItemId)];
                 if (consumeAmmo)
@@ -74,11 +77,34 @@ namespace NotEnoughFlareGuns.Projectiles.VergilFlamethrower
                 ModLoader.TryGetMod("ShardsOfAtheria", out Mod shards);
                 if (shards != null)
                 {
-                    shards.Call("overcharge", player, chargeToAdd);
+                    if ((bool)shards.Call("checkCombat", player))
+                    {
+                        shards.Call("overcharge", player, chargeToAdd);
+                    }
                 }
 
-                Projectile.NewProjectileDirect(source, Projectile.Center, velocity * 8, ProjectileID.Flames,
-                    Projectile.damage, Projectile.knockBack, player.whoAmI);
+                float flameSpeed = 8;
+                if (player.InfernalPlayer().nozzleEquipped)
+                {
+                    flameSpeed *= 1.3f;
+                }
+                if (player.InfernalPlayer().metalBacktankEquipped > BacktankTiers.None && player.InfernalPlayer().nozzleEquipped)
+                {
+                    velocity *= flameSpeed * 1.2f;
+                    int numProjectiles = 2;
+                    float rotation = MathHelper.ToRadians(5);
+                    for (int i = 0; i < numProjectiles; i++)
+                    {
+                        Vector2 perturbedSpeed = velocity.RotatedBy(MathHelper.Lerp(-rotation, rotation, i / (numProjectiles - 1))); // Watch out for dividing by 0 if there is only 1 projectile.
+                        Projectile.NewProjectile(source, Projectile.Center, perturbedSpeed, ProjectileID.Flames, Projectile.damage,
+                            Projectile.knockBack, player.whoAmI);
+                    }
+                }
+                else
+                {
+                    Projectile.NewProjectileDirect(source, Projectile.Center, velocity * flameSpeed, ProjectileID.Flames,
+                        Projectile.damage, Projectile.knockBack, player.whoAmI);
+                }
 
                 if (consumeAmmoTimer == 16)
                 {
@@ -86,8 +112,6 @@ namespace NotEnoughFlareGuns.Projectiles.VergilFlamethrower
                     Vector2 newVelocity = velocity.RotatedByRandom(MathHelper.ToRadians(15));
                     newVelocity.Normalize();
                     newVelocity *= 16f;
-                    // Decrease velocity randomly for nicer visuals.
-                    newVelocity *= 1f - Main.rand.NextFloat(0.3f);
                     // Create a Projectile.
                     Projectile overchargedFlare = Projectile.NewProjectileDirect(source, Projectile.Center, newVelocity,
                         ModContent.ProjectileType<AreusFlare>(), Projectile.damage, Projectile.knockBack, player.whoAmI);

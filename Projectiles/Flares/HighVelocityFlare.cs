@@ -13,7 +13,6 @@ namespace NotEnoughFlareGuns.Projectiles.Flares
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("High Velocity Flare"); // The English name of the projectile
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 5; // The length of old position to be recorded
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0; // The recording mode
             NEFGlobalProjectile.Flare.Add(Type);

@@ -1,4 +1,5 @@
-﻿using Terraria;
+﻿using NotEnoughFlareGuns.Globals;
+using Terraria;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
@@ -17,6 +18,7 @@ namespace NotEnoughFlareGuns.Systems
         public static RecipeGroup Cobalt;
         public static RecipeGroup Mythril;
         public static RecipeGroup Adamantite;
+        public static RecipeGroup Flares;
 
         public override void Unload()
         {
@@ -29,6 +31,7 @@ namespace NotEnoughFlareGuns.Systems
             Cobalt = null;
             Mythril = null;
             Adamantite = null;
+            Flares = null;
         }
 
         public override void AddRecipeGroups()
@@ -64,6 +67,10 @@ namespace NotEnoughFlareGuns.Systems
             Adamantite = new RecipeGroup(() => $"{Language.GetTextValue("LegacyMisc.37")} Tier 3 Bar",
                    ItemID.AdamantiteBar, ItemID.TitaniumBar);
             RecipeGroup.RegisterGroup("Shards:Tier3Bars", Adamantite);
+
+            Flares = new RecipeGroup(() => $"{Language.GetTextValue("LegacyMisc.37")} {Lang.GetItemNameValue(ItemID.Flare)}",
+                   NEFGlobalItem.Flares.ToArray());
+            RecipeGroup.RegisterGroup("NEFG:Flares", Flares);
         }
     }
 }

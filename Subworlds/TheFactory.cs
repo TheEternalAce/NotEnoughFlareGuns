@@ -1,4 +1,5 @@
-﻿using StructureHelper;
+﻿using NotEnoughFlareGuns.Systems;
+using StructureHelper;
 using SubworldLibrary;
 using System.Collections.Generic;
 using Terraria;
@@ -30,6 +31,14 @@ namespace NotEnoughFlareGuns.Subworlds
         public override void OnEnter()
         {
             SubworldSystem.hideUnderworld = true;
+            CopyData();
+        }
+
+        public void CopyData()
+        {
+            SubworldSystem.CopyWorldData(nameof(DownedSystem.downedFactoryEvent), DownedSystem.downedFactoryEvent);
+            SubworldSystem.CopyWorldData(nameof(DownedSystem.factoryDefeatAmount), DownedSystem.factoryDefeatAmount);
+            SubworldSystem.CopyWorldData(nameof(NPC.downedGolemBoss), NPC.downedGolemBoss);
         }
     }
 

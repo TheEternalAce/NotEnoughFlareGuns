@@ -11,6 +11,7 @@ namespace NotEnoughFlareGuns.Globals
         /// Allows the Merchant to sell flares if the player has any flare gun in their inventory
         /// </summary>
         public static List<int> FlareGuns = new();
+        public static List<int> Flares = new();
         public static List<int> Flamethrowers = new();
         public static List<int> Launchers = new();
 
@@ -30,6 +31,10 @@ namespace NotEnoughFlareGuns.Globals
                 item.type == ItemID.BouncyGrenade || item.type == ItemID.PartyGirlGrenade)
             {
                 item.ammo = AmmoID.Rocket;
+            }
+            if (item.ammo == AmmoID.Flare && item.consumable)
+            {
+                Flares.Add(item.type);
             }
         }
 

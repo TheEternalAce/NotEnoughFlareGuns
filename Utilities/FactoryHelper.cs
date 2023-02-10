@@ -1,4 +1,5 @@
-﻿using Terraria;
+﻿using System;
+using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -6,6 +7,34 @@ namespace NotEnoughFlareGuns.Utilities
 {
     public static class FactoryHelper
     {
+        public static int HoursToTick(int hours)
+        {
+            int result = (int)(hours * Math.Pow(60, 3));
+            return result;
+        }
+
+        public static int MinutesToTick(int minutes)
+        {
+            int result = (int)(minutes * Math.Pow(60, 3));
+            return result;
+        }
+
+        public static int SecondsToTick(int seconds)
+        {
+            int result = (int)(seconds * Math.Pow(60, 3));
+            return result;
+        }
+
+        public static int ConvertFlareTo(this int type, int flareOutput, int flareTypeOverride = ProjectileID.Flare, bool convertAllFlares = false)
+        {
+            bool convert = type == flareTypeOverride || type == NotEnoughFlareGuns.ConvertibleFlare;
+            if (convert || convertAllFlares)
+            {
+                return flareOutput;
+            }
+            return type;
+        }
+
         public static void DefaultToFlareGun(this Item flareGun, int damage, int useTime, int crit = 0, float knockback = 0f, bool autoReuse = false, float velocity = 6f)
         {
             // Use Properties
@@ -31,7 +60,7 @@ namespace NotEnoughFlareGuns.Utilities
         public static void DefaultToFlamethrower(this Item thrower, int damage, int useTime, int crit = 0, float knockback = 4f, bool autoReuse = false, float velocity = 8f)
         {
             // Use Properties
-            thrower.useTime = useTime / 5; // The item's use time in ticks (60 ticks == 1 second.)
+            thrower.useTime = useTime / 2; // The item's use time in ticks (60 ticks == 1 second.)
             thrower.useAnimation = useTime; // The length of the item's use animation in ticks (60 ticks == 1 second.)
             thrower.useStyle = ItemUseStyleID.Shoot; // How you use the item (swinging, holding out, etc.)
             thrower.autoReuse = autoReuse; // Whether or not you can hold click to automatically use it again.
@@ -107,6 +136,11 @@ namespace NotEnoughFlareGuns.Utilities
             flare.shoot = projectile;
             flare.shootSpeed = velocity;
             flare.ammo = AmmoID.Flare;
+        }
+
+        public static FactoryPlayer InfernalPlayer(this Player player)
+        {
+            return player.GetModPlayer<FactoryPlayer>();
         }
 
         public static Item DefaultItem(int type)

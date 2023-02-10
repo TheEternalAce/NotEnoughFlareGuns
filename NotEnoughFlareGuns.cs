@@ -1,6 +1,8 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using NotEnoughFlareGuns.Items;
+using NotEnoughFlareGuns.Items.BossSummons;
+using NotEnoughFlareGuns.Items.Materials;
+using NotEnoughFlareGuns.Items.Misc;
 using NotEnoughFlareGuns.Items.Placable;
 using NotEnoughFlareGuns.NPCs.TheFactoryOnslaught;
 using NotEnoughFlareGuns.Systems;
@@ -15,6 +17,8 @@ namespace NotEnoughFlareGuns
 {
     public class NotEnoughFlareGuns : Mod
     {
+        public static int ConvertibleFlare = 0;
+
         public override void Load()
         {
             Point16 point = new Point16(0, 0);
@@ -83,15 +87,19 @@ namespace NotEnoughFlareGuns
                 {
                     ModContent.NPCType<SoulstoneCore>(),
                     ModContent.NPCType<PlasmaTurret>(),
+                    ModContent.NPCType<PhotonTurret>(),
+                    ModContent.NPCType<IonTurret>(),
                 };
 
                 List<int> collection = new List<int>()
                 {
+                    ModContent.ItemType<SoulstonePlating>()
                 };
 
-                checklist.Call("AddEvent", this, "$Mods.NotEnoughFlareGuns.NPCName.SoulstoneCore", enemyList, 11.5f,
-                    DownedSystem.downedFactoryEvent, () => true, collection, ModContent.ItemType<SoulstoneKeys>(),
-                    $"Use [i:{ModContent.ItemType<SoulstoneKeys>()} and interact with the [i:{ModContent.ItemType<OnslaughtTerminalItem>()}]");
+                checklist.Call("AddEvent", this, "Factory Onslaught", enemyList, 11.5f,
+                    () => DownedSystem.downedFactoryEvent, () => true, collection, ModContent.ItemType<SoulstoneKeys>(),
+                    $"Create and use [i:{ModContent.ItemType<SoulstoneKeys>()}] and interact with the " +
+                    $"[i:{ModContent.ItemType<OnslaughtTerminalItem>()}] once you enter.");
             }
         }
     }

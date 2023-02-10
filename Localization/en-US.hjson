@@ -9,50 +9,62 @@
 Mods: {
 	NotEnoughFlareGuns: {
 		ItemName: {
-			# Pre-HM Flare Gun
+			# Flare Gun
 			AzulFlame: Azul Flame
 			BloodFlareGun: Bloodflare Gun
 			DarkSignal: Dark Signal
-			Revolnade: Revolnade
 			ScorchShot: Scorch Shot
 			SkillShot: Skill Shot
 			Sparkler: Sparkler
 			SporeFlare: Spore Flare
 			VileflareGun: Vileflare Gun
 
-			# HM Flare Guns
+			# HM Flare Gun
 			ClockworkFlareGun: Clockwork Flare Gun
 			HallowedFlareGun: Hallowed Flare Gun
 			SolarStorm: Solar Storm
 			TerraFlame: Terraflame
 			TrueDarkSignal: True Dark Signal
 			TrueHallowedFlareGun: True Hallowed Flare Gun
+			SFG: SFG
 
-			# HM Flamethrowers
+			# Flamethrower
+			Exterminator: Exterminator
+
+			# HM Flamethrower
 			VergilFlamethrower: Approaching Storm
+
+			# Launcher
+			Revolnade: Revolutionary Action
 
 			# Flare
 			HighVelocityFlare: High Velocity Flare
-			UnlimitedFlare: Unlimited Flare Box
-			UnlimitedBlueFlare: Unlimited Blue Flare Box
+			EndlessFlareBox: Endless Flare Box
 
 			HeatResistantPlastic: Heat Resistant Plastic
 
 			Blacklight: Blacklight
 			SoulstoneKeys: Soulstone Keys
 
+			PressurizedNozzle: Pressurized Nozzle
+			CopperBacktank: Copper Backtank
+			TinBacktank: Tin Backtank
+			CobaltBacktank: Cobalt Backtank
+			PalladiumBacktank: Palladium Backtank
+			SoulstoneBacktank: Soulstone Backtank
+			LuminiteBacktank: Luminite Backtank
+
 			FactorySoulCrystal: "'Soul Crystal (The Factory)'"
 		}
 
 		ItemTooltip: {
-			# Pre-HM Flare Gun
+			# Flare Gun
 			AzulFlame: Converts blue flares into Aqua Flares
 			BloodFlareGun: Converts flares into Bloodflares
 			DarkSignal: Converts blue flares into Shadow Flares
 			ScorchShot:
 				'''
 				Converts flares into Blazers
-				'Pyro gaming!'
 				'''
 			SkillShot:
 				'''
@@ -67,7 +79,7 @@ Mods: {
 			SporeFlare: Flares have a chance to be coated in poison
 			VileflareGun: Converts flares into Vileflares
 
-			# HM Flare Guns
+			# HM Flare Gun
 			ClockworkFlareGun: Fires flares in a burst of 2
 			SolarStorm:
 				'''
@@ -75,13 +87,24 @@ Mods: {
 				'Harness energy from the sun to vaporize your foes!'
 				'''
 			TerraFlame: Fires a random flare based on flare guns used to make this
+			SFG:
+				'''
+				'Absolutely destroy your arm'
+				'And I guess your enemy too'
+				'''
+
+			# Flamethrower
+			Exterminator: 'Seems very familiar'
 
 			# HM Flamethrower
 			VergilFlamethrower: "'Now I'm feeling motivated!'"
 
 			# Flare
-			UnlimitedFlare: Never run out of Flares
-			UnlimitedBlueFlare: Never run out of Blue Flares
+			EndlessFlareBox:
+				'''
+				Never run out of flares
+				Can be converted into any type of flare
+				'''
 
 			HeatResistantPlastic: "'Plastic that is less likely to melt at moderately high temperatures'"
 
@@ -90,7 +113,21 @@ Mods: {
 				'It consumes the light...'
 				Destroys all flares you own
 				'''
+			Starlight:
+				'''
+				'It's light is blinding'
+				Permanently provides extra light from flares you own.
+				'''
 			SoulstoneKeys: "Grants access to the Norman Industries Factory"
+			OnslaughtTerminalItem: Onslaught Terminal
+
+			PressurizedNozzle: Pressurized Nozzle
+			CopperBacktank: Copper Backtank
+			TinBacktank: Tin Backtank
+			CobaltBacktank: Cobalt Backtank
+			PalladiumBacktank: Palladium Backtank
+			SoulstoneBacktank: Soulstone Backtank
+			LuminiteBacktank: Luminite Backtank
 
 			FactorySoulCrystal:
 				'''
@@ -104,19 +141,50 @@ Mods: {
 		
 		BlacklightDestroy: Destroyed {0} flares.
 
+		ProjectileName: {
+			AquaFlare: Aqua Flare
+			Blazer: Blazer
+			Bloodflare: Bloodflare
+			HighVelocityFlare: High Velocity Flare
+			PoisonFlare: Poison Flare
+			ScorchShotExplosion: Blazer Explosion
+			ShadowFlare: Shadow Flare
+			SkullFlare: Skull Flare
+			SmallFrikinFlare: "Small Frikin' Flare"
+			SolarFlare: Solar Flare
+			Vileflare: Vileflare
+
+			IonLaser: Ion Beam
+			PhotonLaser: Photon Laser
+			PlasmaLaser: Plasma Ray
+
+			SFGHeld: SFG
+			SFGCork: SFG Cork
+
+			ApproachingStorm: Approaching Storm
+			AreusFlare: Areus Flare
+			AreusShard: Areus Shard
+		}
+
 		BuffName: {
 			# Any debuff
 			BloodBoil: Blood Boil
-			Burning: Burning
+			Burning: Afterburn
+			Crippled: Crippled
 
 			# Player buff
-			CoreOverheat: Core Overheat
+			CoreOverheat: Overheating Core
 		}
 
 		BuffDescription: {
 			# Any debuff
 			BloodBoil: Defense reduced
 			Burning: Losing Life
+			Crippled:
+				'''
+				Movement severely reduced
+				Defense gone
+				'''
 
 			# Player buff
 			CoreOverheat:
@@ -131,11 +199,28 @@ Mods: {
 		NPCName: {
 			SoulstoneCore: The Soulstone Core
 			PlasmaTurret: Plasma Turret
+			PhotonTurret: Photon Turret
+			IonTurret: Ion Turret
 		}
 
 		NPCBestiary: {
 			SoulstoneCore: ""
 			PlasmaTurret: ""
+			PhotonTurret: ""
+			IonTurret: ""
+		}
+
+		BuffName: {
+			# Any debuff
+			BloodBoil: Blood Boil
+			Burning: Burning
+
+			# Player buff
+			CoreOverheat: Core Overheat
+		}
+
+		CustomDeathReason: {
+			Factory: "{0} blew up with the factory."
 		}
 	}
 }

@@ -13,7 +13,6 @@ namespace NotEnoughFlareGuns.Projectiles.VergilFlamethrower
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Areus Flare"); // The English name of the projectile
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 5; // The length of old position to be recorded
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0; // The recording mode
             NEFGlobalProjectile.Flare.Add(Type);
@@ -38,7 +37,7 @@ namespace NotEnoughFlareGuns.Projectiles.VergilFlamethrower
             Projectile.extraUpdates = 0; // Set to above 0 if you want the projectile to update multiple time in a frame
             Projectile.netImportant = true;
             Projectile.usesLocalNPCImmunity = true;
-            Projectile.localNPCHitCooldown = 10;
+            Projectile.localNPCHitCooldown = 6;
 
             AIType = ProjectileID.BlueFlare; // Act exactly like default Flare
         }
