@@ -7,21 +7,21 @@ namespace NotEnoughFlareGuns.Utilities
 {
     public static class FactoryHelper
     {
-        public static int HoursToTick(int hours)
+        public static int Hours(int hours)
         {
             int result = (int)(hours * Math.Pow(60, 3));
             return result;
         }
 
-        public static int MinutesToTick(int minutes)
+        public static int Minutues(int minutes)
         {
-            int result = (int)(minutes * Math.Pow(60, 3));
+            int result = (int)(minutes * Math.Pow(60, 2));
             return result;
         }
 
-        public static int SecondsToTick(int seconds)
+        public static int Seconds(int seconds)
         {
-            int result = (int)(seconds * Math.Pow(60, 3));
+            int result = seconds * 60;
             return result;
         }
 

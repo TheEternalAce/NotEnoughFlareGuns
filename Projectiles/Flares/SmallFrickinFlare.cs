@@ -43,12 +43,12 @@ namespace NotEnoughFlareGuns.Projectiles.Flares
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
-            target.AddBuff(ModContent.BuffType<Crippled>(), FactoryHelper.SecondsToTick(15));
+            target.AddBuff(ModContent.BuffType<Crippled>(), FactoryHelper.Seconds(15));
         }
 
         public override void OnHitPlayer(Player target, int damage, bool crit)
         {
-            target.AddBuff(ModContent.BuffType<Crippled>(), FactoryHelper.SecondsToTick(15));
+            target.AddBuff(ModContent.BuffType<Crippled>(), FactoryHelper.Seconds(15));
         }
 
         public override bool PreDraw(ref Color lightColor)

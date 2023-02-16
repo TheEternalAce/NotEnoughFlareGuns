@@ -222,5 +222,17 @@ Mods: {
 		CustomDeathReason: {
 			Factory: "{0} blew up with the factory."
 		}
+
+		Config: {
+			ServerLabel: Server-side config
+
+			SoundHeader: "[i:890]"
+
+			OnslaughtIntercom: Onslaught Audio
+		}
+
+		ConfigDesc: {
+			OnslaughtIntercom: Enables intercom voice lines during the Factory Onslaught.
+		}
 	}
 }

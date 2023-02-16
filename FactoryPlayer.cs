@@ -20,7 +20,7 @@ namespace NotEnoughFlareGuns
 
         public int sceneInvulnerability = 0;
         public int factoryTimer;
-        public int factoryTimerMax = (int)FactoryHelper.MinutesToTick(2);
+        public int factoryTimerMax = (int)FactoryHelper.Minutues(2);
 
         public bool cokeStarlight = false;
         public bool cokeStarlightActive = true;

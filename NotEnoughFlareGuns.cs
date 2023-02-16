@@ -9,15 +9,20 @@ using NotEnoughFlareGuns.Systems;
 using StructureHelper;
 using System.Collections.Generic;
 using Terraria;
+using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace NotEnoughFlareGuns
 {
-    public class NotEnoughFlareGuns : Mod
+    public partial class NotEnoughFlareGuns : Mod
     {
         public static int ConvertibleFlare = 0;
+
+        public static readonly SoundStyle IntruderAlert = new SoundStyle("NotEnoughFlareGuns/Sounds/TheFactoryOnslaught/IntruderAlert", SoundType.Ambient);
+        public static readonly SoundStyle AnomalyFound = new SoundStyle("NotEnoughFlareGuns/Sounds/TheFactoryOnslaught/AnomalyFound", SoundType.Ambient);
+        public static readonly SoundStyle PriorityUpdate = new SoundStyle("NotEnoughFlareGuns/Sounds/TheFactoryOnslaught/PriorityUpdate", SoundType.Ambient);
 
         public override void Load()
         {

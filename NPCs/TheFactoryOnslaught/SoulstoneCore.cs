@@ -51,7 +51,12 @@ namespace NotEnoughFlareGuns.NPCs.TheFactoryOnslaught
             {
                 SpecificallyImmuneTo = new int[] {
                     BuffID.Poisoned,
-
+                    BuffID.OnFire,
+                    BuffID.OnFire3,
+                    BuffID.Frostburn,
+                    BuffID.Frostburn2,
+                    BuffID.Ichor,
+                    BuffID.CursedInferno,
                     BuffID.Confused // Most NPCs have this
 				}
             };
@@ -100,6 +105,7 @@ namespace NotEnoughFlareGuns.NPCs.TheFactoryOnslaught
                 Reset();
                 SummonTurrets();
                 NPC.ai[0] = 1;
+                SoundEngine.PlaySound(NotEnoughFlareGuns.IntruderAlert);
             }
 
             RestrictPlayerMovement(player);
@@ -161,9 +167,6 @@ namespace NotEnoughFlareGuns.NPCs.TheFactoryOnslaught
 
         public void ClosedCorePhase(Player player)
         {
-            NPC.defense = 150;
-            NPC.takenDamageMultiplier = 1f;
-
             if (attackCooldown <= 0)
             {
                 Reset();
@@ -171,7 +174,6 @@ namespace NotEnoughFlareGuns.NPCs.TheFactoryOnslaught
             }
             else if (attackTimer > 0)
             {
-                Vector2 toPlayer = Vector2.Normalize(player.Center - NPC.Center);
                 switch (attackType)
                 {
                     case SpawnTurrets:
@@ -191,8 +193,11 @@ namespace NotEnoughFlareGuns.NPCs.TheFactoryOnslaught
 
         public void OpenCorePhase(Player player)
         {
-            NPC.defense = 67;
-            NPC.takenDamageMultiplier = 1f;
+            if (NPC.ai[1] == 0)
+            {
+                NPC.defense = 34;
+                NPC.ai[1] = 1;
+            }
             Vector2 vector = Vector2.One.RotatedByRandom(MathHelper.ToRadians(360)) * 8 * Main.rand.NextFloat();
             Gore.NewGore(NPC.GetSource_FromThis(), NPC.Center, vector, GoreID.Smoke1);
             Gore.NewGore(NPC.GetSource_FromThis(), NPC.Center, vector, GoreID.Smoke2);
@@ -202,6 +207,8 @@ namespace NotEnoughFlareGuns.NPCs.TheFactoryOnslaught
             {
                 openCoreTimer = 0;
                 coreClosed = true;
+                NPC.defense = 150;
+                NPC.ai[1] = 0;
             }
 
             if (attackCooldown <= 0)

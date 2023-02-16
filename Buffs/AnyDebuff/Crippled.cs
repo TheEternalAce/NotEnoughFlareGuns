@@ -13,7 +13,7 @@ namespace NotEnoughFlareGuns.Buffs.AnyDebuff
 
         public override void Update(NPC npc, ref int buffIndex)
         {
-            npc.defense = 0;
+            npc.defense *= 0;
             npc.velocity.X *= 0.4f;
         }
 
