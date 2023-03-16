@@ -6,7 +6,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace NotEnoughFlareGuns.Items.Weapons.Ranged.Flamethrowers.PreHardmode
+namespace NotEnoughFlareGuns.Items.Weapons.Ranged.Flamethrowers
 {
     public class Exterminator : ModItem
     {

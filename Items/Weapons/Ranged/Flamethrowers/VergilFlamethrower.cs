@@ -1,13 +1,13 @@
 ﻿using MMZeroElements;
 using NotEnoughFlareGuns.Globals;
-using NotEnoughFlareGuns.Projectiles.VergilFlamethrower;
+using NotEnoughFlareGuns.Projectiles.Ranged.VergilFlamethrower;
 using NotEnoughFlareGuns.Systems;
 using NotEnoughFlareGuns.Utilities;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace NotEnoughFlareGuns.Items.Weapons.Ranged.Flamethrowers.PostMoonLord
+namespace NotEnoughFlareGuns.Items.Weapons.Ranged.Flamethrowers
 {
     /// <summary>
     /// Vergil Flamethrower

@@ -5,7 +5,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace NotEnoughFlareGuns.Items.Weapons.Ranged.Launchers.PreHardmode
+namespace NotEnoughFlareGuns.Items.Weapons.Ranged.Launchers
 {
     public class Revolnade : ModItem
     {
