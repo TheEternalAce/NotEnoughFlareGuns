@@ -26,7 +26,7 @@ namespace NotEnoughFlareGuns.Items.Weapons.Ranged.Guns
             Item.value = Item.buyPrice(gold: 10);
 
             Item.DefaultToRangedWeapon(ProjectileID.PurificationPowder, AmmoID.Bullet, 32, 16);
-            Item.damage = 80;
+            Item.damage = 120;
             Item.knockBack = 7;
             Item.crit = 6;
             Item.ArmorPenetration = 15;
