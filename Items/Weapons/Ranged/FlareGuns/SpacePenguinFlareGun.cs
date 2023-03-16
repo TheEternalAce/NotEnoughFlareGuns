@@ -28,6 +28,7 @@ namespace NotEnoughFlareGuns.Items.Weapons.Ranged.FlareGuns
             Item.rare = ItemRarityID.Red; // The color that the item's name will be in-game.
 
             Item.DefaultToFlareGun(120, 32, 7, autoReuse: true);
+            Item.value = 300000;
         }
 
         public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)

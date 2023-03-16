@@ -25,7 +25,7 @@ namespace NotEnoughFlareGuns.Items.Weapons.Ranged.Flamethrowers
             Item.rare = ItemRarityID.Green; // The color that the item's name will be in-game.
 
             Item.DefaultToFlamethrower(20, 26, 4, autoReuse: true, velocity: 6);
-            Item.value = 11400;
+            Item.value = 70000;
         }
 
         public override void AddRecipes()

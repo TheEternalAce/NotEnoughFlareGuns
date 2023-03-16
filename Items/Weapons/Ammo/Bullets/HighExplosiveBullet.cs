@@ -18,11 +18,10 @@ namespace NotEnoughFlareGuns.Items.Weapons.Ammo.Bullets
         {
             Item.width = 6;
             Item.height = 10;
+            Item.value = 1800;
+            Item.rare = ItemRarityID.LightPurple;
 
             Item.DefaultToBullet(20, ModContent.ProjectileType<Projectiles.Ranged.Bullets.HighExplosiveBullet>());
-
-            Item.value = Item.sellPrice(copper: 8);
-            Item.rare = ItemRarityID.LightPurple;
         }
 
         // Please see Content/ExampleRecipes.cs for a detailed explanation of recipe creation.

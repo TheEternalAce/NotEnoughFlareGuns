@@ -23,7 +23,7 @@ namespace NotEnoughFlareGuns.Items.Weapons.Ranged.Guns
             Item.width = 100; // Hitbox width of the item.
             Item.height = 30; // Hitbox height of the item.
             Item.rare = ItemRarityID.LightPurple; // The color that the item's name will be in-game.
-            Item.value = Item.buyPrice(gold: 10);
+            Item.value = 250000;
 
             Item.DefaultToRangedWeapon(ProjectileID.PurificationPowder, AmmoID.Bullet, 32, 16);
             Item.damage = 120;
