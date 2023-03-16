@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using NotEnoughFlareGuns.Items.BossSummons;
 using NotEnoughFlareGuns.Items.Materials;
 using NotEnoughFlareGuns.Items.Misc;
-using NotEnoughFlareGuns.Items.Placable;
+using NotEnoughFlareGuns.Items.Placeable;
 using NotEnoughFlareGuns.NPCs.TheFactoryOnslaught;
 using NotEnoughFlareGuns.Systems;
 using StructureHelper;
@@ -92,7 +92,6 @@ namespace NotEnoughFlareGuns
                 {
                     ModContent.NPCType<SoulstoneCore>(),
                     ModContent.NPCType<PlasmaTurret>(),
-                    ModContent.NPCType<PhotonTurret>(),
                     ModContent.NPCType<IonTurret>(),
                 };
 

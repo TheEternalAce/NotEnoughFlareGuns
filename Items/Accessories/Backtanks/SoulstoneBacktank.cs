@@ -1,4 +1,5 @@
 ﻿using NotEnoughFlareGuns.Items.Materials;
+using NotEnoughFlareGuns.Tiles;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -29,7 +30,7 @@ namespace NotEnoughFlareGuns.Items.Accessories.Backtanks
                 .AddIngredient(ModContent.ItemType<SoulstonePlating>(), 26)
                 .AddIngredient(ItemID.Cog, 5)
                 .AddIngredient(ItemID.Leather, 16)
-                .AddTile(TileID.MythrilAnvil)
+                .AddTile(ModContent.TileType<FactoryWorkstation>())
                 .Register();
         }
     }

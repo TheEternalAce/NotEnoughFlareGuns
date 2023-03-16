@@ -22,7 +22,7 @@ namespace NotEnoughFlareGuns.Items.Weapons.Ammo.Flares
 			Item.width = 10;
 			Item.height = 22;
 
-			Item.DefaultToFlare(1, 0, NotEnoughFlareGuns.ConvertibleFlare, false);
+			Item.DefaultToFlare(1, NotEnoughFlareGuns.ConvertibleFlare, false);
 
 			Item.value = Item.sellPrice(gold: 1);
 			Item.rare = ItemRarityID.White;

@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MMZeroElements;
+using NotEnoughFlareGuns.Config;
 using NotEnoughFlareGuns.Projectiles.TheFactoryOnslaught;
 using NotEnoughFlareGuns.Systems;
 using NotEnoughFlareGuns.Utilities;
@@ -11,13 +12,13 @@ using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
+using Terraria.Utilities;
 
 namespace NotEnoughFlareGuns.NPCs.TheFactoryOnslaught
 {
     public class SoulstoneCore : ModNPC
     {
-        int closedCoreTimer;
-        int closedCoreTimerMax = 100;
+        int coreDamage;
         bool coreClosed = true;
         int openCoreTimer;
         int openCoreTimerMax = 1000;
@@ -28,15 +29,20 @@ namespace NotEnoughFlareGuns.NPCs.TheFactoryOnslaught
         int turretType;
         int laserType;
 
-        const int SpawnTurrets = 0;
-        const int SpawnDrones = 1;
-        const int SpawnExplosiveDrones = 2;
+        const int NoAttack = -1;
+
+        const int SpawnDrones = 0;
+        const int SpawnExplosiveDrones = 1;
 
         const int SpawnWorkers = 0;
         const int LaserBarrage = 1;
         const int SpreadFire = 2;
 
         NPC[] turrets = new NPC[2];
+        FactoryTurret turret1;
+        FactoryTurret turret2;
+
+        bool intercomAudio = ModContent.GetInstance<NEFGServerConfig>().IntercomAudio;
 
         public override void SetStaticDefaults()
         {
@@ -47,7 +53,7 @@ namespace NotEnoughFlareGuns.NPCs.TheFactoryOnslaught
             Main.npcFrameCount[Type] = 2;
 
             // Specify the debuffs it is immune to
-            NPCDebuffImmunityData debuffData = new NPCDebuffImmunityData
+            NPCDebuffImmunityData debuffData = new()
             {
                 SpecificallyImmuneTo = new int[] {
                     BuffID.Poisoned,
@@ -68,13 +74,28 @@ namespace NotEnoughFlareGuns.NPCs.TheFactoryOnslaught
         {
             NPC.width = NPC.height = 300;
             NPC.lifeMax = 47000;
-            NPC.defense = 34;
+            NPC.defense = 150;
             NPC.boss = true;
             NPC.knockBackResist = 0f;
             NPC.noGravity = true;
             NPC.HitSound = SoundID.NPCHit4;
             NPC.DeathSound = SoundID.NPCDeath14;
-            Music = MusicID.Monsoon;
+            NPC.value = 140000;
+            NPC.SpawnWithHigherTime(30);
+            NPC.npcSlots = 1f; // Take up open spawn slots, preventing random NPCs from spawning during the fight
+
+            // Don't set immunities like this as of 1.4:
+            // NPC.buffImmune[BuffID.Confused] = true;
+            // immunities are handled via dictionaries through NPCID.Sets.DebuffImmunitySets
+
+            // Custom AI, 0 is "bound town NPC" AI which slows the NPC down and changes sprite orientation towards the target
+            NPC.aiStyle = -1;
+
+            // The following code assigns a music track to the boss in a simple way.
+            if (!Main.dedServ)
+            {
+                Music = MusicID.Monsoon;
+            }
         }
 
         public override void BossLoot(ref string name, ref int potionType)
@@ -97,6 +118,11 @@ namespace NotEnoughFlareGuns.NPCs.TheFactoryOnslaught
                 NPC.despawnEncouraged = true;
                 // This method makes it so when the boss is in "despawn range" (outside of the screen), it despawns in 10 ticks
                 NPC.EncourageDespawn(10);
+                if (NPC.ai[0] == 1)
+                {
+                    ChatHelper.BroadcastChatMessage(NetworkText.FromKey("Mods.NotEnoughFlareGuns.FactoryIntercom.NeutralizedAnomaly"), Color.Red);
+                    NPC.ai[0] = 2;
+                }
                 return;
             }
 
@@ -104,8 +130,12 @@ namespace NotEnoughFlareGuns.NPCs.TheFactoryOnslaught
             {
                 Reset();
                 SummonTurrets();
+                if (intercomAudio)
+                {
+                    SoundEngine.PlaySound(NotEnoughFlareGuns.IntruderAlert);
+                }
+                ChatHelper.BroadcastChatMessage(NetworkText.FromKey("Mods.NotEnoughFlareGuns.FactoryIntercom.IntruderAlert"), Color.Red);
                 NPC.ai[0] = 1;
-                SoundEngine.PlaySound(NotEnoughFlareGuns.IntruderAlert);
             }
 
             RestrictPlayerMovement(player);
@@ -122,15 +152,70 @@ namespace NotEnoughFlareGuns.NPCs.TheFactoryOnslaught
             }
         }
 
+        public void ClosedCorePhase(Player player)
+        {
+            if (attackCooldown <= 0)
+            {
+                Reset();
+                attackType = ChooseClosedAttack();
+            }
+            else if (attackTimer > 0)
+            {
+                CycleClosedAttack();
+            }
+            DecrimentAttackTimer();
+        }
+
+        public void OpenCorePhase(Player player)
+        {
+            if (NPC.ai[1] == 0)
+            {
+                NPC.defense = 34;
+                turret1.ToggleActive();
+                turret2.ToggleActive();
+                NPC.ai[1] = 1;
+            }
+            Vector2 vector = Vector2.One.RotatedByRandom(MathHelper.ToRadians(360)) * 8 * Main.rand.NextFloat();
+            Gore.NewGore(NPC.GetSource_FromThis(), NPC.Center, vector, GoreID.Smoke1);
+            Gore.NewGore(NPC.GetSource_FromThis(), NPC.Center, vector, GoreID.Smoke2);
+            Gore.NewGore(NPC.GetSource_FromThis(), NPC.Center, vector, GoreID.Smoke3);
+
+            if (++openCoreTimer >= openCoreTimerMax && attackCooldown <= 0)
+            {
+                turret1.ToggleActive();
+                turret2.ToggleActive();
+                openCoreTimer = 0;
+                coreClosed = true;
+                NPC.defense = 150;
+                NPC.ai[1] = 0;
+            }
+
+            if (attackCooldown <= 0)
+            {
+                Reset();
+                attackType = ChooseOpenAttack();
+            }
+            else if (attackTimer > 0)
+            {
+                Vector2 toPlayer = Vector2.Normalize(player.Center - NPC.Center);
+                CycleOpenAttack();
+            }
+            DecrimentAttackTimer();
+        }
+
         public int ChooseClosedAttack()
         {
-            int randomAttack = Main.rand.Next(3);
-            randomAttack = 0;
+            WeightedRandom<int> closedAttacks = new();
+            closedAttacks.Add(NoAttack, 0.8);
+            closedAttacks.Add(SpawnDrones, 0.1);
+            closedAttacks.Add(SpawnExplosiveDrones, 0.1);
+
+            int randomAttack = closedAttacks.Get();
             switch (randomAttack)
             {
-                case SpawnTurrets:
-                    attackTimer = 11;
-                    attackCooldown = 5;
+                case NoAttack:
+                    attackTimer = 0;
+                    attackCooldown = 180;
                     break;
                 case SpawnDrones:
                     attackTimer = 10;
@@ -146,92 +231,64 @@ namespace NotEnoughFlareGuns.NPCs.TheFactoryOnslaught
 
         public int ChooseOpenAttack()
         {
-            int randomAttack = Main.rand.Next(2);
+            WeightedRandom<int> openAttacks = new();
+            openAttacks.Add(SpawnWorkers, 0.8);
+            openAttacks.Add(LaserBarrage, 0.1);
+            openAttacks.Add(SpreadFire, 0.1);
+
+            int randomAttack = openAttacks.Get();
             switch (randomAttack)
             {
                 case SpawnWorkers:
-                    attackTimer = 10;
-                    attackCooldown = 5;
+                    attackTimer = 60;
+                    attackCooldown = 20;
                     break;
                 case LaserBarrage:
-                    attackTimer = 60;
-                    attackCooldown = 15;
+                    attackTimer = 172;
+                    attackCooldown = 30;
+                    damage = 16;
                     break;
                 case SpreadFire:
-                    attackTimer = 60;
-                    attackCooldown = 15;
+                    attackTimer = 180;
+                    attackCooldown = 600;
+                    damage = 16;
                     break;
             }
             return randomAttack;
         }
 
-        public void ClosedCorePhase(Player player)
+        int damage = 0;
+        public void CycleClosedAttack()
         {
-            if (attackCooldown <= 0)
+            switch (attackType)
             {
-                Reset();
-                attackType = ChooseClosedAttack();
+                case SpawnDrones:
+                    break;
+                case SpawnExplosiveDrones:
+                    break;
             }
-            else if (attackTimer > 0)
-            {
-                switch (attackType)
-                {
-                    case SpawnTurrets:
-                        if (attackTimer == 10)
-                        {
-                            SummonTurrets();
-                        }
-                        break;
-                    case SpawnDrones:
-                        break;
-                    case SpawnExplosiveDrones:
-                        break;
-                }
-            }
-            DecrimentAttackTimer();
         }
 
-        public void OpenCorePhase(Player player)
+        public void CycleOpenAttack()
         {
-            if (NPC.ai[1] == 0)
+            switch (attackType)
             {
-                NPC.defense = 34;
-                NPC.ai[1] = 1;
+                case SpawnWorkers:
+                    SummonWorkers();
+                    break;
+                case LaserBarrage:
+                    if (attackTimer % 8 == 0)
+                    {
+                        ShootLasers();
+                    }
+                    break;
+                case SpreadFire:
+                    if (attackTimer % 8 == 0)
+                    {
+                        ShootFire(2);
+                    }
+                    break;
             }
-            Vector2 vector = Vector2.One.RotatedByRandom(MathHelper.ToRadians(360)) * 8 * Main.rand.NextFloat();
-            Gore.NewGore(NPC.GetSource_FromThis(), NPC.Center, vector, GoreID.Smoke1);
-            Gore.NewGore(NPC.GetSource_FromThis(), NPC.Center, vector, GoreID.Smoke2);
-            Gore.NewGore(NPC.GetSource_FromThis(), NPC.Center, vector, GoreID.Smoke3);
-
-            if (++openCoreTimer >= openCoreTimerMax)
-            {
-                openCoreTimer = 0;
-                coreClosed = true;
-                NPC.defense = 150;
-                NPC.ai[1] = 0;
-            }
-
-            if (attackCooldown <= 0)
-            {
-                Reset();
-                attackType = ChooseOpenAttack();
-            }
-            else if (attackTimer > 0)
-            {
-                Vector2 toPlayer = Vector2.Normalize(player.Center - NPC.Center);
-                switch (attackType)
-                {
-                    case SpawnWorkers:
-                        break;
-                    case LaserBarrage:
-                        if (attackTimer % 15 == 0)
-                        {
-                            ShootLasers();
-                        }
-                        break;
-                }
-            }
-            DecrimentAttackTimer();
         }
 
         public void RestrictPlayerMovement(Player player)
@@ -271,49 +328,78 @@ namespace NotEnoughFlareGuns.NPCs.TheFactoryOnslaught
 
             if (turrets[0] == null)
             {
-                NPC turrret = NPC.NewNPCDirect(NPC.GetSource_FromThis(), x, y, type);
-                turrets[0] = turrret;
+                NPC turret = NPC.NewNPCDirect(NPC.GetSource_FromThis(), x, y, type);
+                turrets[0] = turret;
+                turret1 = turret.ModNPC as FactoryTurret;
             }
             else if (!turrets[0].active)
             {
-                NPC turrret = NPC.NewNPCDirect(NPC.GetSource_FromThis(), x, y, type);
-                turrets[0] = turrret;
+                NPC turret = NPC.NewNPCDirect(NPC.GetSource_FromThis(), x, y, type);
+                turrets[0] = turret;
+                turret1 = turret.ModNPC as FactoryTurret;
             }
             if (turrets[1] == null)
             {
-                NPC turrret = NPC.NewNPCDirect(NPC.GetSource_FromThis(), x2, y, type);
-                turrets[1] = turrret;
+                NPC turret = NPC.NewNPCDirect(NPC.GetSource_FromThis(), x2, y, type);
+                turrets[1] = turret;
+                turret2 = turret.ModNPC as FactoryTurret;
             }
             else if (!turrets[1].active)
             {
                 NPC turret = NPC.NewNPCDirect(NPC.GetSource_FromThis(), x2, y, type);
                 turrets[1] = turret;
+                turret2 = turret.ModNPC as FactoryTurret;
             }
         }
 
-        public void ShootLasers(int projectileAmount = 6, Vector2 velocityOverride = new())
+        void SummonWorkers()
         {
-            for (int i = 0; i < projectileAmount; i++)
+            if (NPC.CountNPCS(ModContent.NPCType<FactoryWorker>()) > 6)
             {
-                Vector2 vel = new Vector2(0, -1).RotatedBy(MathHelper.ToRadians(360 / projectileAmount * i));
-                SoundEngine.PlaySound(SoundID.Item33);
-                Projectile proj = Projectile.NewProjectileDirect(NPC.GetSource_FromThis(), NPC.Center, vel * 32, laserType,
-                    30, 4, Main.myPlayer);
-                if (velocityOverride.LengthSquared() != 0)
+                attackTimer = 0;
+                attackType = 0;
+                return;
+            }
+            Vector2 spawnadjust = new(950, 480);
+            if (Main.rand.NextBool())
+            {
+                spawnadjust.X *= -1;
+            }
+            Vector2 spawnPos = NPC.Center + spawnadjust;
+            if (Main.rand.NextBool(20))
+            {
+                int index = NPC.NewNPC(NPC.GetSource_FromAI(), (int)spawnPos.X, (int)spawnPos.Y, ModContent.NPCType<FactoryWorker>());
+                if (Main.netMode == NetmodeID.Server && index < Main.maxNPCs)
                 {
-                    proj.velocity = velocityOverride;
+                    NetMessage.SendData(MessageID.SyncNPC, number: index);
                 }
             }
+        }
+
+        float rotation;
+        public void ShootLasers()
+        {
+            int projectileAmount = 3;
+            for (int i = 0; i < projectileAmount; i++)
+            {
+                Vector2 vel = new Vector2(0, -1).RotatedBy(MathHelper.ToRadians(360 / projectileAmount * i) + rotation);
+                SoundEngine.PlaySound(SoundID.Item33);
+                Projectile.NewProjectileDirect(NPC.GetSource_FromThis(), NPC.Center, vel * 32, laserType, damage, 4, Main.myPlayer);
+            }
+            rotation += MathHelper.ToRadians(15);
         }
 
         public void ShootFire(int projectileAmount = 6)
         {
             for (int i = 0; i < projectileAmount; i++)
             {
-                Vector2 vel = new Vector2(0, -1).RotatedBy(MathHelper.ToRadians(360 / projectileAmount * i));
-                SoundEngine.PlaySound(SoundID.Item33);
-                Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, vel * 32, laserType, 30, 4, Main.myPlayer);
+                Vector2 vel = new Vector2(0, -1).RotatedBy(MathHelper.ToRadians(360 / projectileAmount * i) + rotation);
+                SoundEngine.PlaySound(SoundID.Item20);
+                Projectile fire = Projectile.NewProjectileDirect(NPC.GetSource_FromThis(), NPC.Center + vel * 200, vel * 8,
+                    ProjectileID.Fireball, damage, 4, Main.myPlayer);
+                fire.friendly = true;
             }
+            rotation += MathHelper.ToRadians(10);
         }
 
         public void DecrimentAttackTimer()
@@ -330,15 +416,11 @@ namespace NotEnoughFlareGuns.NPCs.TheFactoryOnslaught
 
         public void Reset()
         {
+            rotation = 0;
             if (NPC.downedGolemBoss)
             {
                 turretType = ModContent.NPCType<IonTurret>();
                 laserType = ModContent.ProjectileType<IonLaser>();
-            }
-            else if (DownedSystem.factoryDefeatAmount >= 2)
-            {
-                turretType = ModContent.NPCType<PhotonTurret>();
-                laserType = ModContent.ProjectileType<PhotonLaser>();
             }
             else
             {
@@ -351,9 +433,11 @@ namespace NotEnoughFlareGuns.NPCs.TheFactoryOnslaught
         {
             if (coreClosed)
             {
-                if (++closedCoreTimer >= closedCoreTimerMax)
+                int maxCoreDamage = 400;
+                coreDamage += (int)damage;
+                if (coreDamage >= maxCoreDamage)
                 {
-                    closedCoreTimer = 0;
+                    coreDamage = 0;
                     coreClosed = false;
                 }
             }
@@ -361,10 +445,10 @@ namespace NotEnoughFlareGuns.NPCs.TheFactoryOnslaught
 
         public override void OnKill()
         {
+            turret1.SetActive(true);
+            turret2.SetActive(true);
             NPC.SetEventFlagCleared(ref DownedSystem.downedFactoryEvent, -1);
-            DownedSystem.factoryDefeatAmount++;
-            ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral($"Soulstone core defeated {DownedSystem.factoryDefeatAmount} time(s)."), Color.White);
-            ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral("WARNING: SUBSTANTIAL DAMAGE TO THE CORE, EVACUATE IMMEDIATELY."), Color.Red);
+            ChatHelper.BroadcastChatMessage(NetworkText.FromKey("Mods.NotEnoughFlareGuns.FactoryIntercom.EvacuateFactory"), Color.Red);
         }
 
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)

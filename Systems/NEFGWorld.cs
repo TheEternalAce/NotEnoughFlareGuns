@@ -1,6 +1,6 @@
 ﻿using NotEnoughFlareGuns.Globals;
 using NotEnoughFlareGuns.Items.Materials;
-using NotEnoughFlareGuns.Items.Weapons.Ranged.FlareGuns.PreHardmode;
+using NotEnoughFlareGuns.Items.Weapons.Ranged.FlareGuns;
 using NotEnoughFlareGuns.Tiles;
 using NotEnoughFlareGuns.Utilities;
 using Terraria;

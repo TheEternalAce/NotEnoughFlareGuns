@@ -14,6 +14,6 @@ namespace NotEnoughFlareGuns.Config
         [Tooltip("$Mods.NotEnoughFlareGuns.ConfigDesc.OnslaughtIntercom")] // A tooltip is a description showed when you hover your mouse over the option. It can be used as a more in-depth explanation of the option.
         [DefaultValue(true)]
         [ReloadRequired]
-        public bool metalBladeSound;
+        public bool IntercomAudio;
     }
 }

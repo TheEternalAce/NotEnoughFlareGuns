@@ -1,4 +1,5 @@
 ﻿using NotEnoughFlareGuns.Systems;
+using NotEnoughFlareGuns.Utilities;
 using StructureHelper;
 using SubworldLibrary;
 using System.Collections.Generic;
@@ -31,13 +32,22 @@ namespace NotEnoughFlareGuns.Subworlds
         public override void OnEnter()
         {
             SubworldSystem.hideUnderworld = true;
+            SubworldSystem.noReturn = true;
+        }
+
+        public override void CopyMainWorldData()
+        {
             CopyData();
+        }
+
+        public override void OnExit()
+        {
+            Main.LocalPlayer.InfernalPlayer().factoryTimer = 0;
         }
 
         public void CopyData()
         {
             SubworldSystem.CopyWorldData(nameof(DownedSystem.downedFactoryEvent), DownedSystem.downedFactoryEvent);
-            SubworldSystem.CopyWorldData(nameof(DownedSystem.factoryDefeatAmount), DownedSystem.factoryDefeatAmount);
             SubworldSystem.CopyWorldData(nameof(NPC.downedGolemBoss), NPC.downedGolemBoss);
         }
     }

@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using MMZeroElements;
 using Terraria;
+using Terraria.Audio;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -32,6 +33,11 @@ namespace NotEnoughFlareGuns.Projectiles.TheFactoryOnslaught
 
         public override void AI()
         {
+            if (Projectile.ai[0] == 0)
+            {
+                SoundEngine.PlaySound(SoundID.Item33);
+                Projectile.ai[0] = 1;
+            }
             Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.ToRadians(90);
         }
 

@@ -2,9 +2,11 @@
 using NotEnoughFlareGuns.Buffs.PlayerBuff;
 using NotEnoughFlareGuns.Items.Accessories.Backtanks;
 using NotEnoughFlareGuns.Items.Misc;
+using NotEnoughFlareGuns.Items.Tools;
 using NotEnoughFlareGuns.NPCs.TheFactoryOnslaught;
 using NotEnoughFlareGuns.Utilities;
 using SubworldLibrary;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -24,6 +26,8 @@ namespace NotEnoughFlareGuns
 
         public bool cokeStarlight = false;
         public bool cokeStarlightActive = true;
+
+        public bool blacklight = false;
 
         public int metalBacktankEquipped;
         public bool nozzleEquipped;
@@ -61,6 +65,7 @@ namespace NotEnoughFlareGuns
         {
             tag[nameof(cokeStarlight)] = cokeStarlight;
             tag[nameof(cokeStarlightActive)] = cokeStarlightActive;
+            tag[nameof(blacklight)] = blacklight;
         }
 
         public override void LoadData(TagCompound tag)
@@ -73,6 +78,10 @@ namespace NotEnoughFlareGuns
             {
                 cokeStarlightActive = tag.GetBool(nameof(cokeStarlightActive));
             }
+            if (tag.ContainsKey(nameof(blacklight)))
+            {
+                blacklight = tag.GetBool(nameof(blacklight));
+            }
         }
 
         public override void Initialize()
@@ -82,6 +91,15 @@ namespace NotEnoughFlareGuns
                 this.shards = shards;
             }
             base.Initialize();
+        }
+
+        public override IEnumerable<Item> AddStartingItems(bool mediumCoreDeath)
+        {
+            if (!mediumCoreDeath)
+            {
+                return new[] { new Item(ModContent.ItemType<Blacklight>()) };
+            }
+            return base.AddStartingItems(mediumCoreDeath);
         }
 
         public override void UpdateEquips()
@@ -101,14 +119,14 @@ namespace NotEnoughFlareGuns
             {
                 switch (metalBacktankEquipped)
                 {
-                    case BacktankTiers.Copper:
-                        return Main.rand.NextFloat() > 0.08f;
-                    case BacktankTiers.Cobalt:
-                        return Main.rand.NextFloat() > 0.16f;
-                    case BacktankTiers.Soulstone:
-                        return Main.rand.NextFloat() > 0.33f;
                     case BacktankTiers.Luminite:
                         return Main.rand.NextFloat() > 0.66f;
+                    case BacktankTiers.Soulstone:
+                        return Main.rand.NextFloat() > 0.33f;
+                    case BacktankTiers.Cobalt:
+                        return Main.rand.NextFloat() > 0.16f;
+                    case BacktankTiers.Copper:
+                        return Main.rand.NextFloat() > 0.08f;
                 }
             }
             return base.CanConsumeAmmo(weapon, ammo);

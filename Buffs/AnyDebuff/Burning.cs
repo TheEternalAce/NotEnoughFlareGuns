@@ -1,5 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
-using NotEnoughFlareGuns.Projectiles.Flares;
+using NotEnoughFlareGuns.Projectiles.Ranged.Flares;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -12,8 +12,6 @@ namespace NotEnoughFlareGuns.Buffs.AnyDebuff
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Burning"); // Buff display name
-            Description.SetDefault("Losing life"); // Buff description
             Main.debuff[Type] = true;  // Is it a debuff?
             Main.pvpBuff[Type] = true; // Players can give other players buffs, which are listed as pvpBuff
             Main.buffNoSave[Type] = true; // It means the buff won't save when you exit the world

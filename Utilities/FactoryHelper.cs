@@ -1,5 +1,9 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using System;
 using Terraria;
+using Terraria.Audio;
+using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -33,6 +37,66 @@ namespace NotEnoughFlareGuns.Utilities
                 return flareOutput;
             }
             return type;
+        }
+
+        public static SpriteEffects ToSpriteEffect(this int value)
+        {
+            return value == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
+        }
+
+        public static Rectangle Frame(this Rectangle rectangle, int frameX, int frameY, int sizeOffsetX = 0, int sizeOffsetY = 0)
+        {
+            return new Rectangle(rectangle.X + (rectangle.Width - sizeOffsetX) * frameX, rectangle.Y + (rectangle.Width - sizeOffsetY) * frameY, rectangle.Width, rectangle.Height);
+        }
+        public static Rectangle Frame(this Projectile projectile)
+        {
+            return TextureAssets.Projectile[projectile.type].Value.Frame(1, Main.projFrames[projectile.type], 0, projectile.frame);
+        }
+
+        public static SpriteEffects GetSpriteEffect(this Projectile projectile)
+        {
+            return (-projectile.spriteDirection).ToSpriteEffect();
+        }
+
+        public static Vector2 RotateTowards(Vector2 currentPosition, Vector2 currentVelocity, Vector2 targetPosition, float maxChange)
+        {
+            float scaleFactor = currentVelocity.Length();
+            float targetAngle = currentPosition.AngleTo(targetPosition);
+            return currentVelocity.ToRotation().AngleTowards(targetAngle, maxChange).ToRotationVector2() * scaleFactor;
+        }
+
+        public static Color MaxRGBA(this Color color, byte amt)
+        {
+            return color.MaxRGBA(amt, amt);
+        }
+        public static Color MaxRGBA(this Color color, byte amt, byte a)
+        {
+            return color.MaxRGBA(amt, amt, amt, a);
+        }
+        public static Color MaxRGBA(this Color color, byte r, byte g, byte b, byte a)
+        {
+            color.R = Math.Max(color.R, r);
+            color.G = Math.Max(color.G, g);
+            color.B = Math.Max(color.B, b);
+            color.A = Math.Max(color.A, a);
+            return color;
+        }
+
+        public static void Explode(this Projectile projectile, int explosionSize)
+        {
+            if (projectile.ai[1] == 0)
+            {
+                SoundEngine.PlaySound(SoundID.Item14);
+                projectile.ai[1] = 1;
+                Vector2 oldSize = projectile.Size;
+                projectile.velocity = Vector2.Zero;
+                projectile.alpha = 255;
+                projectile.hide = true;
+                projectile.hostile = true;
+                projectile.Size = new Vector2(explosionSize);
+                projectile.timeLeft = 30;
+                projectile.position += (oldSize - projectile.Size) / 2;
+            }
         }
 
         public static void DefaultToFlareGun(this Item flareGun, int damage, int useTime, int crit = 0, float knockback = 0f, bool autoReuse = false, float velocity = 6f)
@@ -123,19 +187,32 @@ namespace NotEnoughFlareGuns.Utilities
             preHMLauncher.useAmmo = ItemID.Grenade; // The "ammo Id" of the ammo item that this weapon uses. Ammo IDs are magic numbers that usually correspond to the item id of one item that most commonly represent the ammo type.
         }
 
-        public static void DefaultToFlare(this Item flare, int damage, int crit, int projectile, bool consumable = true, float velocity = 6)
+        public static void DefaultToFlare(this Item flare, int damage, int projectile, bool consumable = true)
         {
             flare.maxStack = consumable ? 9999 : 1;
 
             flare.damage = damage;
             flare.DamageType = DamageClass.Ranged;
             flare.knockBack = 1.5f;
-            flare.crit = crit;
 
             flare.consumable = consumable;
             flare.shoot = projectile;
-            flare.shootSpeed = velocity;
+            flare.shootSpeed = 6f;
             flare.ammo = AmmoID.Flare;
+        }
+
+        public static void DefaultToBullet(this Item bullet, int damage, int projectile)
+        {
+            bullet.maxStack = 9999;
+
+            bullet.damage = damage;
+            bullet.DamageType = DamageClass.Ranged;
+            bullet.knockBack = 4f;
+
+            bullet.consumable = true;
+            bullet.shoot = projectile;
+            bullet.shootSpeed = 4f;
+            bullet.ammo = AmmoID.Bullet;
         }
 
         public static FactoryPlayer InfernalPlayer(this Player player)

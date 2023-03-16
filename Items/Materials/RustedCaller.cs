@@ -9,7 +9,7 @@ namespace NotEnoughFlareGuns.Items.Materials
         public override void SetStaticDefaults()
         {
             Tooltip.SetDefault("'It's so worn and rusted it's useless..?'");
-            SacrificeTotal = 100;
+            SacrificeTotal = 1;
         }
 
         public override void SetDefaults()

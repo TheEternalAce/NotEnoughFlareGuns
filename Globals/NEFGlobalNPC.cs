@@ -1,8 +1,7 @@
 ﻿using NotEnoughFlareGuns.Items.Accessories;
 using NotEnoughFlareGuns.Items.Materials;
-using NotEnoughFlareGuns.Items.Weapons.Ranged.FlareGuns.Hardmode;
-using NotEnoughFlareGuns.Items.Weapons.Ranged.FlareGuns.PreHardmode;
-using NotEnoughFlareGuns.Items.Weapons.Ranged.Launchers.PreHardmode;
+using NotEnoughFlareGuns.Items.Weapons.Ranged.FlareGuns;
+using NotEnoughFlareGuns.Items.Weapons.Ranged.Launchers;
 using Terraria;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;

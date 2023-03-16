@@ -1,5 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
-using NotEnoughFlareGuns.Items.Placable;
+using NotEnoughFlareGuns.Items.Placeable;
 using NotEnoughFlareGuns.NPCs.TheFactoryOnslaught;
 using Terraria;
 using Terraria.Chat;
@@ -23,10 +23,9 @@ namespace NotEnoughFlareGuns.Tiles
             TileObjectData.newTile.CoordinateHeights = new[] { 16, 18 };
             TileObjectData.newTile.StyleHorizontal = true;
             TileObjectData.addTile(Type);
-            ModTranslation name = CreateMapEntryName();
-            name.SetDefault("Onslaught Terminal");
+            ModTranslation name = CreateMapEntryName("OnslaughtTerminal");
             AddMapEntry(new Color(200, 200, 200), name);
-            DustType = DustID.Titanium;
+            DustType = DustID.Iron;
             TileID.Sets.HasOutlines[Type] = true;
             TileID.Sets.DisableSmartCursor[Type] = true;
         }
@@ -44,18 +43,32 @@ namespace NotEnoughFlareGuns.Tiles
 
         public override bool RightClick(int i, int j)
         {
-            /*
-             * 41 tiles up from top, 42 from bottom, *16 for pixel
-             * 11 tiles left from far left, 12 from left, 13 from right, 14 from far right, *16 for pixel
-             */
-
             Player player = Main.LocalPlayer;
             int type = ModContent.NPCType<SoulstoneCore>();
             Tile terminal = Main.tile[i, j];
+            int frameX = terminal.TileFrameX;
+            int frameY = terminal.TileFrameY;
+            if (frameX >= 72)
+            {
+                frameX -= 72;
+            }
 
-            Vector2 tilePos = new(i * 16 - terminal.TileFrameX, j * 16 - terminal.TileFrameY);
+            Vector2 tilePos = new(i * 16 - frameX, j * 16 - frameY);
             Vector2 offset = new(40, 42);
             Vector2 spawnPos = tilePos + new Vector2(-10 * 16, -41 * 16) + offset;
+            //for (int d = 0; d < 20; d++)
+            //{
+            //    Dust dust = Dust.NewDustPerfect(spawnPos, DustID.Electric);
+            //    dust.noGravity = true;
+            //    dust.velocity *= 0f;
+            //}
+            //for (int d = 0; d < 20; d++)
+            //{
+            //    Dust dust = Dust.NewDustPerfect(tilePos, DustID.Electric);
+            //    dust.noGravity = true;
+            //    dust.velocity *= 0f;
+            //}
+            //return true;
 
             if (!NPC.AnyNPCs(type))
             {

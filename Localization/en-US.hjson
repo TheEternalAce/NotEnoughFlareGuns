@@ -9,7 +9,15 @@
 Mods: {
 	NotEnoughFlareGuns: {
 		ItemName: {
-			# Flare Gun
+			# Magic weapon
+			PlasmaBeacon: Plasma Beacon
+			TheFireLord: The Fire Lord
+			
+			# Ranged weapon
+				# Gun
+			MaterialNotRifle: "Materialn't Rifle"
+
+				# Flare Gun
 			AzulFlame: Azul Flame
 			BloodFlareGun: Bloodflare Gun
 			DarkSignal: Dark Signal
@@ -18,8 +26,6 @@ Mods: {
 			Sparkler: Sparkler
 			SporeFlare: Spore Flare
 			VileflareGun: Vileflare Gun
-
-			# HM Flare Gun
 			ClockworkFlareGun: Clockwork Flare Gun
 			HallowedFlareGun: Hallowed Flare Gun
 			SolarStorm: Solar Storm
@@ -27,17 +33,16 @@ Mods: {
 			TrueDarkSignal: True Dark Signal
 			TrueHallowedFlareGun: True Hallowed Flare Gun
 			SFG: SFG
+			SpacePenguinFlareGun: S.P.F.G.
 
-			# Flamethrower
+				# Flamethrower
 			Exterminator: Exterminator
-
-			# HM Flamethrower
 			VergilFlamethrower: Approaching Storm
 
-			# Launcher
+				# Launcher
 			Revolnade: Revolutionary Action
 
-			# Flare
+				# Flare
 			HighVelocityFlare: High Velocity Flare
 			EndlessFlareBox: Endless Flare Box
 
@@ -46,6 +51,10 @@ Mods: {
 			Blacklight: Blacklight
 			SoulstoneKeys: Soulstone Keys
 
+			FactoryWorkstationItem: Factory Workstation
+			OnslaughtTerminalItem: Onslaught Terminal
+
+			# Accessory
 			PressurizedNozzle: Pressurized Nozzle
 			CopperBacktank: Copper Backtank
 			TinBacktank: Tin Backtank
@@ -58,7 +67,15 @@ Mods: {
 		}
 
 		ItemTooltip: {
-			# Flare Gun
+			# Magic weapon
+			PlasmaBeacon: Fires a continuous plasma beam
+			TheFireLord: "'I have all the power in the world!'"
+
+			# Ranged weapon
+				# Gun
+			MaterialNotRifle: "'Begone!'"
+
+				# Flare Gun
 			AzulFlame: Converts blue flares into Aqua Flares
 			BloodFlareGun: Converts flares into Bloodflares
 			DarkSignal: Converts blue flares into Shadow Flares
@@ -78,8 +95,6 @@ Mods: {
 				'''
 			SporeFlare: Flares have a chance to be coated in poison
 			VileflareGun: Converts flares into Vileflares
-
-			# HM Flare Gun
 			ClockworkFlareGun: Fires flares in a burst of 2
 			SolarStorm:
 				'''
@@ -92,14 +107,13 @@ Mods: {
 				'Absolutely destroy your arm'
 				'And I guess your enemy too'
 				'''
+			SpacePenguinFlareGun: "'It came from the center of space'"
 
-			# Flamethrower
-			Exterminator: 'Seems very familiar'
-
-			# HM Flamethrower
+				# Flamethrower
+			Exterminator: "'Seems very familiar'"
 			VergilFlamethrower: "'Now I'm feeling motivated!'"
 
-			# Flare
+				# Flare
 			EndlessFlareBox:
 				'''
 				Never run out of flares
@@ -111,7 +125,7 @@ Mods: {
 			Blacklight:
 				'''
 				'It consumes the light...'
-				Destroys all flares you own
+				Makes flares you own disappear faster
 				'''
 			Starlight:
 				'''
@@ -121,13 +135,14 @@ Mods: {
 			SoulstoneKeys: "Grants access to the Norman Industries Factory"
 			OnslaughtTerminalItem: Onslaught Terminal
 
-			PressurizedNozzle: Pressurized Nozzle
-			CopperBacktank: Copper Backtank
-			TinBacktank: Tin Backtank
-			CobaltBacktank: Cobalt Backtank
-			PalladiumBacktank: Palladium Backtank
-			SoulstoneBacktank: Soulstone Backtank
-			LuminiteBacktank: Luminite Backtank
+			# Accessory
+			PressurizedNozzle: Extends fire length
+			CopperBacktank: "8% chance to not consume gel"
+			TinBacktank: "8% chance to not consume gel"
+			CobaltBacktank: "16% chance to not consume gel"
+			PalladiumBacktank: "16% chance to not consume gel"
+			SoulstoneBacktank: "33% chance to not consume gel"
+			LuminiteBacktank: "66% chance to not consume gel"
 
 			FactorySoulCrystal:
 				'''
@@ -139,7 +154,26 @@ Mods: {
 				'''
 		}
 		
-		BlacklightDestroy: Destroyed {0} flares.
+		BlacklightActivate: Activated Blacklight.
+		BlacklightDeactivate: Deactivated Blacklight.
+
+		FactoryIntercom: {
+			IntruderAlert:
+				'''
+				INTRUDER ALERT. ANOMALY FOUND AT THE CORE. INTRUDER ALERT. ANOMALY FOUND AT THE CORE.
+				PRIORITY UPDATE: KILL THE ANOMALY. PRIORITY UPDATE: KILL THE ANOMALY.
+				'''
+			EvacuateFactory:
+				'''
+				SUBSTANTIAL DAMAGE TO THE CORE. SUBSTANTIAL DAMAGE TO THE CORE.
+				PRIORITY UPDATE: EVACUATE. PRIORITY UPDATE: EVACUATE.
+				'''
+			NeutralizedAnomaly:
+				'''
+				ANOMALLY NEUTRALIZED. ANOMALLY NEUTRALIZED.
+				PRIORITY UPDATE: REPAIR AND RECOVER. PRIORITY UPDATE: REPAIR AND RECOVER.
+				'''
+		}
 
 		ProjectileName: {
 			AquaFlare: Aqua Flare
@@ -169,7 +203,7 @@ Mods: {
 		BuffName: {
 			# Any debuff
 			BloodBoil: Blood Boil
-			Burning: Afterburn
+			Burning: Post-burn
 			Crippled: Crippled
 
 			# Player buff
@@ -219,6 +253,11 @@ Mods: {
 			CoreOverheat: Core Overheat
 		}
 
+		MapObject: {
+			FactoryWorkstation: Factory Workstation
+			OnslaughtTerminal: Onslaught Terminal
+		}
+
 		CustomDeathReason: {
 			Factory: "{0} blew up with the factory."
 		}
@@ -226,9 +265,9 @@ Mods: {
 		Config: {
 			ServerLabel: Server-side config
 
-			SoundHeader: "[i:890]"
+			SoundHeader: "[i:890] Sounds"
 
-			OnslaughtIntercom: Onslaught Audio
+			OnslaughtIntercom: Onslaught Intercom Audio
 		}
 
 		ConfigDesc: {

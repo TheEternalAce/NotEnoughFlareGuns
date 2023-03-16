@@ -1,4 +1,4 @@
-﻿using NotEnoughFlareGuns.Projectiles.Flares;
+﻿using NotEnoughFlareGuns.Projectiles.Ranged.Flares;
 using System;
 using Terraria.ModLoader;
 

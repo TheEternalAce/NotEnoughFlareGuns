@@ -8,18 +8,15 @@ namespace NotEnoughFlareGuns.Systems
     public class DownedSystem : ModSystem
     {
         public static bool downedFactoryEvent = false;
-        public static int factoryDefeatAmount = 0;
 
         public override void OnWorldUnload()
         {
             downedFactoryEvent = false;
-            factoryDefeatAmount = 0;
         }
 
         public override void SaveWorldData(TagCompound tag)
         {
             tag["downedFactoryEvent"] = downedFactoryEvent;
-            tag["factoryDefeatAmount"] = factoryDefeatAmount;
         }
 
         public override void LoadWorldData(TagCompound tag)
@@ -27,10 +24,6 @@ namespace NotEnoughFlareGuns.Systems
             if (tag.ContainsKey("downedFactoryEvent"))
             {
                 downedFactoryEvent = tag.GetBool("downedFactoryEvent");
-            }
-            if (tag.ContainsKey("factoryDefeatAmount"))
-            {
-                factoryDefeatAmount = tag.GetInt("factoryDefeatAmount");
             }
         }
 

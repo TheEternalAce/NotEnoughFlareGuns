@@ -38,35 +38,35 @@ namespace NotEnoughFlareGuns.Systems
         {
             EvilMaterial = new RecipeGroup(() => $"{Language.GetTextValue("LegacyMisc.37")} Evil Material",
                    ItemID.ShadowScale, ItemID.TissueSample);
-            RecipeGroup.RegisterGroup("Shards:EvilMaterials", EvilMaterial);
+            RecipeGroup.RegisterGroup("NEFG:EvilMaterials", EvilMaterial);
 
             Copper = new RecipeGroup(() => $"{Language.GetTextValue("LegacyMisc.37")} {Lang.GetItemNameValue(ItemID.CopperBar)}",
                    ItemID.CopperBar, ItemID.TinBar);
-            RecipeGroup.RegisterGroup("Shards:CopperBars", Copper);
+            RecipeGroup.RegisterGroup("NEFG:CopperBars", Copper);
 
             Silver = new RecipeGroup(() => $"{Language.GetTextValue("LegacyMisc.37")} {Lang.GetItemNameValue(ItemID.SilverBar)}",
                    ItemID.SilverBar, ItemID.TungstenBar);
-            RecipeGroup.RegisterGroup("Shards:SilverBars", Silver);
+            RecipeGroup.RegisterGroup("NEFG:SilverBars", Silver);
 
             Gold = new RecipeGroup(() => $"{Language.GetTextValue("LegacyMisc.37")} {Lang.GetItemNameValue(ItemID.GoldBar)}",
                    ItemID.GoldBar, ItemID.PlatinumBar);
-            RecipeGroup.RegisterGroup("Shards:GoldBars", Gold);
+            RecipeGroup.RegisterGroup("NEFG:GoldBars", Gold);
 
             EvilBar = new RecipeGroup(() => $"{Language.GetTextValue("LegacyMisc.37")} Evil Bar",
                    ItemID.DemoniteBar, ItemID.CrimtaneBar);
-            RecipeGroup.RegisterGroup("Shards:EvilBars", EvilBar);
+            RecipeGroup.RegisterGroup("NEFG:EvilBars", EvilBar);
 
             Cobalt = new RecipeGroup(() => $"{Language.GetTextValue("LegacyMisc.37")} Tier 1 Bar",
                    ItemID.CobaltBar, ItemID.PalladiumBar);
-            RecipeGroup.RegisterGroup("Shards:Tier1Bars", Cobalt);
+            RecipeGroup.RegisterGroup("NEFG:Tier1Bars", Cobalt);
 
             Mythril = new RecipeGroup(() => $"{Language.GetTextValue("LegacyMisc.37")} Tier 2 Bar",
                    ItemID.MythrilBar, ItemID.OrichalcumBar);
-            RecipeGroup.RegisterGroup("Shards:Tier2Bars", Mythril);
+            RecipeGroup.RegisterGroup("NEFG:Tier2Bars", Mythril);
 
             Adamantite = new RecipeGroup(() => $"{Language.GetTextValue("LegacyMisc.37")} Tier 3 Bar",
                    ItemID.AdamantiteBar, ItemID.TitaniumBar);
-            RecipeGroup.RegisterGroup("Shards:Tier3Bars", Adamantite);
+            RecipeGroup.RegisterGroup("NEFG:Tier3Bars", Adamantite);
 
             Flares = new RecipeGroup(() => $"{Language.GetTextValue("LegacyMisc.37")} {Lang.GetItemNameValue(ItemID.Flare)}",
                    NEFGlobalItem.Flares.ToArray());

@@ -1,7 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
-using NotEnoughFlareGuns.Globals;
+using NotEnoughFlareGuns.Utilities;
 using Terraria;
-using Terraria.Audio;
 using Terraria.Chat;
 using Terraria.ID;
 using Terraria.Localization;
@@ -34,26 +33,14 @@ namespace NotEnoughFlareGuns.Items.Tools
         {
             if (Main.myPlayer == player.whoAmI)
             {
-                int killedFlares = 0;
-                for (int i = 0; i < Main.maxProjectiles; i++)
+                player.InfernalPlayer().blacklight = !player.InfernalPlayer().blacklight;
+                if (player.InfernalPlayer().blacklight)
                 {
-                    Projectile flare = Main.projectile[i];
-                    if (flare.active && flare.owner == player.whoAmI && NEFGlobalProjectile.Flare.Contains(flare.type))
-                    {
-                        flare.Kill();
-                        for (int d = 0; d < 10; d++)
-                        {
-                            Dust.NewDust(flare.position, flare.width, flare.height, DustID.GolfPaticle, newColor: Color.Black);
-                        }
-                        killedFlares++;
-                        //Main.projectile[i] = null;
-                    }
+                    ChatHelper.SendChatMessageToClient(NetworkText.FromKey("Mods.NotEnoughFlareGuns.BlacklightActivate"), Color.White, player.whoAmI);
                 }
-                if (killedFlares > 0)
+                else
                 {
-                    ChatHelper.SendChatMessageToClient(NetworkText.FromKey("Mods.NotEnoughFlareGuns.BlacklightDestroy", killedFlares),
-                        Color.White, player.whoAmI);
-                    SoundEngine.PlaySound(SoundID.NPCDeath37);
+                    ChatHelper.SendChatMessageToClient(NetworkText.FromKey("Mods.NotEnoughFlareGuns.BlacklightDeactivate"), Color.White, player.whoAmI);
                 }
             }
             return true;
