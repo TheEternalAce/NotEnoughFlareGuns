@@ -167,6 +167,7 @@ namespace NotEnoughFlareGuns.Projectiles.Magic
         public override bool PreDraw(ref Color lightColor)
         {
             var texture = TextureAssets.Projectile[Type].Value;
+            var glowTexture = ModContent.Request<Texture2D>(Texture + "_Glow", AssetRequestMode.ImmediateLoad).Value;
             var drawColor = Projectile.GetAlpha(lightColor);
             var swordTip = Projectile.Center;
             var frame = Projectile.Frame();
@@ -180,6 +181,7 @@ namespace NotEnoughFlareGuns.Projectiles.Magic
 
             DrawLaser();
             Main.EntitySpriteDraw(texture, swordTip - Main.screenPosition, frame, drawColor * Projectile.Opacity, Projectile.rotation, origin, Projectile.scale, effects, 0);
+            Main.EntitySpriteDraw(glowTexture, swordTip - Main.screenPosition, frame, Color.White * Projectile.Opacity, Projectile.rotation, origin, Projectile.scale, effects, 0);
             return false;
         }
 

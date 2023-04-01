@@ -5,10 +5,12 @@ using NotEnoughFlareGuns.Config;
 using NotEnoughFlareGuns.Projectiles.TheFactoryOnslaught;
 using NotEnoughFlareGuns.Systems;
 using NotEnoughFlareGuns.Utilities;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
 using Terraria.Chat;
 using Terraria.DataStructures;
+using Terraria.GameContent.Bestiary;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
@@ -43,6 +45,15 @@ namespace NotEnoughFlareGuns.NPCs.TheFactoryOnslaught
         FactoryTurret turret2;
 
         bool intercomAudio = ModContent.GetInstance<NEFGServerConfig>().IntercomAudio;
+
+        public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
+        {
+            // Sets the description of this NPC that is listed in the bestiary
+            bestiaryEntry.Info.AddRange(new List<IBestiaryInfoElement> {
+                //BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Sky,
+                new FlavorTextBestiaryInfoElement(Language.GetTextValue("Mods.NotEnoughFlareGuns.NPCBestiary.SoulstoneCore"))
+            });
+        }
 
         public override void SetStaticDefaults()
         {
@@ -82,20 +93,13 @@ namespace NotEnoughFlareGuns.NPCs.TheFactoryOnslaught
             NPC.DeathSound = SoundID.NPCDeath14;
             NPC.value = 140000;
             NPC.SpawnWithHigherTime(30);
-            NPC.npcSlots = 1f; // Take up open spawn slots, preventing random NPCs from spawning during the fight
-
-            // Don't set immunities like this as of 1.4:
-            // NPC.buffImmune[BuffID.Confused] = true;
-            // immunities are handled via dictionaries through NPCID.Sets.DebuffImmunitySets
-
-            // Custom AI, 0 is "bound town NPC" AI which slows the NPC down and changes sprite orientation towards the target
+            NPC.npcSlots = 1f;
             NPC.aiStyle = -1;
-
-            // The following code assigns a music track to the boss in a simple way.
             if (!Main.dedServ)
             {
                 Music = MusicID.Monsoon;
             }
+            NPC.SetElementMultipliersByElement(Element.Fire);
         }
 
         public override void BossLoot(ref string name, ref int potionType)

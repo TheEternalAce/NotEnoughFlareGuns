@@ -1,4 +1,5 @@
 ﻿using NotEnoughFlareGuns.Globals;
+using NotEnoughFlareGuns.Items.Weapons.Melee;
 using Terraria;
 using Terraria.ID;
 using Terraria.Localization;
@@ -10,7 +11,6 @@ namespace NotEnoughFlareGuns.Systems
     {
         // A place to store the recipe group so we can easily use it later
         public static RecipeGroup EvilMaterial;
-        public static RecipeGroup EvilGun;
         public static RecipeGroup Copper;
         public static RecipeGroup Silver;
         public static RecipeGroup Gold;
@@ -23,7 +23,6 @@ namespace NotEnoughFlareGuns.Systems
         public override void Unload()
         {
             EvilMaterial = null;
-            EvilGun = null;
             Copper = null;
             Silver = null;
             Gold = null;
@@ -71,6 +70,15 @@ namespace NotEnoughFlareGuns.Systems
             Flares = new RecipeGroup(() => $"{Language.GetTextValue("LegacyMisc.37")} {Lang.GetItemNameValue(ItemID.Flare)}",
                    NEFGlobalItem.Flares.ToArray());
             RecipeGroup.RegisterGroup("NEFG:Flares", Flares);
+        }
+
+        public override void AddRecipes()
+        {
+            Recipe.Create(ItemID.FieryGreatsword)
+                .AddIngredient(ModContent.ItemType<Geyser>())
+                .AddIngredient(ItemID.HellstoneBar, 8)
+                .AddTile(TileID.Anvils)
+                .Register();
         }
     }
 }

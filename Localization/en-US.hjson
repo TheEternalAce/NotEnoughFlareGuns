@@ -9,7 +9,12 @@
 Mods: {
 	NotEnoughFlareGuns: {
 		ItemName: {
+			# Melee weapon
+			BurningBaselard: Burning Baselard
+			Geyser: Geyser
+
 			# Magic weapon
+			EarthShatter: Earth Shatter
 			PlasmaBeacon: Plasma Beacon
 			TheFireLord: The Fire Lord
 			
@@ -67,6 +72,9 @@ Mods: {
 		}
 
 		ItemTooltip: {
+			# Melee weapon
+			Geyser: "'Volcano lite'"
+
 			# Magic weapon
 			PlasmaBeacon: Fires a continuous plasma beam
 			TheFireLord: "'I have all the power in the world!'"
@@ -176,6 +184,11 @@ Mods: {
 		}
 
 		ProjectileName: {
+			GeyserExplosion: Geyser Explosion
+			FlameBaselard: Burning Baselard
+
+			FlameJavelin: Flame Javelin
+			
 			AquaFlare: Aqua Flare
 			Blazer: Blazer
 			Bloodflare: Bloodflare
@@ -238,7 +251,7 @@ Mods: {
 		}
 
 		NPCBestiary: {
-			SoulstoneCore: ""
+			SoulstoneCore: "The rhythmic clanging of hydraulic presses echoes, the venting of steam pierces your ears, and the watchful eye of the core gazes into your soul."
 			PlasmaTurret: ""
 			PhotonTurret: ""
 			IonTurret: ""

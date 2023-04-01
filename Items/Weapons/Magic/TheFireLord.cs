@@ -4,6 +4,7 @@ using NotEnoughFlareGuns.Items.Materials;
 using NotEnoughFlareGuns.Projectiles.Magic;
 using NotEnoughFlareGuns.Tiles;
 using Terraria;
+using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -37,7 +38,7 @@ namespace NotEnoughFlareGuns.Items.Weapons.Magic
 
             Item.useTime = 16;
             Item.useAnimation = 16;
-            Item.useStyle = ItemUseStyleID.Shoot;
+            Item.useStyle = ItemUseStyleID.Rapier;
             Item.UseSound = SoundID.Item20;
             Item.noMelee = true;
             Item.noUseGraphic = true;
@@ -63,10 +64,12 @@ namespace NotEnoughFlareGuns.Items.Weapons.Magic
                 if (Main.rand.NextBool())
                 {
                     Lightning(player, source, position, velocity, damage, knockback);
+                    SoundEngine.PlaySound(SoundID.Item43);
                 }
                 else
                 {
                     Meteor(player, source, damage, knockback);
+                    SoundEngine.PlaySound(SoundID.Item88);
                 }
                 return false;
             }

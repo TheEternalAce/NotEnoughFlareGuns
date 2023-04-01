@@ -39,6 +39,7 @@ namespace NotEnoughFlareGuns.NPCs.TheFactoryOnslaught
             NPC.aiStyle = NPCAIStyleID.Fighter;
             NPC.HitSound = SoundID.PlayerHit;
             NPC.DeathSound = SoundID.NPCDeath1;
+            NPC.SetElementMultipliersByElement(Element.Fire);
         }
 
         public override void AI()

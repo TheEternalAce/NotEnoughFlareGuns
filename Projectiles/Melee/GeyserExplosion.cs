@@ -13,6 +13,7 @@ namespace NotEnoughFlareGuns.Projectiles.Melee
         public override void SetStaticDefaults()
         {
             Main.projFrames[Type] = 5;
+            ProjectileElements.Fire.Add(Type);
             ProjectileElements.Ice.Add(Type);
         }
 
@@ -36,14 +37,9 @@ namespace NotEnoughFlareGuns.Projectiles.Melee
             Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.height, Projectile.width, DustID.SteampunkSteam, Scale: 1.0f);
             dust.velocity *= 4f;
 
-            int frameTime = 2;
-            if (++Projectile.frameCounter > frameTime)
+            if (++Projectile.frame > Main.projFrames[Type])
             {
-                Projectile.frameCounter = 0;
-                if (++Projectile.frame > Main.projFrames[Type])
-                {
-                    Projectile.Kill();
-                }
+                Projectile.Kill();
             }
         }
     }

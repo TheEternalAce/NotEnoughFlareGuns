@@ -40,7 +40,7 @@ namespace NotEnoughFlareGuns.Items.BossSummons
         {
             CreateRecipe()
                 .AddIngredient(ItemID.HellstoneBar, 5)
-                .AddIngredient(ItemID.SoulofFlight, 5)
+                .AddIngredient(ItemID.SoulofFright, 5)
                 .AddIngredient(ItemID.SoulofMight, 5)
                 .AddIngredient(ItemID.SoulofSight, 5)
                 .AddTile(TileID.MythrilAnvil)

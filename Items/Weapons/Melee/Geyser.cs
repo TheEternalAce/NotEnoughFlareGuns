@@ -12,6 +12,7 @@ namespace NotEnoughFlareGuns.Items.Weapons.Melee
         public override void SetStaticDefaults()
         {
             SacrificeTotal = 1;
+            WeaponElements.Fire.Add(Type);
             WeaponElements.Ice.Add(Type);
         }
 
@@ -24,7 +25,7 @@ namespace NotEnoughFlareGuns.Items.Weapons.Melee
             Item.value = 150000;
 
             Item.damage = 16;
-            Item.DamageType = DamageClass.Magic;
+            Item.DamageType = DamageClass.Melee;
             Item.knockBack = 4;
 
             Item.useTime = 26;
@@ -37,9 +38,8 @@ namespace NotEnoughFlareGuns.Items.Weapons.Melee
         {
             CreateRecipe()
                 .AddIngredient(ItemID.GoldBar, 17)
+                .AddIngredient(ItemID.GeyserTrap, 2)
                 .AddIngredient(ItemID.Seashell, 5)
-                .AddIngredient(ItemID.Starfish, 5)
-                .AddIngredient(ItemID.Coral, 5)
                 .AddTile(TileID.Anvils)
                 .Register();
         }
