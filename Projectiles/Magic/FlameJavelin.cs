@@ -26,6 +26,8 @@ namespace NotEnoughFlareGuns.Projectiles.Magic
 			Projectile.DamageType = DamageClass.Magic;
 			Projectile.timeLeft = 240;
 			Projectile.alpha = 255;
+			Projectile.penetrate = 3;
+			Projectile.tileCollide = false;
 		}
 
 		public override void AI()
@@ -42,7 +44,7 @@ namespace NotEnoughFlareGuns.Projectiles.Magic
 					dust.noLight = true;
 					dust.velocity = new Vector2(2, 2).RotatedBy(MathHelper.ToRadians(36 * i));
 				}
-				Projectile.frame = Main.rand.Next(7);
+				Projectile.frame = Main.rand.Next(Main.projFrames[Type]);
 				SoundEngine.PlaySound(SoundID.Item20, Projectile.position);
 
 				if (Main.myPlayer == Main.player[Projectile.owner].whoAmI)
@@ -65,22 +67,26 @@ namespace NotEnoughFlareGuns.Projectiles.Magic
 				{
 					Projectile.alpha -= 36;
 				}
+				Projectile.tileCollide = true;
 				Dust d = Dust.NewDustDirect(Projectile.Center - new Vector2(4, 4), 9, 9, DustID.Torch, Scale: 1.25f);
 				d.velocity = -Projectile.velocity / 5;
 				d.noLight = true;
 				d.noGravity = true;
-				Projectile.tileCollide = true;
 
-				if (Projectile.ai[1] < 50 && Main.myPlayer == Main.player[Projectile.owner].whoAmI)
+				if (Projectile.ai[1] < 30 && Main.myPlayer == Main.player[Projectile.owner].whoAmI)
 				{
 					Vector2 move = Main.MouseWorld - Projectile.Center;
 					AdjustMagnitude(ref move);
-					Projectile.velocity = (20 * Projectile.velocity + move); // / 5f;
+					Projectile.velocity = (20 * Projectile.velocity + move);
 					AdjustMagnitude(ref Projectile.velocity);
 					Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.ToRadians(90);
 
 					Projectile.netUpdate = true;
 					Projectile.tileCollide = false;
+				}
+				if (Projectile.ai[1] > 20)
+				{
+					Projectile.penetrate = 1;
 				}
 			}
 		}
@@ -118,8 +124,7 @@ namespace NotEnoughFlareGuns.Projectiles.Magic
 				Color color = new(227, 182, 245, 80);
 				Projectile.DrawPrimsAfterImage(color);
 			}
-			lightColor = Color.White;
-			return base.PreDraw(ref lightColor);
+			return false;
 		}
 	}
 }
