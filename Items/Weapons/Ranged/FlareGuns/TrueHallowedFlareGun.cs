@@ -15,7 +15,6 @@ namespace NotEnoughFlareGuns.Items.Weapons.Ranged.FlareGuns
             SacrificeTotal = 1;
             NEFGlobalItem.FlareGuns.Add(Type);
             WeaponElements.Fire.Add(Type);
-            WeaponElements.Metal.Add(Type);
         }
 
         public override void SetDefaults()
