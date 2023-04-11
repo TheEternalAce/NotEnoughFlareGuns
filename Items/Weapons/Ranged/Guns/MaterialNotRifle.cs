@@ -1,5 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
-using MMZeroElements;
+using MMZeroElements.Utilities;
 using NotEnoughFlareGuns.Items.Materials;
 using NotEnoughFlareGuns.Projectiles.Ranged.Bullets;
 using NotEnoughFlareGuns.Tiles;
@@ -14,7 +14,7 @@ namespace NotEnoughFlareGuns.Items.Weapons.Ranged.Guns
         public override void SetStaticDefaults()
         {
             SacrificeTotal = 1;
-            WeaponElements.Fire.Add(Type);
+            Item.AddFire();
         }
 
         public override void SetDefaults()

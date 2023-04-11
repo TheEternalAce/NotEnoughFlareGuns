@@ -1,5 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
-using MMZeroElements;
+using MMZeroElements.Utilities;
 using NotEnoughFlareGuns.Utilities;
 using Terraria;
 using Terraria.ID;
@@ -11,7 +11,7 @@ namespace NotEnoughFlareGuns.Projectiles.Ranged.Bullets
     {
         public override void SetStaticDefaults()
         {
-            ProjectileElements.Fire.Add(Type);
+            Projectile.AddFire();
         }
 
         public override void SetDefaults()

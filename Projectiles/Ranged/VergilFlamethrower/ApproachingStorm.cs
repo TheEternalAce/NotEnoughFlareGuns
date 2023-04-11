@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using MMZeroElements;
+using MMZeroElements.Utilities;
 using NotEnoughFlareGuns.Items.Accessories.Backtanks;
 using NotEnoughFlareGuns.Utilities;
 using ReLogic.Content;
@@ -42,7 +42,7 @@ namespace NotEnoughFlareGuns.Projectiles.Ranged.VergilFlamethrower
             Projectile.aiStyle = -1;
             Projectile.tileCollide = false;
             Projectile.hide = true; //aiStyle 20 assigns heldProj
-            ProjectileElements.Electric.Add(Type);
+            Projectile.AddElectric();
         }
 
         public override void AI()

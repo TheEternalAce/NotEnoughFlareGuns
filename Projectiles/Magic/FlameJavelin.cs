@@ -1,5 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
-using MMZeroElements;
+using MMZeroElements.Utilities;
 using NotEnoughFlareGuns.Utilities;
 using System;
 using Terraria;
@@ -13,7 +13,7 @@ namespace NotEnoughFlareGuns.Projectiles.Magic
 	{
 		public override void SetStaticDefaults()
 		{
-			ProjectileElements.Fire.Add(Type);
+			Projectile.AddFire();
 			Main.projFrames[Type] = 8;
 			ProjectileID.Sets.TrailCacheLength[Type] = 30;
 			ProjectileID.Sets.TrailingMode[Type] = 3;

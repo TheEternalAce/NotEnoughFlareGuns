@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using MMZeroElements;
+using MMZeroElements.Utilities;
 using NotEnoughFlareGuns.Globals;
 using Terraria;
 using Terraria.GameContent;
@@ -14,8 +14,8 @@ namespace NotEnoughFlareGuns.Projectiles.Ranged.Flares
         public override void SetStaticDefaults()
         {
             NEFGlobalProjectile.Flare.Add(Type);
-            ProjectileElements.Fire.Add(Type);
-            ProjectileElements.Ice.Add(Type);
+            Projectile.AddFire();
+            Projectile.AddIce();
         }
 
         public override void SetDefaults()

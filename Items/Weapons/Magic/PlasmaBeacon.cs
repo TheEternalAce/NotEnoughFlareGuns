@@ -1,4 +1,4 @@
-﻿using MMZeroElements;
+﻿using MMZeroElements.Utilities;
 using NotEnoughFlareGuns.Projectiles.Magic;
 using Terraria;
 using Terraria.ID;
@@ -11,7 +11,7 @@ namespace NotEnoughFlareGuns.Items.Weapons.Magic
         public override void SetStaticDefaults()
         {
             SacrificeTotal = 1;
-            WeaponElements.Fire.Add(Type);
+            Item.AddFire();
         }
 
         public override void SetDefaults()

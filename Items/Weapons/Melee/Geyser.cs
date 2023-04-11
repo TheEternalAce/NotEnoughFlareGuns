@@ -1,5 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
-using MMZeroElements;
+using MMZeroElements.Utilities;
 using NotEnoughFlareGuns.Projectiles.Melee;
 using Terraria;
 using Terraria.ID;
@@ -12,8 +12,8 @@ namespace NotEnoughFlareGuns.Items.Weapons.Melee
         public override void SetStaticDefaults()
         {
             SacrificeTotal = 1;
-            WeaponElements.Fire.Add(Type);
-            WeaponElements.Ice.Add(Type);
+            Item.AddFire();
+            Item.AddIce();
         }
 
         public override void SetDefaults()

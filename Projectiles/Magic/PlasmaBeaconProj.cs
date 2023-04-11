@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using MMZeroElements;
+using MMZeroElements.Utilities;
 using NotEnoughFlareGuns.Utilities;
 using ReLogic.Content;
 using System;
@@ -16,7 +16,7 @@ namespace NotEnoughFlareGuns.Projectiles.Magic
     {
         public override void SetStaticDefaults()
         {
-            ProjectileElements.Fire.Add(Type);
+            Projectile.AddFire();
         }
 
         public override void SetDefaults()

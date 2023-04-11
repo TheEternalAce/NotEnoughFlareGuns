@@ -1,4 +1,4 @@
-﻿using MMZeroElements;
+﻿using MMZeroElements.Utilities;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
@@ -13,8 +13,8 @@ namespace NotEnoughFlareGuns.Projectiles.Melee
         public override void SetStaticDefaults()
         {
             Main.projFrames[Type] = 5;
-            ProjectileElements.Fire.Add(Type);
-            ProjectileElements.Ice.Add(Type);
+            Projectile.AddFire();
+            Projectile.AddIce();
         }
 
         public override void SetDefaults()

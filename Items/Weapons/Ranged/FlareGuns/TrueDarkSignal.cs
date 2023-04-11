@@ -1,5 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
-using MMZeroElements;
+using MMZeroElements.Utilities;
 using NotEnoughFlareGuns.Globals;
 using NotEnoughFlareGuns.Projectiles.Ranged.Flares;
 using NotEnoughFlareGuns.Utilities;
@@ -16,7 +16,7 @@ namespace NotEnoughFlareGuns.Items.Weapons.Ranged.FlareGuns
             Tooltip.SetDefault("Fires a random flare based on flare guns used to make this");
             SacrificeTotal = 1;
             NEFGlobalItem.FlareGuns.Add(Type);
-            WeaponElements.Fire.Add(Type);
+            Item.AddFire();
         }
 
         public override void SetDefaults()

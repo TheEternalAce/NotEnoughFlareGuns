@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using MMZeroElements;
+using MMZeroElements.Utilities;
 using NotEnoughFlareGuns.Globals;
 using Terraria;
 using Terraria.GameContent;
@@ -16,7 +16,7 @@ namespace NotEnoughFlareGuns.Projectiles.Ranged.Flares
             //ProjectileID.Sets.TrailCacheLength[Projectile.type] = 5; // The length of old position to be recorded
             //ProjectileID.Sets.TrailingMode[Projectile.type] = 0; // The recording mode
             NEFGlobalProjectile.Flare.Add(Type);
-            ProjectileElements.Fire.Add(Type);
+            Projectile.AddFire();
         }
 
         public override void SetDefaults()

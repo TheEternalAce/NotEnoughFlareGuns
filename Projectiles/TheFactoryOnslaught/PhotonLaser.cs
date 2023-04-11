@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using MMZeroElements;
+using MMZeroElements.Utilities;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent;
@@ -15,7 +15,7 @@ namespace NotEnoughFlareGuns.Projectiles.TheFactoryOnslaught
         {
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 5; // The length of old position to be recorded
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0; // The recording mode
-            ProjectileElements.Fire.Add(Type);
+            Projectile.AddFire();
         }
 
         public override void SetDefaults()

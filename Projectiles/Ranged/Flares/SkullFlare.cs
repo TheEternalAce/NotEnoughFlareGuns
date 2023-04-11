@@ -1,5 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
-using MMZeroElements;
+using MMZeroElements.Utilities;
 using NotEnoughFlareGuns.Globals;
 using Terraria;
 using Terraria.ID;
@@ -15,7 +15,7 @@ namespace NotEnoughFlareGuns.Projectiles.Ranged.Flares
         {
             ProjectileID.Sets.CultistIsResistantTo[Projectile.type] = true; // Make the cultist resistant to this projectile, as it's resistant to all homing projectiles.
             NEFGlobalProjectile.Flare.Add(Type);
-            ProjectileElements.Fire.Add(Type);
+            Projectile.AddFire();
         }
 
         // Setting the default parameters of the projectile

@@ -1,4 +1,4 @@
-﻿using MMZeroElements;
+﻿using MMZeroElements.Utilities;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
@@ -14,7 +14,7 @@ namespace NotEnoughFlareGuns.Projectiles.Ranged.Flares
 
         public override void SetStaticDefaults()
         {
-            ProjectileElements.Fire.Add(Type);
+            Projectile.AddFire();
         }
 
         // Setting the default parameters of the projectile

@@ -1,5 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
-using MMZeroElements;
+using MMZeroElements.Utilities;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -12,7 +12,7 @@ namespace NotEnoughFlareGuns.Projectiles.Magic
 
         public override void SetStaticDefaults()
         {
-            ProjectileElements.Electric.Add(Type);
+            Projectile.AddElectric();
         }
 
         public override void SetDefaults()

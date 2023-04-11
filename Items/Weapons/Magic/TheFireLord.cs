@@ -1,5 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
-using MMZeroElements;
+using MMZeroElements.Utilities;
 using NotEnoughFlareGuns.Items.Materials;
 using NotEnoughFlareGuns.Projectiles.Magic;
 using NotEnoughFlareGuns.Tiles;
@@ -19,8 +19,8 @@ namespace NotEnoughFlareGuns.Items.Weapons.Magic
         public override void SetStaticDefaults()
         {
             SacrificeTotal = 1;
-            WeaponElements.Fire.Add(Type);
-            WeaponElements.Electric.Add(Type);
+            Item.AddFire();
+            Item.AddElectric();
         }
 
         public override void SetDefaults()

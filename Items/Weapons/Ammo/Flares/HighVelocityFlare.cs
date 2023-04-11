@@ -1,4 +1,4 @@
-﻿using MMZeroElements;
+﻿using MMZeroElements.Utilities;
 using NotEnoughFlareGuns.Globals;
 using NotEnoughFlareGuns.Utilities;
 using Terraria;
@@ -13,7 +13,7 @@ namespace NotEnoughFlareGuns.Items.Weapons.Ammo.Flares
 		{
 			SacrificeTotal = 99;
 			NEFGlobalItem.Flares.Add(Type);
-			WeaponElements.Fire.Add(Type);
+			Item.AddFire();
 		}
 
 		public override void SetDefaults()

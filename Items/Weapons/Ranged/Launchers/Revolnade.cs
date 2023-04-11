@@ -1,5 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
-using MMZeroElements;
+using MMZeroElements.Utilities;
 using NotEnoughFlareGuns.Utilities;
 using Terraria;
 using Terraria.ID;
@@ -12,7 +12,7 @@ namespace NotEnoughFlareGuns.Items.Weapons.Ranged.Launchers
         public override void SetStaticDefaults()
         {
             SacrificeTotal = 1;
-            WeaponElements.Fire.Add(Type);
+            Item.AddFire();
         }
 
         public override void SetDefaults()

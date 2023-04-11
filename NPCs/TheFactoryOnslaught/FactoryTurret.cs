@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MMZeroElements;
+using MMZeroElements.Utilities;
 using ReLogic.Content;
 using Terraria;
 using Terraria.DataStructures;
@@ -44,7 +45,7 @@ namespace NotEnoughFlareGuns.NPCs.TheFactoryOnslaught
 				}
             };
             NPCID.Sets.DebuffImmunitySets.Add(Type, debuffData);
-            NPCElements.Fire.Add(Type);
+            NPC.AddFire();
         }
 
         public override void SetDefaults()
@@ -55,7 +56,7 @@ namespace NotEnoughFlareGuns.NPCs.TheFactoryOnslaught
             NPC.HitSound = SoundID.NPCHit4;
             NPC.DeathSound = SoundID.NPCDeath14;
             FireRate = fireTimerMax / fireRate;
-            NPC.SetElementMultipliersByElement(Element.Fire);
+            NPC.SetCustomElementMultipliers(0.8f, 0.5f, 0.8f);
         }
 
         public override bool CheckActive()

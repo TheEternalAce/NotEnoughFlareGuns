@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MMZeroElements;
+using MMZeroElements.Utilities;
 using NotEnoughFlareGuns.Config;
 using NotEnoughFlareGuns.Projectiles.TheFactoryOnslaught;
 using NotEnoughFlareGuns.Systems;
@@ -78,7 +79,7 @@ namespace NotEnoughFlareGuns.NPCs.TheFactoryOnslaught
 				}
             };
             NPCID.Sets.DebuffImmunitySets.Add(Type, debuffData);
-            NPCElements.Fire.Add(Type);
+            NPC.AddFire();
         }
 
         public override void SetDefaults()
@@ -99,7 +100,7 @@ namespace NotEnoughFlareGuns.NPCs.TheFactoryOnslaught
             {
                 Music = MusicID.Monsoon;
             }
-            NPC.SetElementMultipliersByElement(Element.Fire);
+            NPC.SetCustomElementMultipliers(0.8f, 0.5f, 0.8f);
         }
 
         public override void BossLoot(ref string name, ref int potionType)

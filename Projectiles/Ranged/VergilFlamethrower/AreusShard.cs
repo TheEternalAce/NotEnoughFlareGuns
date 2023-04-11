@@ -1,5 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
-using MMZeroElements;
+using MMZeroElements.Utilities;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -11,7 +11,7 @@ namespace NotEnoughFlareGuns.Projectiles.Ranged.VergilFlamethrower
 
         public override void SetStaticDefaults()
         {
-            ProjectileElements.Electric.Add(Type);
+            Projectile.AddElectric();
         }
 
         public override void SetDefaults()

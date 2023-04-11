@@ -166,7 +166,6 @@ namespace NotEnoughFlareGuns.Utilities
 
             Main.spriteBatch.Draw(texture, projectile.position + offset - Main.screenPosition, frame, Color.White, projectile.rotation, origin, projectile.scale, SpriteEffects.None, 0f);
         }
-
         public static void DrawPrimsAfterImage(this Projectile projectile, Color color)
         {
             var texture = TextureAssets.Projectile[projectile.type].Value;

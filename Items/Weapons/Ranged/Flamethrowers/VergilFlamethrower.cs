@@ -1,4 +1,5 @@
-﻿using MMZeroElements;
+﻿using MMZeroElements.Utilities;
+using MMZeroElements.Utilities;
 using NotEnoughFlareGuns.Globals;
 using NotEnoughFlareGuns.Projectiles.Ranged.VergilFlamethrower;
 using NotEnoughFlareGuns.Systems;
@@ -18,8 +19,8 @@ namespace NotEnoughFlareGuns.Items.Weapons.Ranged.Flamethrowers
         {
             SacrificeTotal = 1;
             NEFGlobalItem.Flamethrowers.Add(Type);
-            WeaponElements.Fire.Add(Type);
-            WeaponElements.Electric.Add(Type);
+            Item.AddFire();
+            Item.AddElectric();
         }
 
         public override void SetDefaults()

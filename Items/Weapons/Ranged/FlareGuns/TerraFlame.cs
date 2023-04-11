@@ -1,5 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
-using MMZeroElements;
+using MMZeroElements.Utilities;
 using NotEnoughFlareGuns.Globals;
 using NotEnoughFlareGuns.Items.Materials;
 using NotEnoughFlareGuns.Projectiles.Ranged.Flares;
@@ -16,9 +16,9 @@ namespace NotEnoughFlareGuns.Items.Weapons.Ranged.FlareGuns
         {
             SacrificeTotal = 1;
             NEFGlobalItem.FlareGuns.Add(Type);
-            WeaponElements.Fire.Add(Type);
-            WeaponElements.Ice.Add(Type);
-            WeaponElements.Electric.Add(Type);
+            Item.AddFire();
+            Item.AddIce();
+            Item.AddElectric();
         }
 
         public override void SetDefaults()

@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using MMZeroElements;
+using MMZeroElements.Utilities;
 using NotEnoughFlareGuns.Projectiles.TheFactoryOnslaught;
 using Terraria;
 using Terraria.DataStructures;
@@ -26,7 +27,7 @@ namespace NotEnoughFlareGuns.NPCs.TheFactoryOnslaught
                 }
             };
             NPCID.Sets.DebuffImmunitySets.Add(Type, debuffData);
-            NPCElements.Fire.Add(Type);
+            NPC.AddFire();
         }
 
         public override void SetDefaults()
@@ -39,7 +40,7 @@ namespace NotEnoughFlareGuns.NPCs.TheFactoryOnslaught
             NPC.aiStyle = NPCAIStyleID.Fighter;
             NPC.HitSound = SoundID.PlayerHit;
             NPC.DeathSound = SoundID.NPCDeath1;
-            NPC.SetElementMultipliersByElement(Element.Fire);
+            NPC.SetCustomElementMultipliers(0.8f, 0.5f, 0.8f);
         }
 
         public override void AI()

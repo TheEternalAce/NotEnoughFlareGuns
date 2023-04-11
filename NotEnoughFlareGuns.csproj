@@ -15,7 +15,7 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="MMZeroElements">
-      <HintPath>..\ModAssemblies\MMZeroElements_v0.1.dll</HintPath>
+      <HintPath>..\ModAssemblies\MMZeroElements_v1.0.dll</HintPath>
     </Reference>
     <Reference Include="StructureHelper">
       <HintPath>..\ModAssemblies\StructureHelper_v2.0.10.dll</HintPath>
