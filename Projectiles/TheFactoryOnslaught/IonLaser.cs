@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using MMZeroElements.Utilities;
+using NotEnoughFlareGuns.Utilities;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent;
@@ -15,7 +15,7 @@ namespace NotEnoughFlareGuns.Projectiles.TheFactoryOnslaught
         {
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 5; // The length of old position to be recorded
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0; // The recording mode
-            Projectile.AddFire();
+            Projectile.AddElementFire();
         }
 
         public override void SetDefaults()
@@ -25,7 +25,7 @@ namespace NotEnoughFlareGuns.Projectiles.TheFactoryOnslaught
             Projectile.aiStyle = 0; // The ai style of the projectile, please reference the source code of Terraria
             Projectile.hostile = true; // Can the projectile deal damage to the player?
             Projectile.penetrate = -1; // How many monsters the projectile can penetrate.
-            Projectile.timeLeft = 300; // The live time for the projectile (60 = 1 second, so 600 is 10 seconds)
+            Projectile.timeLeft = 120; // The live time for the projectile (60 = 1 second, so 600 is 10 seconds)
             Projectile.ignoreWater = true; // Does the projectile's speed be influenced by water?
             Projectile.tileCollide = false; // Can the projectile collide with tiles?
             Projectile.netImportant = true;
@@ -41,7 +41,7 @@ namespace NotEnoughFlareGuns.Projectiles.TheFactoryOnslaught
             Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.ToRadians(90);
         }
 
-        public override void OnHitPlayer(Player target, int damage, bool crit)
+        public override void OnHitPlayer(Player target, Player.HurtInfo info)
         {
             target.AddBuff(BuffID.OnFire3, 600);
         }

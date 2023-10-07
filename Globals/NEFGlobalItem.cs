@@ -1,5 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using NotEnoughFlareGuns.Items.Weapons.Melee;
+using NotEnoughFlareGuns.Utilities;
+using System.Collections.Generic;
 using Terraria;
+using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -10,10 +13,13 @@ namespace NotEnoughFlareGuns.Globals
         /// <summary>
         /// Allows the Merchant to sell flares if the player has any flare gun in their inventory
         /// </summary>
-        public static List<int> FlareGuns = new();
-        public static List<int> Flares = new();
-        public static List<int> Flamethrowers = new();
-        public static List<int> Launchers = new();
+        public static readonly List<int> FlareGuns = new();
+        public static readonly List<int> Flares = new();
+        public static readonly List<int> Flamethrowers = new();
+
+        int transformTimer = 10;
+
+        public override bool InstancePerEntity => true;
 
         public override void SetDefaults(Item item)
         {
@@ -23,7 +29,7 @@ namespace NotEnoughFlareGuns.Globals
                 item.DamageType = DamageClass.Ranged;
                 FlareGuns.Add(item.type);
             }
-            if (item.type == ItemID.Flamethrower || item.type == ItemID.EldMelter)
+            if (item.type == ItemID.Flamethrower || item.type == ItemID.ElfMelter)
             {
                 Flamethrowers.Add(item.type);
             }
@@ -45,6 +51,27 @@ namespace NotEnoughFlareGuns.Globals
                 return !(player.itemAnimation < weapon.useAnimation - 2);
             }
             return base.CanConsumeAmmo(weapon, ammo, player);
+        }
+
+        public override void Update(Item item, ref float gravity, ref float maxFallSpeed)
+        {
+            if (item.type == ItemID.EnchantedSword)
+            {
+                if (item.lavaWet)
+                {
+                    var player = item.Center.FindClosestPlayer(-1);
+                    if (player.ZoneUnderworldHeight)
+                    {
+                        if (--transformTimer <= 0)
+                        {
+                            item.TurnToAir();
+                            Item.NewItem(item.GetSource_FromThis(), item.Hitbox,
+                                ModContent.ItemType<UntaintedSaber>());
+                            SoundEngine.PlaySound(SoundID.Item74, item.Center);
+                        }
+                    }
+                }
+            }
         }
     }
 }

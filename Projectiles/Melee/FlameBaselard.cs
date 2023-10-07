@@ -1,9 +1,9 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using MMZeroElements.Utilities;
 using NotEnoughFlareGuns.Utilities;
 using ReLogic.Content;
 using Terraria;
+using Terraria.Audio;
 using Terraria.Enums;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -28,7 +28,7 @@ namespace NotEnoughFlareGuns.Projectiles.Melee
 
         public override void SetStaticDefaults()
         {
-            Projectile.AddFire();
+            Projectile.AddElementFire();
         }
 
         public override void SetDefaults()
@@ -37,7 +37,7 @@ namespace NotEnoughFlareGuns.Projectiles.Melee
             Projectile.aiStyle = -1; // Use our own AI to customize how it behaves, if you don't want that, keep this at ProjAIStyleID.ShortSword. You would still need to use the code in SetVisualOffsets() though
             Projectile.friendly = true;
             Projectile.penetrate = -1;
-            Projectile.tileCollide = false;
+            //Projectile.tileCollide = false;
             Projectile.scale = 1f;
             Projectile.DamageType = DamageClass.Melee;
             Projectile.ownerHitCheck = true; // Prevents hits through tiles. Most melee weapons that use projectiles have this
@@ -81,11 +81,8 @@ namespace NotEnoughFlareGuns.Projectiles.Melee
 
             // The code in this method is important to align the sprite with the hitbox how we want it to
             SetVisualOffsets();
-            for (int i = 0; i < 2; i++)
-            {
-                Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.Torch,
-                    0, 0, 0, Color.White, 1.5f);
-            }
+            Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.Torch,
+                Projectile.velocity.X * 0.8f, Projectile.velocity.Y * 0.8f, 0, Color.White, 1.5f);
         }
 
         private void SetVisualOffsets()
@@ -159,17 +156,28 @@ namespace NotEnoughFlareGuns.Projectiles.Melee
             return true;
         }
 
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override bool OnTileCollide(Vector2 oldVelocity)
+        {
+            Projectile.tileCollide = false;
+            Projectile.velocity = oldVelocity;
+            Player player = Main.player[Projectile.owner];
+            SoundEngine.PlaySound(SoundID.DD2_BetsysWrathImpact);
+            float rotation = Projectile.velocity.ToRotation() - MathHelper.ToRadians(90);
+            for (int i = 0; i < 4; i++)
+            {
+                Vector2 velocity = new Vector2(0, -1).RotatedByRandom(MathHelper.ToRadians(50));
+                velocity *= 3f + Main.rand.NextFloat(0f, 3.1f);
+                Projectile.NewProjectile(Projectile.GetSource_FromThis(), player.Center, velocity.RotatedBy(rotation), ProjectileID.Spark,
+                    Projectile.damage, Projectile.knockBack, Projectile.owner);
+            }
+            return false;
+        }
+
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             target.AddBuff(BuffID.OnFire, 600);
         }
-
-        public override void OnHitPlayer(Player target, int damage, bool crit)
-        {
-            target.AddBuff(BuffID.OnFire, 600);
-        }
-
-        public override void OnHitPvp(Player target, int damage, bool crit)
+        public override void OnHitPlayer(Player target, Player.HurtInfo info)
         {
             target.AddBuff(BuffID.OnFire, 600);
         }

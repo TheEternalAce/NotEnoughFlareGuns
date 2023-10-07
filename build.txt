@@ -1,5 +1,5 @@
 displayName = Infernal Arson-al
 author = TheEternalAce
-version = 0.6
+version = 0.6.1
 homepage = https://forums.terraria.org/index.php?threads/infernal-arson-al.117453/
-modReferences = SubworldLibrary, StructureHelper, MMZeroElements
+weakReferences = BattleNetworkElements

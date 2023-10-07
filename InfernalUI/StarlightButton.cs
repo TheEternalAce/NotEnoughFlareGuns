@@ -71,9 +71,9 @@ namespace ShardsOfAtheria.UI.LoreTablet
             base.Draw(spriteBatch);
         }
 
-        public override void MouseUp(UIMouseEvent evt)
+        public override void LeftMouseUp(UIMouseEvent evt)
         {
-            base.MouseUp(evt);
+            base.LeftMouseUp(evt);
             if (display && area.ContainsPoint(evt.MousePosition))
             {
                 Main.LocalPlayer.InfernalPlayer().cokeStarlightActive = !Main.LocalPlayer.InfernalPlayer().cokeStarlightActive;

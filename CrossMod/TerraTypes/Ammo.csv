@@ -1,0 +1,6 @@
+internalName,type,type
+HighExplosiveBullet,Fire,
+AcidFlare,Fire,Poison
+EndlessFlareBox,Fire,
+HighVelocityFlare,Fire,
+SkullFlareItem,Fire,Bone

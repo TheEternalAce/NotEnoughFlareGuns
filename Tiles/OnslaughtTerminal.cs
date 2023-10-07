@@ -23,8 +23,7 @@ namespace NotEnoughFlareGuns.Tiles
             TileObjectData.newTile.CoordinateHeights = new[] { 16, 18 };
             TileObjectData.newTile.StyleHorizontal = true;
             TileObjectData.addTile(Type);
-            ModTranslation name = CreateMapEntryName("OnslaughtTerminal");
-            AddMapEntry(new Color(200, 200, 200), name);
+            AddMapEntry(new Color(200, 200, 200), Language.GetText("Mods.NotEnoughFlareGuns.Tiles.FactoryTerminal.MapEntry"));
             DustType = DustID.Iron;
             TileID.Sets.HasOutlines[Type] = true;
             TileID.Sets.DisableSmartCursor[Type] = true;

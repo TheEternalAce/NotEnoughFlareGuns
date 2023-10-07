@@ -1,4 +1,4 @@
-﻿# You may find this .hjson file approach to translations easier for your mod.
+# You may find this .hjson file approach to translations easier for your mod.
 # .hjson files contain translations for the language specified in the filename. (Make sure this file is UTF-8 encoded only.)
 # The possible languages are: English ("en-US"), German ("de-DE"), Italian ("it-IT"), French ("fr-FR"), Spanish ("es-ES"), Russian ("ru-RU"), Chinese ("zh-Hans"), Portuguese ("pt-BR"), and Polish ("pl-PL")
 # Here in ExampleMod we have organized these files in a folder called Localization. A single file per language makes it extremely easy to to integrate and maintain translations.
@@ -8,162 +8,327 @@
 
 Mods: {
 	NotEnoughFlareGuns: {
-		ItemName: {
+		Items: {
 			# Melee weapon
-			BurningBaselard: Burning Baselard
-			Geyser: Geyser
+			BurningBaselard: {
+				DisplayName: Burning Baselard
+				Tooltip: Striking the ground creates sparks
+			}
+
+			Geyser: {
+				DisplayName: Geyser
+				Tooltip: "'Volcano lite'"
+			}
+
+			UntaintedSaber: {
+				DisplayName: Untainted Saber
+				Tooltip: Extinguishes and severely lacerates burning enemies
+			}
 
 			# Magic weapon
-			EarthShatter: Earth Shatter
-			PlasmaBeacon: Plasma Beacon
-			TheFireLord: The Fire Lord
-			
-			# Ranged weapon
-				# Gun
-			MaterialNotRifle: "Materialn't Rifle"
+			EarthShatter: {
+				DisplayName: Earth Shatter
+				Tooltip: ""
+			}
 
-				# Flare Gun
-			AzulFlame: Azul Flame
-			BloodFlareGun: Bloodflare Gun
-			DarkSignal: Dark Signal
-			ScorchShot: Scorch Shot
-			SkillShot: Skill Shot
-			Sparkler: Sparkler
-			SporeFlare: Spore Flare
-			VileflareGun: Vileflare Gun
-			ClockworkFlareGun: Clockwork Flare Gun
-			HallowedFlareGun: Hallowed Flare Gun
-			SolarStorm: Solar Storm
-			TerraFlame: Terraflame
-			TrueDarkSignal: True Dark Signal
-			TrueHallowedFlareGun: True Hallowed Flare Gun
-			SFG: SFG
-			SpacePenguinFlareGun: S.P.F.G.
+			PlasmaBeacon: {
+				DisplayName: Plasma Beacon
+				Tooltip: Fires a continuous plasma beam
+			}
 
-				# Flamethrower
-			Exterminator: Exterminator
-			VergilFlamethrower: Approaching Storm
+			PyrotexGlove: {
+				DisplayName: Colonel's Explosive Glove
+				Tooltip: Creates an explosion at the cursor
+			}
 
-				# Launcher
-			Revolnade: Revolutionary Action
+			TheFireLord: {
+				DisplayName: The Fire Lord
+				Tooltip: "'I have all the power in the world!'"
+			}
 
-				# Flare
-			HighVelocityFlare: High Velocity Flare
-			EndlessFlareBox: Endless Flare Box
-
-			HeatResistantPlastic: Heat Resistant Plastic
-
-			Blacklight: Blacklight
-			SoulstoneKeys: Soulstone Keys
-
-			FactoryWorkstationItem: Factory Workstation
-			OnslaughtTerminalItem: Onslaught Terminal
-
-			# Accessory
-			PressurizedNozzle: Pressurized Nozzle
-			CopperBacktank: Copper Backtank
-			TinBacktank: Tin Backtank
-			CobaltBacktank: Cobalt Backtank
-			PalladiumBacktank: Palladium Backtank
-			SoulstoneBacktank: Soulstone Backtank
-			LuminiteBacktank: Luminite Backtank
-
-			FactorySoulCrystal: "'Soul Crystal (The Factory)'"
-		}
-
-		ItemTooltip: {
-			# Melee weapon
-			Geyser: "'Volcano lite'"
-
-			# Magic weapon
-			PlasmaBeacon: Fires a continuous plasma beam
-			TheFireLord: "'I have all the power in the world!'"
+			Welder: {
+				DisplayName: Welder
+				Tooltip: The laser's damage weakens as it travels
+			}
 
 			# Ranged weapon
-				# Gun
-			MaterialNotRifle: "'Begone!'"
+			AzulFlame: {
+				DisplayName: Azul Flame
+				Tooltip: Converts blue flares into Aqua Flares
+			}
 
-				# Flare Gun
-			AzulFlame: Converts blue flares into Aqua Flares
-			BloodFlareGun: Converts flares into Bloodflares
-			DarkSignal: Converts blue flares into Shadow Flares
-			ScorchShot:
-				'''
-				Converts flares into Blazers
-				'''
-			SkillShot:
-				'''
-				Converts blue flares into Skull Flares
-				'Very much skill issue'
-				'''
-			Sparkler:
-				'''
-				Pull hard on the string and you might get a spark
-				'The base of every flare gun'
-				'''
-			SporeFlare: Flares have a chance to be coated in poison
-			VileflareGun: Converts flares into Vileflares
-			ClockworkFlareGun: Fires flares in a burst of 2
-			SolarStorm:
-				'''
-				Converts flares into Solar Flares
-				'Harness energy from the sun to vaporize your foes!'
-				'''
-			TerraFlame: Fires a random flare based on flare guns used to make this
-			SFG:
-				'''
-				'Absolutely destroy your arm'
-				'And I guess your enemy too'
-				'''
-			SpacePenguinFlareGun: "'It came from the center of space'"
+			Blightsear: {
+				DisplayName: Blightsear
+				Tooltip: ""
+			}
 
-				# Flamethrower
-			Exterminator: "'Seems very familiar'"
-			VergilFlamethrower: "'Now I'm feeling motivated!'"
+			BloodFlareGun: {
+				DisplayName: Bloodflare Gun
+				Tooltip: Converts flares into Bloodflares
+			}
 
-				# Flare
-			EndlessFlareBox:
-				'''
-				Never run out of flares
-				Can be converted into any type of flare
-				'''
+			ClockworkFlareGun: {
+				DisplayName: Clockwork Flare Gun
+				Tooltip: Fires flares in a burst of 2
+			}
 
-			HeatResistantPlastic: "'Plastic that is less likely to melt at moderately high temperatures'"
+			DarkSignal: {
+				DisplayName: Dark Signal
+				Tooltip: Converts blue flares into Shadow Flares
+			}
 
-			Blacklight:
-				'''
-				'It consumes the light...'
-				Makes flares you own disappear faster
-				'''
-			Starlight:
-				'''
-				'It's light is blinding'
-				Permanently provides extra light from flares you own.
-				'''
-			SoulstoneKeys: "Grants access to the Norman Industries Factory"
-			OnslaughtTerminalItem: Onslaught Terminal
+			Exterminator: {
+				DisplayName: Exterminator
+				Tooltip: "'Seems very familiar'"
+			}
+
+			HallowedFlareGun: {
+				DisplayName: Hallowed Flare Gun
+				Tooltip: ""
+			}
+
+			HeatWave: {
+				DisplayName: Heat Wave
+				Tooltip:
+					'''
+					May launch fiery exploding fists
+					'My justice burns brightly!'
+					'''
+			}
+
+			MaterialNotRifle: {
+				DisplayName: Materialn't Rifle
+				Tooltip:
+					'''
+					Fires highly explosive bullets
+					'Begone!'
+					'''
+			}
+
+			PoisonFury: {
+				DisplayName: Poison Fury
+				Tooltip: "'How the hell does a plant-based flamethrower work??'"
+			}
+
+			Revolnade: {
+				DisplayName: Revolutionary Action
+				Tooltip: Uses grenades as ammo
+			}
+
+			ScorchShot: {
+				DisplayName: Scorch Shot
+				Tooltip: Converts flares into Blazers
+			}
+
+			SFG: {
+				DisplayName: SFG
+				Tooltip:
+					'''
+					'Absolutely destroy your arm'
+					'And I guess your enemy too'
+					'''
+			}
+
+			Sparkler: {
+				DisplayName: Sparkler
+				Tooltip:
+					'''
+					Pull hard on the string and you might get a spark
+					'The base of every flare gun'
+					'''
+			}
+
+			SolarStorm: {
+				DisplayName: Solar Storm
+				Tooltip:
+					'''
+					Converts flares into Solar Flares
+					'Harness energy from the sun to vaporize your foes!'
+					'''
+			}
+
+			SpacePenguinFlareGun: {
+				DisplayName: S.P.F.G.
+				Tooltip: "'It came from the center of space'"
+			}
+
+			TerraFlame: {
+				DisplayName: Terraflame
+				Tooltip: Fires a random flare based on flare guns used to make this
+			}
+
+			SporeFlare: {
+				DisplayName: Spore Flare
+				Tooltip: Flares have a chance to be coated in poison
+			}
+
+			TrueDarkSignal: {
+				DisplayName: True Dark Signal
+				Tooltip: Fires a random flare based on flare guns used to make this
+			}
+
+			TrueHallowedFlareGun: {
+				DisplayName: True Hallowed Flare Gun
+				Tooltip: ""
+			}
+
+			VileflareGun: {
+				DisplayName: Vileflare Gun
+				Tooltip: Converts flares into Vileflares
+			}
+
+			WyvernsWrath: {
+				DisplayName: Wyverns Wrath
+				Tooltip: Fires a single burst of fire
+			}
+
+			# Ammunition
+			AcidFlare: {
+				DisplayName: Acid Flare
+				Tooltip: ""
+			}
+
+			HighVelocityFlare: {
+				DisplayName: High Velocity Flare
+				Tooltip: ""
+			}
+
+			SkullFlareItem: {
+				DisplayName: Skull Flare
+				Tooltip: "'I diagnose you with: Skill issue'"
+			}
+
+			EndlessFlareBox: {
+				DisplayName: Endless Flare Box
+				Tooltip:
+					'''
+					Never run out of flares
+					Can be converted into any type of flare
+					'''
+			}
+
+			HighExplosiveBullet: {
+				DisplayName: High Explosive Bullet
+				Tooltip: ""
+			}
+
+			# Potions
+			CoolantPotion: {
+				DisplayName: Coolant Potion
+				Tooltip: Reduced damage from Fire sources
+			}
+
+			# Tools
+			Blacklight: {
+				DisplayName: Blacklight
+				Tooltip:
+					'''
+					'It consumes the light...'
+					Makes flares you fire disappear faster
+					'''
+				Activate: Activated Blacklight.
+				Deactivate: Deactivated Blacklight.
+			}
+
+			SoulstoneKeys: {
+				DisplayName: Soulstone Keys
+				Tooltip: Grants access to the Norman Industries Factory
+			}
+
+			Starlight: {
+				DisplayName: Starlight
+				Tooltip:
+					'''
+					'It's light is blinding'
+					Permanently provides extra light from flares you fire
+					'''
+			}
+
+			# Placable
+			FactoryWorkstationItem: {
+				DisplayName: Factory Workstation
+				Tooltip: ""
+			}
+
+			OnslaughtTerminalItem: {
+				DisplayName: Onslaught Terminal
+				Tooltip: Onslaught Terminal
+			}
+
+			SteelChestItem: {
+				DisplayName: Steel Chest Item
+				Tooltip: ""
+			}
 
 			# Accessory
-			PressurizedNozzle: Extends fire length
-			CopperBacktank: "8% chance to not consume gel"
-			TinBacktank: "8% chance to not consume gel"
-			CobaltBacktank: "16% chance to not consume gel"
-			PalladiumBacktank: "16% chance to not consume gel"
-			SoulstoneBacktank: "33% chance to not consume gel"
-			LuminiteBacktank: "66% chance to not consume gel"
+			PressurizedNozzle: {
+				DisplayName: Pressurized Nozzle
+				Tooltip: Extends fire length from flamethrowers
+			}
 
-			FactorySoulCrystal:
-				'''
-				Increased damage reduction by 20%
-				After taking 200 damage, the following occurs for one minute:
-				Increased damage dealt and taken by 50%
-				Increased movement speed by 5%
-				Attacks inflict 'Hellfire'
-				'''
+			CopperBacktank: {
+				DisplayName: Copper Backtank
+				Tooltip: 8% chance to not consume gel
+			}
+
+			TinBacktank: {
+				DisplayName: Tin Backtank
+				Tooltip: 8% chance to not consume gel
+			}
+
+			CobaltBacktank: {
+				DisplayName: Cobalt Backtank
+				Tooltip: 16% chance to not consume gel
+			}
+
+			PalladiumBacktank: {
+				DisplayName: Palladium Backtank
+				Tooltip: 16% chance to not consume gel
+			}
+
+			SoulstoneBacktank: {
+				DisplayName: Soulstone Backtank
+				Tooltip: 33% chance to not consume gel
+			}
+
+			LuminiteBacktank: {
+				DisplayName: Luminite Backtank
+				Tooltip: 66% chance to not consume gel
+			}
+
+			FactorySoulCrystal: {
+				DisplayName: "'Soul Crystal (The Factory)'"
+				Tooltip:
+					'''
+					Increased damage reduction by 20%
+					After taking 200 damage, the following occurs for one minute:
+					Increased damage dealt and taken by 50%
+					Increased movement speed by 5%
+					Attacks inflict 'Hellfire'
+					'''
+			}
+
+			# Materials
+			HeatResistantPlastic: {
+				DisplayName: Heat Resistant Plastic
+				Tooltip: "'Plastic that is less likely to melt at moderately high temperatures'"
+			}
+
+			RustedCaller: {
+				DisplayName: Rusted Caller
+				Tooltip: "'It's so worn and rusted it's useless..?'"
+			}
+
+			SoulstonePlating: {
+				DisplayName: Soulstone Plating
+				Tooltip: ""
+			}
+
+			Veinsinge: {
+				DisplayName: Veinsinge
+				Tooltip: ""
+			}
 		}
-		
-		BlacklightActivate: Activated Blacklight.
-		BlacklightDeactivate: Deactivated Blacklight.
 
 		FactoryIntercom: {
 			IntruderAlert:
@@ -183,108 +348,158 @@ Mods: {
 				'''
 		}
 
-		ProjectileName: {
-			GeyserExplosion: Geyser Explosion
-			FlameBaselard: Burning Baselard
-
-			FlameJavelin: Flame Javelin
-			
-			AquaFlare: Aqua Flare
-			Blazer: Blazer
-			Bloodflare: Bloodflare
-			HighVelocityFlare: High Velocity Flare
-			PoisonFlare: Poison Flare
-			ScorchShotExplosion: Blazer Explosion
-			ShadowFlare: Shadow Flare
-			SkullFlare: Skull Flare
-			SmallFrikinFlare: "Small Frikin' Flare"
-			SolarFlare: Solar Flare
-			Vileflare: Vileflare
-
-			IonLaser: Ion Beam
-			PhotonLaser: Photon Laser
-			PlasmaLaser: Plasma Ray
-
-			SFGHeld: SFG
-			SFGCork: SFG Cork
-
-			ApproachingStorm: Approaching Storm
-			AreusFlare: Areus Flare
-			AreusShard: Areus Shard
+		Projectiles: {
+			GeyserExplosion.DisplayName: Geyser Explosion
+			FlameBaselard.DisplayName: Burning Baselard
+			FlameBase.DisplayName: Flame Base
+			FlameJavelin.DisplayName: Flame Javelin
+			AquaFlare.DisplayName: Aqua Flare
+			Blazer.DisplayName: Blazer
+			Bloodflare.DisplayName: Bloodflare
+			HighVelocityFlare.DisplayName: High Velocity Flare
+			PoisonFlare.DisplayName: Poison Flare
+			ScorchShotExplosion.DisplayName: Blazer Explosion
+			ShadowFlare.DisplayName: Shadow Flare
+			SkullFlare.DisplayName: Skull Flare
+			SmallFrikinFlare.DisplayName: Small Frikin' Flare
+			SolarFlare.DisplayName: Solar Flare
+			Vileflare.DisplayName: Vileflare
+			IonLaser.DisplayName: Ion Beam
+			PhotonLaser.DisplayName: Photon Laser
+			PlasmaLaser.DisplayName: Plasma Ray
+			SFGHeld.DisplayName: SFG
+			SFGCork.DisplayName: SFG Cork
+			ApproachingStorm.DisplayName: Approaching Storm
+			AreusFlare.DisplayName: Areus Flare
+			AreusShard.DisplayName: Areus Shard
+			LightningBolt.DisplayName: Lightning Bolt
+			PlasmaBeaconProj.DisplayName: Plasma Beacon Proj
+			HighExplosiveBullet.DisplayName: High Explosive Bullet
+			ConvertibleFlare.DisplayName: Convertible Flare
+			FrostbiteExplosion.DisplayName: Frostbite Explosion
+			FrostbiteFlare.DisplayName: Frostbite Flare
+			SmallFrickinFlare.DisplayName: Small Frickin Flare
+			LargeSpark.DisplayName: Large Spark Explosion
+			SmallSpark.DisplayName: Small Spark Explosion
+			BloodSpray.DisplayName: Blood Spray
+			AcidFlare.DisplayName: Acid Flare
+			FlameFist.DisplayName: Flame Fist
+			WelderLaser.DisplayName: Welder Laser
+			BlightFlame.DisplayName: Blight Flame
+			PoisonFlame.DisplayName: Poison Flame
+			ShadowFlame.DisplayName: Shadow Flame
+			BloodFlame.DisplayName: Blood Flame
 		}
 
-		BuffName: {
+		Buffs: {
 			# Any debuff
-			BloodBoil: Blood Boil
-			Burning: Post-burn
-			Crippled: Crippled
+			BloodBoil: {
+				DisplayName: Blood Boil
+				Description: Reduced defense
+			}
+
+			Burning: {
+				DisplayName: Burning
+				Description: Losing Life
+			}
 
 			# Player buff
-			CoreOverheat: Overheating Core
+			CoreOverheat: {
+				DisplayName: Core Overheat
+				Description:
+					'''
+					'Your core is melting'
+					Increased damage dealt and taken by 50%
+					Increased movement speed by 5%
+					Attacks inflict 'Hellfire'
+					'''
+			}
+
+			Crippled: {
+				DisplayName: Crippled
+				Description: Yourdefensegon
+			}
+
+			Coolant: {
+				DisplayName: Coolant
+				Description: Reduced damage from Fire sources
+			}
+
+			Hemorrhaging: {
+				DisplayName: Hemorrhaging
+				Description: Mods.NotEnoughFlareGuns.Buffs.Hemorrhaging.Description
+			}
+
+			Wyvern: {
+				DisplayName: Wyvern
+				Description: 15% increased ranged damage and attack speed
+			}
+
+			BlightFire: {
+				DisplayName: Blight Fire
+				Description: Mods.NotEnoughFlareGuns.Buffs.BlightFire.Description
+			}
 		}
 
-		BuffDescription: {
-			# Any debuff
-			BloodBoil: Defense reduced
-			Burning: Losing Life
-			Crippled:
-				'''
-				Movement severely reduced
-				Defense gone
-				'''
-
-			# Player buff
-			CoreOverheat:
-				'''
-				'Your core is melting'
-				Increased damage dealt and taken by 50%
-				Increased movement speed by 5%
-				Attacks inflict 'Hellfire'
-				'''
-		}
-
-		NPCName: {
-			SoulstoneCore: The Soulstone Core
-			PlasmaTurret: Plasma Turret
-			PhotonTurret: Photon Turret
-			IonTurret: Ion Turret
+		NPCs: {
+			SoulstoneCore.DisplayName: The Soulstone Core
+			PlasmaTurret.DisplayName: Plasma Turret
+			PhotonTurret.DisplayName: Photon Turret
+			IonTurret.DisplayName: Ion Turret
 		}
 
 		NPCBestiary: {
-			SoulstoneCore: "The rhythmic clanging of hydraulic presses echoes, the venting of steam pierces your ears, and the watchful eye of the core gazes into your soul."
+			SoulstoneCore: The rhythmic clanging of hydraulic presses echoes, the venting of steam pierces your ears, and the watchful eye of the core gazes into your soul.
 			PlasmaTurret: ""
 			PhotonTurret: ""
 			IonTurret: ""
 		}
 
-		BuffName: {
-			# Any debuff
-			BloodBoil: Blood Boil
-			Burning: Burning
+		Tiles: {
+			FactoryWorkstation.MapEntry: Factory Workstation
+			OnslaughtTerminal.MapEntry: Onslaught Terminal
 
-			# Player buff
-			CoreOverheat: Core Overheat
+			SteelChest: {
+				MapEntry0: Steel Chest
+				MapEntry1: Chained Steel Chest
+				ContainerName: Steel Chest
+
+				Mods: {
+					NotEnoughFlareGuns: {
+						Tiles: {
+							SteelChest: {
+								MapEntry0: Mods.NotEnoughFlareGuns.Tiles.SteelChest.Mods.NotEnoughFlareGuns.Tiles.SteelChest.MapEntry0
+								MapEntry1: Mods.NotEnoughFlareGuns.Tiles.SteelChest.Mods.NotEnoughFlareGuns.Tiles.SteelChest.MapEntry1
+							}
+						}
+					}
+				}
+			}
 		}
 
-		MapObject: {
-			FactoryWorkstation: Factory Workstation
-			OnslaughtTerminal: Onslaught Terminal
+		CustomDeathReason.Factory: "{0} blew up with the factory."
+		Condition.SacrificeEnchantedSword: Sacrifice an Enchanted Sword in the Underworld
+
+		Configs: {
+			Headers.SoundHeader: "[i:890] Sounds"
+
+			NEFGServerConfig: {
+				DisplayName: Server-side config
+
+				IntercomAudio: {
+					Label: "[i:NotEnoughFlareGuns/OnslaughtTerminalItem] Onslaught Intercom Audio"
+					Tooltip: Enables intercom voice lines during the Factory Onslaught.
+				}
+
+				Headers.SoundHeader: Sound Header Header
+			}
 		}
 
-		CustomDeathReason: {
-			Factory: "{0} blew up with the factory."
-		}
-
-		Config: {
-			ServerLabel: Server-side config
-
-			SoundHeader: "[i:890] Sounds"
-
-			OnslaughtIntercom: Onslaught Intercom Audio
-		}
-
-		ConfigDesc: {
-			OnslaughtIntercom: Enables intercom voice lines during the Factory Onslaught.
+		BossChecklistIntegration: {
+			FactoryOnslaught: {
+				EntryName: Factory Onslaught
+				SpawnInfo: Create and use [i:5619] and interact with the [i:5615] once you enter.
+			}
 		}
 	}
 }

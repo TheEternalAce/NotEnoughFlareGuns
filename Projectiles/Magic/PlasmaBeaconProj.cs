@@ -1,6 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using MMZeroElements.Utilities;
 using NotEnoughFlareGuns.Utilities;
 using ReLogic.Content;
 using System;
@@ -16,7 +15,7 @@ namespace NotEnoughFlareGuns.Projectiles.Magic
     {
         public override void SetStaticDefaults()
         {
-            Projectile.AddFire();
+            Projectile.AddElementFire();
         }
 
         public override void SetDefaults()
@@ -37,7 +36,7 @@ namespace NotEnoughFlareGuns.Projectiles.Magic
             Projectile.extraUpdates = 10;
         }
 
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             target.AddBuff(BuffID.OnFire3, 600);
         }

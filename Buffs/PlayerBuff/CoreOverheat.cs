@@ -1,16 +1,18 @@
 ﻿using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace NotEnoughFlareGuns.Buffs.PlayerBuff
 {
     public class CoreOverheat : ModBuff
     {
-        public override string Texture => "NotEnoughFlareGuns/Buffs/DebuffTemplate";
+        public override string Texture => NEFG.Buff;
 
         public override void SetStaticDefaults()
         {
-            Main.debuff[Type] = true;  // Is it a debuff?
-            Main.buffNoSave[Type] = true; // It means the buff won't save when you exit the world
+            Main.debuff[Type] = true;
+            Main.buffNoSave[Type] = true;
+            BuffID.Sets.NurseCannotRemoveDebuff[Type] = true;
         }
 
         public override void Update(Player player, ref int buffIndex)

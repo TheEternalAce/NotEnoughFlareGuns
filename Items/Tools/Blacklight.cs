@@ -12,7 +12,7 @@ namespace NotEnoughFlareGuns.Items.Tools
     {
         public override void SetStaticDefaults()
         {
-            SacrificeTotal = 1;
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()
@@ -34,13 +34,14 @@ namespace NotEnoughFlareGuns.Items.Tools
             if (Main.myPlayer == player.whoAmI)
             {
                 player.InfernalPlayer().blacklight = !player.InfernalPlayer().blacklight;
+                string pathBase = "Mods.NotEnoughFlareGuns.Items.Blacklight.";
                 if (player.InfernalPlayer().blacklight)
                 {
-                    ChatHelper.SendChatMessageToClient(NetworkText.FromKey("Mods.NotEnoughFlareGuns.BlacklightActivate"), Color.White, player.whoAmI);
+                    ChatHelper.SendChatMessageToClient(NetworkText.FromKey(pathBase + "Activate"), Color.White, player.whoAmI);
                 }
                 else
                 {
-                    ChatHelper.SendChatMessageToClient(NetworkText.FromKey("Mods.NotEnoughFlareGuns.BlacklightDeactivate"), Color.White, player.whoAmI);
+                    ChatHelper.SendChatMessageToClient(NetworkText.FromKey(pathBase + "Deactivate"), Color.White, player.whoAmI);
                 }
             }
             return true;

@@ -1,5 +1,4 @@
-﻿using MMZeroElements.Utilities;
-using NotEnoughFlareGuns.Utilities;
+﻿using NotEnoughFlareGuns.Utilities;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
@@ -11,11 +10,11 @@ namespace NotEnoughFlareGuns.Projectiles.Ranged.Flares
     // Can be tested with ExampleCustomAmmoGun
     public class FrostbiteExplosion : ModProjectile
     {
-        public override string Texture => "NotEnoughFlareGuns/Blank";
+        public override string Texture => NEFG.BlankTexture;
 
         public override void SetStaticDefaults()
         {
-            Projectile.AddIce();
+            Projectile.AddElementAqua();
         }
 
         // Setting the default parameters of the projectile
@@ -45,7 +44,7 @@ namespace NotEnoughFlareGuns.Projectiles.Ranged.Flares
             dust.velocity *= 4f;
         }
 
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             target.AddBuff(BuffID.Frostburn2, FactoryHelper.Seconds(10));
         }

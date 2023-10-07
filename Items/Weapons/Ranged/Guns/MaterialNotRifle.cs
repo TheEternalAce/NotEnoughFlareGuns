@@ -1,8 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
-using MMZeroElements.Utilities;
 using NotEnoughFlareGuns.Items.Materials;
 using NotEnoughFlareGuns.Projectiles.Ranged.Bullets;
 using NotEnoughFlareGuns.Tiles;
+using NotEnoughFlareGuns.Utilities;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -13,8 +13,8 @@ namespace NotEnoughFlareGuns.Items.Weapons.Ranged.Guns
     {
         public override void SetStaticDefaults()
         {
-            SacrificeTotal = 1;
-            Item.AddFire();
+            Item.ResearchUnlockCount = 1;
+            Item.AddElementFire();
         }
 
         public override void SetDefaults()

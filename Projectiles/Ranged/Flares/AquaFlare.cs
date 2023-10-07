@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using MMZeroElements.Utilities;
 using NotEnoughFlareGuns.Globals;
+using NotEnoughFlareGuns.Utilities;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.ID;
@@ -18,8 +18,8 @@ namespace NotEnoughFlareGuns.Projectiles.Ranged.Flares
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 5; // The length of old position to be recorded
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0; // The recording mode
             NEFGlobalProjectile.Flare.Add(Type);
-            Projectile.AddFire();
-            Projectile.AddIce();
+            Projectile.AddElementFire();
+            Projectile.AddElementAqua();
         }
 
         public override void SetDefaults()
@@ -59,7 +59,7 @@ namespace NotEnoughFlareGuns.Projectiles.Ranged.Flares
             }
         }
 
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             target.AddBuff(BuffID.OnFire, 600);
         }

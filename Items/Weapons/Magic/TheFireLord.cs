@@ -1,8 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
-using MMZeroElements.Utilities;
 using NotEnoughFlareGuns.Items.Materials;
 using NotEnoughFlareGuns.Projectiles.Magic;
 using NotEnoughFlareGuns.Tiles;
+using NotEnoughFlareGuns.Utilities;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -18,9 +18,9 @@ namespace NotEnoughFlareGuns.Items.Weapons.Magic
 
         public override void SetStaticDefaults()
         {
-            SacrificeTotal = 1;
-            Item.AddFire();
-            Item.AddElectric();
+            Item.ResearchUnlockCount = 1;
+            Item.AddElementFire();
+            Item.AddElementElec();
         }
 
         public override void SetDefaults()
@@ -51,7 +51,8 @@ namespace NotEnoughFlareGuns.Items.Weapons.Magic
         public override void AddRecipes()
         {
             CreateRecipe()
-                .AddIngredient(ModContent.ItemType<SoulstonePlating>(), 18)
+                .AddIngredient(ItemID.FireGauntlet)
+                .AddIngredient<SoulstonePlating>(18)
                 .AddTile(ModContent.TileType<FactoryWorkstation>())
                 .Register();
         }

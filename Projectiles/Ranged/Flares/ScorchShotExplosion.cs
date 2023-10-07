@@ -1,4 +1,4 @@
-﻿using MMZeroElements.Utilities;
+﻿using NotEnoughFlareGuns.Utilities;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
@@ -10,11 +10,11 @@ namespace NotEnoughFlareGuns.Projectiles.Ranged.Flares
     // Can be tested with ExampleCustomAmmoGun
     public class ScorchShotExplosion : ModProjectile
     {
-        public override string Texture => "NotEnoughFlareGuns/Blank";
+        public override string Texture => NEFG.BlankTexture;
 
         public override void SetStaticDefaults()
         {
-            Projectile.AddFire();
+            Projectile.AddElementFire();
         }
 
         // Setting the default parameters of the projectile

@@ -1,4 +1,4 @@
-﻿using MMZeroElements.Utilities;
+﻿using NotEnoughFlareGuns.Utilities;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
@@ -13,8 +13,8 @@ namespace NotEnoughFlareGuns.Projectiles.Melee
         public override void SetStaticDefaults()
         {
             Main.projFrames[Type] = 5;
-            Projectile.AddFire();
-            Projectile.AddIce();
+            Projectile.AddElementFire();
+            Projectile.AddElementAqua();
         }
 
         public override void SetDefaults()
@@ -23,7 +23,8 @@ namespace NotEnoughFlareGuns.Projectiles.Melee
             Projectile.aiStyle = -1;
             Projectile.DamageType = DamageClass.Ranged;
             Projectile.friendly = true;
-            Projectile.penetrate = 5;
+            Projectile.penetrate = 1;
+            Projectile.stopsDealingDamageAfterPenetrateHits = true;
         }
 
         // Custom AI
@@ -37,9 +38,13 @@ namespace NotEnoughFlareGuns.Projectiles.Melee
             Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.height, Projectile.width, DustID.SteampunkSteam, Scale: 1.0f);
             dust.velocity *= 4f;
 
-            if (++Projectile.frame > Main.projFrames[Type])
+            if (++Projectile.frameCounter > 1)
             {
-                Projectile.Kill();
+                if (++Projectile.frame > Main.projFrames[Type])
+                {
+                    Projectile.Kill();
+                }
+                Projectile.frameCounter = 0;
             }
         }
     }

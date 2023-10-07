@@ -1,5 +1,4 @@
 ﻿using Microsoft.Xna.Framework;
-using MMZeroElements.Utilities;
 using NotEnoughFlareGuns.Globals;
 using NotEnoughFlareGuns.Utilities;
 using Terraria;
@@ -14,9 +13,9 @@ namespace NotEnoughFlareGuns.Items.Weapons.Ranged.FlareGuns
     {
         public override void SetStaticDefaults()
         {
-            SacrificeTotal = 1;
+            Item.ResearchUnlockCount = 1;
             NEFGlobalItem.FlareGuns.Add(Type);
-            Item.AddFire();
+            Item.AddElementFire();
         }
 
         public override void SetDefaults()

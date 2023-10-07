@@ -1,5 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
-using MMZeroElements.Utilities;
+using NotEnoughFlareGuns.Utilities;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -12,7 +12,7 @@ namespace NotEnoughFlareGuns.Projectiles.Magic
 
         public override void SetStaticDefaults()
         {
-            Projectile.AddElectric();
+            Projectile.AddElementElec();
         }
 
         public override void SetDefaults()
@@ -31,7 +31,7 @@ namespace NotEnoughFlareGuns.Projectiles.Magic
         int initialDmg = 0;
         int DustTimer = 0;
 
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             target.AddBuff(BuffID.Electrified, 600);
             if (Projectile.ai[1] == 2 && target.CanBeChasedBy())
@@ -88,7 +88,7 @@ namespace NotEnoughFlareGuns.Projectiles.Magic
             }
         }
 
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             for (var i = 0; i < 28; i++)
             {

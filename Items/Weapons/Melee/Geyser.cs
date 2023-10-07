@@ -1,9 +1,10 @@
 ﻿using Microsoft.Xna.Framework;
-using MMZeroElements.Utilities;
 using NotEnoughFlareGuns.Projectiles.Melee;
+using NotEnoughFlareGuns.Utilities;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.Utilities;
 
 namespace NotEnoughFlareGuns.Items.Weapons.Melee
 {
@@ -11,9 +12,9 @@ namespace NotEnoughFlareGuns.Items.Weapons.Melee
     {
         public override void SetStaticDefaults()
         {
-            SacrificeTotal = 1;
-            Item.AddFire();
-            Item.AddIce();
+            Item.ResearchUnlockCount = 1;
+            Item.AddElementFire();
+            Item.AddElementAqua();
         }
 
         public override void SetDefaults()
@@ -38,17 +39,45 @@ namespace NotEnoughFlareGuns.Items.Weapons.Melee
         {
             CreateRecipe()
                 .AddIngredient(ItemID.GoldBar, 17)
-                .AddIngredient(ItemID.GeyserTrap, 2)
+                .AddIngredient(ItemID.GeyserTrap)
+                .AddIngredient(ItemID.Seashell, 5)
+                .AddTile(TileID.Anvils)
+                .Register();
+
+            CreateRecipe()
+                .AddIngredient(ItemID.PlatinumBar, 17)
+                .AddIngredient(ItemID.GeyserTrap)
                 .AddIngredient(ItemID.Seashell, 5)
                 .AddTile(TileID.Anvils)
                 .Register();
         }
 
-        public override void OnHitNPC(Player player, NPC target, int damage, float knockBack, bool crit)
+        public override void OnHitNPC(Player player, NPC target, NPC.HitInfo hit, int damageDone)
         {
-            Projectile.NewProjectile(Item.GetSource_OnHit(target), target.Center, Vector2.Zero,
-                ModContent.ProjectileType<GeyserExplosion>(), player.GetWeaponDamage(Item), player.GetWeaponKnockback(Item),
-                player.whoAmI);
+            if (target.CanBeChasedBy())
+            {
+                for (int i = 0; i < 10; i++)
+                {
+                    var dust = Dust.NewDustPerfect(target.Center, DustID.Smoke);
+                    dust.fadeIn = 2;
+                    dust.velocity = new Vector2(0, -1).RotatedByRandom(MathHelper.PiOver4);
+                    dust.velocity *= 8f * Main.rand.NextFloat(0.33f, 1f);
+                }
+                for (int i = 0; i < 4; i++)
+                {
+                    WeightedRandom<int> randSmoke = new();
+                    randSmoke.Add(GoreID.Smoke1);
+                    randSmoke.Add(GoreID.Smoke2);
+                    randSmoke.Add(GoreID.Smoke3);
+
+                    var gore = Gore.NewGoreDirect(target.GetSource_FromThis(),
+                        target.Center, new Vector2(0, -1), randSmoke);
+                    gore.velocity.X = MathHelper.Clamp(gore.velocity.X, 0, 1);
+                }
+                Projectile.NewProjectile(Item.GetSource_OnHit(target), target.Center,
+                    Vector2.Zero, ModContent.ProjectileType<GeyserExplosion>(),
+                    damageDone / 2, 0f, player.whoAmI);
+            }
         }
     }
 }

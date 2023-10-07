@@ -1,15 +1,14 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
+using System.Linq;
 using Terraria;
-using Terraria.Audio;
 using Terraria.GameContent;
 using Terraria.ID;
-using Terraria.ModLoader;
 
 namespace NotEnoughFlareGuns.Utilities
 {
-    public static class FactoryHelper
+    public static partial class FactoryHelper
     {
         public static int Hours(int hours)
         {
@@ -17,7 +16,7 @@ namespace NotEnoughFlareGuns.Utilities
             return result;
         }
 
-        public static int Minutues(int minutes)
+        public static int Minutes(int minutes)
         {
             int result = (int)(minutes * Math.Pow(60, 2));
             return result;
@@ -31,7 +30,7 @@ namespace NotEnoughFlareGuns.Utilities
 
         public static int ConvertFlareTo(this int type, int flareOutput, int flareTypeOverride = ProjectileID.Flare, bool convertAllFlares = false)
         {
-            bool convert = type == flareTypeOverride || type == NotEnoughFlareGuns.ConvertibleFlare;
+            bool convert = type == flareTypeOverride || type == NEFG.ConvertibleFlare;
             if (convert || convertAllFlares)
             {
                 return flareOutput;
@@ -51,11 +50,6 @@ namespace NotEnoughFlareGuns.Utilities
         public static Rectangle Frame(this Projectile projectile)
         {
             return TextureAssets.Projectile[projectile.type].Value.Frame(1, Main.projFrames[projectile.type], 0, projectile.frame);
-        }
-
-        public static SpriteEffects GetSpriteEffect(this Projectile projectile)
-        {
-            return (-projectile.spriteDirection).ToSpriteEffect();
         }
 
         public static Vector2 RotateTowards(Vector2 currentPosition, Vector2 currentVelocity, Vector2 targetPosition, float maxChange)
@@ -82,211 +76,52 @@ namespace NotEnoughFlareGuns.Utilities
             return color;
         }
 
-        public static void Explode(this Projectile projectile, int explosionSize)
+        public static Vector2 GetPointInRegion(this Rectangle region)
         {
-            if (projectile.ai[1] == 0)
+            Vector2 result = new()
             {
-                SoundEngine.PlaySound(SoundID.Item14);
-                projectile.ai[1] = 1;
-                Vector2 oldSize = projectile.Size;
-                projectile.velocity = Vector2.Zero;
-                projectile.alpha = 255;
-                projectile.hide = true;
-                projectile.hostile = true;
-                projectile.Size = new Vector2(explosionSize);
-                projectile.timeLeft = 30;
-                projectile.position += (oldSize - projectile.Size) / 2;
-            }
+                X = region.X + Main.rand.Next(region.Width + 1),
+                Y = region.Y + Main.rand.Next(region.Height + 1)
+            };
+            return result;
         }
 
-        /// <summary>
-        /// Draws a basic single-frame glowmask for an item dropped in the world. Use in <see cref="Terraria.ModLoader.ModProjectile.PostDraw"/>
-        /// </summary>
-        public static void BasicInWorldGlowmask(this Projectile projectile, Texture2D glowTexture, Color color, float rotation, float scale)
+        public static Player FindClosestPlayer(this Vector2 position, float maxDetectDistance, params int[] blaclkistedWhoAmI)
         {
-            Main.EntitySpriteDraw(
-                glowTexture,
-                new Vector2(
-                    projectile.position.X - Main.screenPosition.X + projectile.width * 0.5f,
-                    projectile.position.Y - Main.screenPosition.Y + projectile.height - glowTexture.Height * 0.5f
-                ),
-                new Rectangle(0, 0, glowTexture.Width, glowTexture.Height),
-                color,
-                rotation,
-                glowTexture.Size() * 0.5f,
-                scale,
-                SpriteEffects.None,
-                0);
-        }
+            Player closestPlayer = null;
 
-        public const string DiamondX1 = "DiamondBlur1";
-        public const string DiamondX2 = "DiamondBlur2";
-        public const string OrbX1 = "OrbBlur1";
-        public const string OrbX2 = "OrbBlur2";
-        public const string LineX1 = "LineTrail1";
-        public const string LineX2 = "LineTrail2";
-        public static void DrawProjectilePrims(this Projectile projectile, Color color, string style, float angleAdd = 0f, float scale = 1f)
-        {
-            Main.spriteBatch.End();
-            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, null, null, null, null, Main.GameViewMatrix.ZoomMatrix);
-
-            Main.instance.LoadProjectile(projectile.type);
-            Texture2D texture = ModContent.Request<Texture2D>("NotEnoughFlareGuns/BlurTrails/" + style).Value;
-            float plusRot = 0;
-            if (style == DiamondX1 || style == DiamondX2 || style == LineX1 || style == LineX2)
+            // Using squared values in distance checks will let us skip square root calculations, drastically improving this method's speed.
+            float sqrMaxDetectDistance = maxDetectDistance * maxDetectDistance;
+            if (maxDetectDistance < 0)
             {
-                plusRot = MathHelper.ToRadians(90);
+                sqrMaxDetectDistance = float.PositiveInfinity;
             }
 
-            for (int k = 0; k < projectile.oldPos.Length; k++)
+            // Loop through all Players(max always 255)
+            for (int k = 0; k < Main.maxPlayers; k++)
             {
-                var offset = new Vector2(projectile.width / 2f, projectile.height / 2f);
-                var frame = texture.Frame(1, Main.projFrames[projectile.type], 0, projectile.frame);
-                Vector2 drawPos = (projectile.oldPos[k] - Main.screenPosition) + offset;
-                float sizec = scale * (projectile.oldPos.Length - k) / (projectile.oldPos.Length * 0.8f);
-                Color drawColor = color * (1f - projectile.alpha) * ((projectile.oldPos.Length - k) / (float)projectile.oldPos.Length);
-                Main.EntitySpriteDraw(texture, drawPos, frame, drawColor, projectile.oldRot[k] + plusRot + angleAdd, frame.Size() / 2, sizec, SpriteEffects.None, 0);
-            }
-            Main.spriteBatch.End();
-            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, null, null, null, null, Main.GameViewMatrix.ZoomMatrix);
-        }
-        //Credits to Aslysmic/Tewst Mod (so cool)
+                Player target = Main.player[k];
+                // Check if Player able to be targeted. It means that Player is
+                // 1. active and alive
+                if (target.active && !target.dead)
+                {
+                    // The DistanceSquared function returns a squared distance between 2 points, skipping relatively expensive square root calculations
+                    float sqrDistanceToTarget = Vector2.DistanceSquared(target.Center, position);
 
-        public static void DrawPrimsAfterImage(this Projectile projectile, Color color, Texture2D texture)
-        {
-            Rectangle frame = projectile.Frame();
-            Vector2 offset = new Vector2(projectile.width / 2, projectile.height / 2);
-            var effects = projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
-            var origin = frame.Size() / 2f;
-            for (int i = 0; i < ProjectileID.Sets.TrailCacheLength[projectile.type]; i++)
-            {
-                float progress = 1f / ProjectileID.Sets.TrailCacheLength[projectile.type] * i;
-                Main.spriteBatch.Draw(texture, projectile.oldPos[i] + offset - Main.screenPosition, frame, color * (1f - progress), projectile.rotation, origin, Math.Max(projectile.scale * (1f - progress), 0.1f), effects, 0f);
+                    // Check if it is within the radius
+                    if (sqrDistanceToTarget < sqrMaxDetectDistance)
+                    {
+                        // Check if NPC.whoAmI is not blacklisted
+                        if (!blaclkistedWhoAmI.Contains(target.whoAmI))
+                        {
+                            sqrMaxDetectDistance = sqrDistanceToTarget;
+                            closestPlayer = target;
+                        }
+                    }
+                }
             }
 
-            Main.spriteBatch.Draw(texture, projectile.position + offset - Main.screenPosition, frame, Color.White, projectile.rotation, origin, projectile.scale, SpriteEffects.None, 0f);
-        }
-        public static void DrawPrimsAfterImage(this Projectile projectile, Color color)
-        {
-            var texture = TextureAssets.Projectile[projectile.type].Value;
-            projectile.DrawPrimsAfterImage(color, texture);
-        }
-        //Credits to Aequus Mod (Omega Starite my beloved)
-
-        public static void DefaultToFlareGun(this Item flareGun, int damage, int useTime, int crit = 0, float knockback = 0f, bool autoReuse = false, float velocity = 6f)
-        {
-            // Use Properties
-            flareGun.useTime = useTime; // The item's use time in ticks (60 ticks == 1 second.)
-            flareGun.useAnimation = useTime; // The length of the item's use animation in ticks (60 ticks == 1 second.)
-            flareGun.useStyle = ItemUseStyleID.Shoot; // How you use the item (swinging, holding out, etc.)
-            flareGun.autoReuse = autoReuse; // Whether or not you can hold click to automatically use it again.
-            flareGun.UseSound = SoundID.Item11;
-
-            // Weapon Properties
-            flareGun.damage = damage; // Sets the item's damage. Note that projectiles shot by this weapon will use its and the used ammunition's damage added together.
-            flareGun.DamageType = DamageClass.Ranged; // Sets the damage type to ranged.
-            flareGun.knockBack = knockback;  // Sets the item's knockback. Note that projectiles shot by this weapon will use its and the used ammunition's knockback added together.
-            flareGun.crit = crit;
-            flareGun.noMelee = true; // So the item's animation doesn't do damage.
-
-            // Flare Gun Properties
-            flareGun.shoot = ProjectileID.PurificationPowder; // For some reason, all the guns in the vanilla source have this.
-            flareGun.shootSpeed = velocity; // The speed of the projectile (measured in pixels per frame.)
-            flareGun.useAmmo = AmmoID.Flare; // The "ammo Id" of the ammo item that this weapon uses. Ammo IDs are magic numbers that usually correspond to the item id of one item that most commonly represent the ammo type.
-        }
-
-        public static void DefaultToFlamethrower(this Item flamethrower, int damage, int useTime, int crit = 0, float knockback = 4f, bool autoReuse = false, float velocity = 8f)
-        {
-            // Use Properties
-            flamethrower.useTime = useTime / 2; // The item's use time in ticks (60 ticks == 1 second.)
-            flamethrower.useAnimation = useTime; // The length of the item's use animation in ticks (60 ticks == 1 second.)
-            flamethrower.useStyle = ItemUseStyleID.Shoot; // How you use the item (swinging, holding out, etc.)
-            flamethrower.autoReuse = autoReuse; // Whether or not you can hold click to automatically use it again.
-            flamethrower.UseSound = SoundID.Item34;
-
-            // Weapon Properties
-            flamethrower.damage = damage; // Sets the item's damage. Note that projectiles shot by this weapon will use its and the used ammunition's damage added together.
-            flamethrower.DamageType = DamageClass.Ranged; // Sets the damage type to ranged.
-            flamethrower.knockBack = knockback;  // Sets the item's knockback. Note that projectiles shot by this weapon will use its and the used ammunition's knockback added together.
-            flamethrower.crit = crit;
-            flamethrower.noMelee = true; // So the item's animation doesn't do damage.
-
-            // Flare Gun Properties
-            flamethrower.shoot = ProjectileID.Flames; // For some reason, all the guns in the vanilla source have this.
-            flamethrower.shootSpeed = velocity; // The speed of the projectile (measured in pixels per frame.)
-            flamethrower.useAmmo = AmmoID.Gel; // The "ammo Id" of the ammo item that this weapon uses. Ammo IDs are magic numbers that usually correspond to the item id of one item that most commonly represent the ammo type.
-        }
-
-        public static void DefaultToLauncher(this Item launcher, int damage, int useTime, int crit = 0, float knockback = 4f, bool autoReuse = false, float velocity = 8f)
-        {
-            // Use Properties
-            launcher.useTime = useTime; // The item's use time in ticks (60 ticks == 1 second.)
-            launcher.useAnimation = useTime; // The length of the item's use animation in ticks (60 ticks == 1 second.)
-            launcher.useStyle = ItemUseStyleID.Shoot; // How you use the item (swinging, holding out, etc.)
-            launcher.autoReuse = autoReuse; // Whether or not you can hold click to automatically use it again.
-            launcher.UseSound = SoundID.Item11;
-
-            // Weapon Properties
-            launcher.damage = damage; // Sets the item's damage. Note that projectiles shot by this weapon will use its and the used ammunition's damage added together.
-            launcher.DamageType = DamageClass.Ranged; // Sets the damage type to ranged.
-            launcher.knockBack = knockback;  // Sets the item's knockback. Note that projectiles shot by this weapon will use its and the used ammunition's knockback added together.
-            launcher.crit = crit;
-            launcher.noMelee = true; // So the item's animation doesn't do damage.
-
-            // Flare Gun Properties
-            launcher.shoot = ProjectileID.PurificationPowder; // For some reason, all the guns in the vanilla source have this.
-            launcher.shootSpeed = velocity; // The speed of the projectile (measured in pixels per frame.)
-            launcher.useAmmo = AmmoID.Rocket; // The "ammo Id" of the ammo item that this weapon uses. Ammo IDs are magic numbers that usually correspond to the item id of one item that most commonly represent the ammo type.
-        }
-
-        public static void DefaultToPreHMLauncher(this Item preHMLauncher, int damage, int useTime, int crit = 0, float knockback = 4f, bool autoReuse = false, float velocity = 6f)
-        {
-            // Use Properties
-            preHMLauncher.useTime = useTime; // The item's use time in ticks (60 ticks == 1 second.)
-            preHMLauncher.useAnimation = useTime; // The length of the item's use animation in ticks (60 ticks == 1 second.)
-            preHMLauncher.useStyle = ItemUseStyleID.Shoot; // How you use the item (swinging, holding out, etc.)
-            preHMLauncher.autoReuse = autoReuse; // Whether or not you can hold click to automatically use it again.
-            preHMLauncher.UseSound = SoundID.Item11;
-
-            // Weapon Properties
-            preHMLauncher.damage = damage; // Sets the item's damage. Note that projectiles shot by this weapon will use its and the used ammunition's damage added together.
-            preHMLauncher.DamageType = DamageClass.Ranged; // Sets the damage type to ranged.
-            preHMLauncher.knockBack = knockback;  // Sets the item's knockback. Note that projectiles shot by this weapon will use its and the used ammunition's knockback added together.
-            preHMLauncher.crit = crit;
-            preHMLauncher.noMelee = true; // So the item's animation doesn't do damage.
-
-            // Flare Gun Properties
-            preHMLauncher.shoot = ProjectileID.PurificationPowder; // For some reason, all the guns in the vanilla source have this.
-            preHMLauncher.shootSpeed = velocity; // The speed of the projectile (measured in pixels per frame.)
-            preHMLauncher.useAmmo = ItemID.Grenade; // The "ammo Id" of the ammo item that this weapon uses. Ammo IDs are magic numbers that usually correspond to the item id of one item that most commonly represent the ammo type.
-        }
-
-        public static void DefaultToFlare(this Item flare, int damage, int projectile, bool consumable = true)
-        {
-            flare.maxStack = consumable ? 9999 : 1;
-
-            flare.damage = damage;
-            flare.DamageType = DamageClass.Ranged;
-            flare.knockBack = 1.5f;
-
-            flare.consumable = consumable;
-            flare.shoot = projectile;
-            flare.shootSpeed = 6f;
-            flare.ammo = AmmoID.Flare;
-        }
-
-        public static void DefaultToBullet(this Item bullet, int damage, int projectile)
-        {
-            bullet.maxStack = 9999;
-
-            bullet.damage = damage;
-            bullet.DamageType = DamageClass.Ranged;
-            bullet.knockBack = 4f;
-
-            bullet.consumable = true;
-            bullet.shoot = projectile;
-            bullet.shootSpeed = 4f;
-            bullet.ammo = AmmoID.Bullet;
+            return closestPlayer;
         }
 
         public static FactoryPlayer InfernalPlayer(this Player player)

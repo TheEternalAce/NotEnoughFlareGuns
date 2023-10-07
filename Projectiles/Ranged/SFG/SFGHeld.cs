@@ -1,5 +1,4 @@
 ﻿using Microsoft.Xna.Framework;
-using MMZeroElements.Utilities;
 using NotEnoughFlareGuns.Projectiles.Ranged.Flares;
 using System;
 using Terraria;
@@ -26,7 +25,6 @@ namespace NotEnoughFlareGuns.Projectiles.Ranged.SFG
             Projectile.aiStyle = -1;
             Projectile.tileCollide = false;
             Projectile.hide = true; //aiStyle 20 assigns heldProj
-            Projectile.AddFire();
         }
 
         public override void AI()

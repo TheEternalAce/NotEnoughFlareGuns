@@ -3,6 +3,7 @@ using NotEnoughFlareGuns.Items.Placeable;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 
@@ -19,8 +20,7 @@ namespace NotEnoughFlareGuns.Tiles
             TileObjectData.newTile.CoordinateHeights = new[] { 16, 18 };
             TileObjectData.newTile.StyleHorizontal = true;
             TileObjectData.addTile(Type);
-            ModTranslation name = CreateMapEntryName("FactoryWorkstation");
-            AddMapEntry(new Color(200, 200, 200), name);
+            AddMapEntry(new Color(200, 200, 200), Language.GetText("Mods.NotEnoughFlareGuns.Tiles.FactoryWorkstation.MapEntry"));
             DustType = DustID.Titanium;
         }
 

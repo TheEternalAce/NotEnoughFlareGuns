@@ -1,5 +1,4 @@
 ﻿using Microsoft.Xna.Framework;
-using MMZeroElements.Utilities;
 using NotEnoughFlareGuns.Globals;
 using NotEnoughFlareGuns.Utilities;
 using Terraria;
@@ -13,8 +12,8 @@ namespace NotEnoughFlareGuns.Projectiles.Ranged.Flares
         public override void SetStaticDefaults()
         {
             NEFGlobalProjectile.Flare.Add(Type);
-            Projectile.AddFire();
-            Projectile.AddIce();
+            Projectile.AddElementFire();
+            Projectile.AddElementAqua();
         }
 
         public override void SetDefaults()
@@ -25,7 +24,7 @@ namespace NotEnoughFlareGuns.Projectiles.Ranged.Flares
             Projectile.friendly = true; // Can the projectile deal damage to enemies?
             Projectile.hostile = false; // Can the projectile deal damage to the player?
             Projectile.DamageType = DamageClass.Ranged; // Is the projectile shoot by a ranged weapon?
-            Projectile.penetrate = -1; // How many monsters the projectile can penetrate. (OnTileCollide below also decrements penetrate for bounces as well)
+            Projectile.penetrate = 5; // How many monsters the projectile can penetrate. (OnTileCollide below also decrements penetrate for bounces as well)
             Projectile.timeLeft = 36000; // The live time for the projectile (60 = 1 second, so 600 is 10 seconds)
             Projectile.alpha = 255; // The transparency of the projectile, 255 for completely transparent. (aiStyle 1 quickly fades the projectile in) Make sure to delete this if you aren't using an aiStyle that fades in. You'll wonder why your projectile is invisible.
             Projectile.light = 1f; // How much light emit around the projectile
@@ -37,10 +36,10 @@ namespace NotEnoughFlareGuns.Projectiles.Ranged.Flares
             AIType = ProjectileID.BlueFlare; // Act exactly like default Flare
         }
 
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             Projectile.NewProjectile(Projectile.GetSource_OnHit(target), target.Center, Vector2.Zero,
-                ModContent.ProjectileType<FrostbiteExplosion>(), damage, knockback, Projectile.owner);
+                ModContent.ProjectileType<FrostbiteExplosion>(), hit.Damage, hit.Knockback, Projectile.owner);
             target.AddBuff(BuffID.Frostburn2, FactoryHelper.Seconds(10));
         }
     }

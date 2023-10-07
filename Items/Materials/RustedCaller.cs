@@ -8,8 +8,7 @@ namespace NotEnoughFlareGuns.Items.Materials
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("'It's so worn and rusted it's useless..?'");
-            SacrificeTotal = 1;
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()

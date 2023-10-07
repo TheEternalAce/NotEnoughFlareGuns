@@ -8,7 +8,7 @@ namespace NotEnoughFlareGuns.Items.Materials
     {
         public override void SetStaticDefaults()
         {
-            SacrificeTotal = 30;
+            Item.ResearchUnlockCount = 30;
         }
 
         public override void SetDefaults()

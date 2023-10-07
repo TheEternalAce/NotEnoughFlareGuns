@@ -1,11 +1,13 @@
 ﻿using NotEnoughFlareGuns.Globals;
 using NotEnoughFlareGuns.Items.Materials;
+using NotEnoughFlareGuns.Items.Weapons.Ranged.Flamethrowers;
 using NotEnoughFlareGuns.Items.Weapons.Ranged.FlareGuns;
 using NotEnoughFlareGuns.Tiles;
 using NotEnoughFlareGuns.Utilities;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.Utilities;
 
 namespace NotEnoughFlareGuns.Systems
 {
@@ -38,9 +40,12 @@ namespace NotEnoughFlareGuns.Systems
                         int style = ChestTypes.GetChestStyle(c);
                         if (style == ChestTypes.LockedGold)
                         {
-                            if (Main.rand.NextBool(6))
+                            if (Main.rand.NextBool(4))
                             {
-                                c.Insert(ModContent.ItemType<AzulFlame>(), 1);
+                                WeightedRandom<int> chestItems = new();
+                                chestItems.Add(ModContent.ItemType<AzulFlame>());
+                                chestItems.Add(ModContent.ItemType<HeatWave>());
+                                c.Insert(chestItems, 1);
                             }
                         }
                     }

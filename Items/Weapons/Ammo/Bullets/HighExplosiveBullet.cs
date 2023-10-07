@@ -1,5 +1,4 @@
-﻿using MMZeroElements.Utilities;
-using NotEnoughFlareGuns.Utilities;
+﻿using NotEnoughFlareGuns.Utilities;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -10,14 +9,14 @@ namespace NotEnoughFlareGuns.Items.Weapons.Ammo.Bullets
     {
         public override void SetStaticDefaults()
         {
-            SacrificeTotal = 99;
-            Item.AddFire();
+            Item.ResearchUnlockCount = 99;
+            Item.AddElementFire();
         }
 
         public override void SetDefaults()
         {
-            Item.width = 6;
-            Item.height = 10;
+            Item.width = 10;
+            Item.height = 26;
             Item.value = 1800;
             Item.rare = ItemRarityID.LightPurple;
 
@@ -28,8 +27,9 @@ namespace NotEnoughFlareGuns.Items.Weapons.Ammo.Bullets
         public override void AddRecipes()
         {
             CreateRecipe(50)
-                .AddIngredient(ItemID.Flare, 50)
+                .AddIngredient(ItemID.EmptyBullet, 50)
                 .AddIngredient(ItemID.Cog)
+                .AddIngredient(ItemID.ExplosivePowder)
                 .AddTile(TileID.WorkBenches)
                 .Register();
         }

@@ -1,11 +1,9 @@
 ﻿using Microsoft.Xna.Framework;
 using NotEnoughFlareGuns.Buffs.PlayerBuff;
 using NotEnoughFlareGuns.Items.Accessories.Backtanks;
-using NotEnoughFlareGuns.Items.Misc;
 using NotEnoughFlareGuns.Items.Tools;
 using NotEnoughFlareGuns.NPCs.TheFactoryOnslaught;
 using NotEnoughFlareGuns.Utilities;
-using SubworldLibrary;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
@@ -22,7 +20,7 @@ namespace NotEnoughFlareGuns
 
         public int sceneInvulnerability = 0;
         public int factoryTimer;
-        public int factoryTimerMax = (int)FactoryHelper.Minutues(2);
+        public int factoryTimerMax = (int)FactoryHelper.Minutes(2);
 
         public bool cokeStarlight = false;
         public bool cokeStarlightActive = true;
@@ -56,7 +54,7 @@ namespace NotEnoughFlareGuns
 
             if (shards != null)
             {
-                factorySoul = (bool)shards.Call("checkHasSoulCrystal", Player, ModContent.ItemType<FactorySoulCrystal>());
+                factorySoul = (bool)shards.Call("checkHasSoulCrystal", Player, "FactorySoulCrystal");
                 coreOverheat = false;
             }
         }
@@ -159,22 +157,22 @@ namespace NotEnoughFlareGuns
             return base.Shoot(item, source, position, velocity, type, damage, knockback);
         }
 
-        public override bool PreHurt(bool pvp, bool quiet, ref int damage, ref int hitDirection, ref bool crit, ref bool customDamage, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource, ref int cooldownCounter)
+        public override bool FreeDodge(Player.HurtInfo info)
         {
             if (sceneInvulnerability > 0)
             {
-                return false;
+                return true;
             }
-            return base.PreHurt(pvp, quiet, ref damage, ref hitDirection, ref crit, ref customDamage, ref playSound, ref genGore, ref damageSource, ref cooldownCounter);
+            return base.FreeDodge(info);
         }
 
-        public override void PostHurt(bool pvp, bool quiet, double damage, int hitDirection, bool crit, int cooldownCounter)
+        public override void PostHurt(Player.HurtInfo info)
         {
             if (shards != null)
             {
                 if (factorySoul && !coreOverheat)
                 {
-                    totalDamageTaken += damage;
+                    totalDamageTaken += info.Damage;
                     if (totalDamageTaken >= 200)
                     {
                         Player.AddBuff(ModContent.BuffType<CoreOverheat>(), 3600);
@@ -184,17 +182,17 @@ namespace NotEnoughFlareGuns
             }
         }
 
-        public override void OnHitNPC(Item item, NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPCWithItem(Item item, NPC target, NPC.HitInfo hit, int damageDone)
         {
-            OnHitNPCGeneral(target, damage, knockback, crit);
+            OnHitNPCGeneral(target, hit, damageDone);
         }
 
-        public override void OnHitNPCWithProj(Projectile proj, NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPCWithProj(Projectile proj, NPC target, NPC.HitInfo hit, int damageDone)
         {
-            OnHitNPCGeneral(target, damage, knockback, crit);
+            OnHitNPCGeneral(target, hit, damageDone);
         }
 
-        void OnHitNPCGeneral(NPC target, int damage, float knockback, bool crit)
+        void OnHitNPCGeneral(NPC target, NPC.HitInfo hit, int damageDone)
         {
             if (coreOverheat)
             {
@@ -205,13 +203,21 @@ namespace NotEnoughFlareGuns
                 if (target.life <= 0 && factoryTimer <= 0)
                 {
                     factoryTimer = factoryTimerMax;
+                    if (Main.masterMode || Main.getGoodWorld)
+                    {
+                        factoryTimer /= 2;
+                    }
+                    else if (Main.expertMode)
+                    {
+                        factoryTimer *= 3 / 4;
+                    }
                 }
             }
         }
 
-        public override void OnRespawn(Player player)
+        public override void OnRespawn()
         {
-            SubworldSystem.Exit();
+            //SubworldSystem.Exit();
         }
 
         public override void ModifyScreenPosition()

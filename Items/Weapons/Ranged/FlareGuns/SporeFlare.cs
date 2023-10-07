@@ -1,5 +1,4 @@
 ﻿using Microsoft.Xna.Framework;
-using MMZeroElements.Utilities;
 using NotEnoughFlareGuns.Globals;
 using NotEnoughFlareGuns.Projectiles.Ranged.Flares;
 using NotEnoughFlareGuns.Utilities;
@@ -13,9 +12,10 @@ namespace NotEnoughFlareGuns.Items.Weapons.Ranged.FlareGuns
     {
         public override void SetStaticDefaults()
         {
-            SacrificeTotal = 1;
+            Item.ResearchUnlockCount = 1;
             NEFGlobalItem.FlareGuns.Add(Type);
-            Item.AddFire();
+            Item.AddElementFire();
+            Item.AddElementWood();
         }
 
         public override void SetDefaults()
@@ -48,7 +48,7 @@ namespace NotEnoughFlareGuns.Items.Weapons.Ranged.FlareGuns
 
         public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
         {
-            if (type == ProjectileID.Flare || type == NotEnoughFlareGuns.ConvertibleFlare && Main.rand.NextFloat() > .33f)
+            if (type == ProjectileID.Flare || type == NEFG.ConvertibleFlare && Main.rand.NextFloat() > .33f)
             {
                 type = ModContent.ProjectileType<PoisonFlare>();
             }

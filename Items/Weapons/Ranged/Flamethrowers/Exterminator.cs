@@ -1,5 +1,4 @@
 ﻿using Microsoft.Xna.Framework;
-using MMZeroElements.Utilities;
 using NotEnoughFlareGuns.Globals;
 using NotEnoughFlareGuns.Utilities;
 using Terraria;
@@ -12,9 +11,9 @@ namespace NotEnoughFlareGuns.Items.Weapons.Ranged.Flamethrowers
     {
         public override void SetStaticDefaults()
         {
-            SacrificeTotal = 1;
+            Item.ResearchUnlockCount = 1;
             NEFGlobalItem.Flamethrowers.Add(Type);
-            Item.AddFire();
+            Item.AddElementFire();
         }
 
         public override void SetDefaults()
@@ -24,7 +23,7 @@ namespace NotEnoughFlareGuns.Items.Weapons.Ranged.Flamethrowers
             Item.height = 30; // Hitbox height of the item.
             Item.rare = ItemRarityID.Green; // The color that the item's name will be in-game.
 
-            Item.DefaultToFlamethrower(20, 26, 4, autoReuse: true, velocity: 6);
+            Item.DefaultToFlamethrower(15, 26, 4, autoReuse: true, velocity: 6);
             Item.value = 70000;
         }
 
@@ -32,7 +31,6 @@ namespace NotEnoughFlareGuns.Items.Weapons.Ranged.Flamethrowers
         {
             CreateRecipe()
                 .AddIngredient(ItemID.HellstoneBar, 14)
-                .AddIngredient(ItemID.IllegalGunParts)
                 .AddTile(TileID.Anvils)
                 .Register();
         }

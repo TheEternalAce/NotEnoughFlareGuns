@@ -10,7 +10,7 @@ namespace NotEnoughFlareGuns.Globals
     public class NEFGlobalProjectile : GlobalProjectile
     {
         public static List<int> Flare = new();
-        public bool blacklightDieSoon = false;
+        public bool blacklightDeath = false;
 
         public override bool InstancePerEntity => true;
 
@@ -45,18 +45,18 @@ namespace NotEnoughFlareGuns.Globals
         {
             if (Main.player[projectile.owner].InfernalPlayer().blacklight)
             {
-                if (Flare.Contains(projectile.type) && !blacklightDieSoon)
+                if (Flare.Contains(projectile.type) && !blacklightDeath)
                 {
                     projectile.timeLeft = 60 * (1 + projectile.extraUpdates);
-                    blacklightDieSoon = true;
+                    blacklightDeath = true;
                 }
             }
             return base.OnTileCollide(projectile, oldVelocity);
         }
 
-        public override void Kill(Projectile projectile, int timeLeft)
+        public override void OnKill(Projectile projectile, int timeLeft)
         {
-            if (blacklightDieSoon)
+            if (blacklightDeath)
             {
                 for (int d = 0; d < 10; d++)
                 {

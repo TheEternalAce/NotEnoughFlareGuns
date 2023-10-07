@@ -1,5 +1,4 @@
 ﻿using Microsoft.Xna.Framework;
-using MMZeroElements.Utilities;
 using NotEnoughFlareGuns.Utilities;
 using Terraria;
 using Terraria.ID;
@@ -11,7 +10,7 @@ namespace NotEnoughFlareGuns.Projectiles.Ranged.Bullets
     {
         public override void SetStaticDefaults()
         {
-            Projectile.AddFire();
+            Projectile.AddElementFire();
         }
 
         public override void SetDefaults()
@@ -30,14 +29,9 @@ namespace NotEnoughFlareGuns.Projectiles.Ranged.Bullets
         public override void AI()
         {
             Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.ToRadians(90);
-            if (Projectile.ai[1] == 1)
-            {
-                Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.height, Projectile.width, DustID.Torch, Scale: 1.3f);
-                dust.velocity *= 4f;
-            }
         }
 
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             target.AddBuff(BuffID.OnFire3, FactoryHelper.Seconds(10));
             Projectile.Explode(120);

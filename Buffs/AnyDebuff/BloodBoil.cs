@@ -8,8 +8,6 @@ namespace NotEnoughFlareGuns.Buffs.AnyDebuff
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Blood Boil"); // Buff display name
-            Description.SetDefault("Reduced defense"); // Buff description
             Main.debuff[Type] = true;  // Is it a debuff?
             Main.pvpBuff[Type] = true; // Players can give other players buffs, which are listed as pvpBuff
             Main.buffNoSave[Type] = true; // It means the buff won't save when you exit the world
@@ -23,7 +21,27 @@ namespace NotEnoughFlareGuns.Buffs.AnyDebuff
 
         public override void Update(NPC npc, ref int buffIndex)
         {
-            npc.defense -= 4;
+            npc.GetGlobalNPC<BloodBoilNPC>().boil = true;
+        }
+    }
+
+    public class BloodBoilNPC : GlobalNPC
+    {
+        public bool boil = false;
+
+        public override bool InstancePerEntity => true;
+
+        public override void ResetEffects(NPC npc)
+        {
+            boil = false;
+        }
+
+        public override void ModifyIncomingHit(NPC npc, ref NPC.HitModifiers modifiers)
+        {
+            if (boil)
+            {
+                modifiers.Defense.Flat -= 4;
+            }
         }
     }
 }

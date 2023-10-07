@@ -1,5 +1,5 @@
-﻿using MMZeroElements.Utilities;
-using NotEnoughFlareGuns.Projectiles.Magic;
+﻿using NotEnoughFlareGuns.Projectiles.Magic;
+using NotEnoughFlareGuns.Utilities;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -10,8 +10,8 @@ namespace NotEnoughFlareGuns.Items.Weapons.Magic
     {
         public override void SetStaticDefaults()
         {
-            SacrificeTotal = 1;
-            Item.AddFire();
+            Item.ResearchUnlockCount = 1;
+            Item.AddElementFire();
         }
 
         public override void SetDefaults()

@@ -1,7 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using MMZeroElements;
-using MMZeroElements.Utilities;
 using NotEnoughFlareGuns.Config;
 using NotEnoughFlareGuns.Projectiles.TheFactoryOnslaught;
 using NotEnoughFlareGuns.Systems;
@@ -10,7 +8,6 @@ using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
 using Terraria.Chat;
-using Terraria.DataStructures;
 using Terraria.GameContent.Bestiary;
 using Terraria.ID;
 using Terraria.Localization;
@@ -37,7 +34,6 @@ namespace NotEnoughFlareGuns.NPCs.TheFactoryOnslaught
         const int SpawnDrones = 0;
         const int SpawnExplosiveDrones = 1;
 
-        const int SpawnWorkers = 0;
         const int LaserBarrage = 1;
         const int SpreadFire = 2;
 
@@ -65,21 +61,17 @@ namespace NotEnoughFlareGuns.NPCs.TheFactoryOnslaught
             Main.npcFrameCount[Type] = 2;
 
             // Specify the debuffs it is immune to
-            NPCDebuffImmunityData debuffData = new()
-            {
-                SpecificallyImmuneTo = new int[] {
-                    BuffID.Poisoned,
-                    BuffID.OnFire,
-                    BuffID.OnFire3,
-                    BuffID.Frostburn,
-                    BuffID.Frostburn2,
-                    BuffID.Ichor,
-                    BuffID.CursedInferno,
-                    BuffID.Confused // Most NPCs have this
-				}
-            };
-            NPCID.Sets.DebuffImmunitySets.Add(Type, debuffData);
-            NPC.AddFire();
+            NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Poisoned] = true;
+            NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Venom] = true;
+            NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.OnFire] = true;
+            NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.OnFire3] = true;
+            NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Frostburn] = true;
+            NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Frostburn2] = true;
+            NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Ichor] = true;
+            NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.CursedInferno] = true;
+            NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Confused] = true;
+
+            NPC.AddElementFire();
         }
 
         public override void SetDefaults()
@@ -100,7 +92,7 @@ namespace NotEnoughFlareGuns.NPCs.TheFactoryOnslaught
             {
                 Music = MusicID.Monsoon;
             }
-            NPC.SetCustomElementMultipliers(0.8f, 0.5f, 0.8f);
+            NPC.ElementMultipliers(new[] { 0.8f, 2.5f, 0.8f, 0.5f });
         }
 
         public override void BossLoot(ref string name, ref int potionType)
@@ -137,7 +129,7 @@ namespace NotEnoughFlareGuns.NPCs.TheFactoryOnslaught
                 SummonTurrets();
                 if (intercomAudio)
                 {
-                    SoundEngine.PlaySound(NotEnoughFlareGuns.IntruderAlert);
+                    SoundEngine.PlaySound(NEFG.IntruderAlert);
                 }
                 ChatHelper.BroadcastChatMessage(NetworkText.FromKey("Mods.NotEnoughFlareGuns.FactoryIntercom.IntruderAlert"), Color.Red);
                 NPC.ai[0] = 1;
@@ -181,9 +173,18 @@ namespace NotEnoughFlareGuns.NPCs.TheFactoryOnslaught
                 NPC.ai[1] = 1;
             }
             Vector2 vector = Vector2.One.RotatedByRandom(MathHelper.ToRadians(360)) * 8 * Main.rand.NextFloat();
-            Gore.NewGore(NPC.GetSource_FromThis(), NPC.Center, vector, GoreID.Smoke1);
-            Gore.NewGore(NPC.GetSource_FromThis(), NPC.Center, vector, GoreID.Smoke2);
-            Gore.NewGore(NPC.GetSource_FromThis(), NPC.Center, vector, GoreID.Smoke3);
+            switch (Main.rand.Next(3))
+            {
+                case 0:
+                    Gore.NewGore(NPC.GetSource_FromThis(), NPC.Center, vector, GoreID.Smoke1);
+                    break;
+                case 1:
+                    Gore.NewGore(NPC.GetSource_FromThis(), NPC.Center, vector, GoreID.Smoke2);
+                    break;
+                case 2:
+                    Gore.NewGore(NPC.GetSource_FromThis(), NPC.Center, vector, GoreID.Smoke3);
+                    break;
+            }
 
             if (++openCoreTimer >= openCoreTimerMax && attackCooldown <= 0)
             {
@@ -237,25 +238,20 @@ namespace NotEnoughFlareGuns.NPCs.TheFactoryOnslaught
         public int ChooseOpenAttack()
         {
             WeightedRandom<int> openAttacks = new();
-            openAttacks.Add(SpawnWorkers, 0.8);
             openAttacks.Add(LaserBarrage, 0.1);
             openAttacks.Add(SpreadFire, 0.1);
 
             int randomAttack = openAttacks.Get();
             switch (randomAttack)
             {
-                case SpawnWorkers:
-                    attackTimer = 60;
-                    attackCooldown = 20;
-                    break;
                 case LaserBarrage:
                     attackTimer = 172;
                     attackCooldown = 30;
                     damage = 16;
                     break;
                 case SpreadFire:
-                    attackTimer = 180;
-                    attackCooldown = 600;
+                    attackTimer = 61;
+                    attackCooldown = 60;
                     damage = 16;
                     break;
             }
@@ -278,9 +274,6 @@ namespace NotEnoughFlareGuns.NPCs.TheFactoryOnslaught
         {
             switch (attackType)
             {
-                case SpawnWorkers:
-                    SummonWorkers();
-                    break;
                 case LaserBarrage:
                     if (attackTimer % 8 == 0)
                     {
@@ -288,9 +281,9 @@ namespace NotEnoughFlareGuns.NPCs.TheFactoryOnslaught
                     }
                     break;
                 case SpreadFire:
-                    if (attackTimer % 8 == 0)
+                    if (attackTimer % 20 == 0)
                     {
-                        ShootFire(2);
+                        ShootFire(8);
                     }
                     break;
             }
@@ -357,37 +350,14 @@ namespace NotEnoughFlareGuns.NPCs.TheFactoryOnslaught
             }
         }
 
-        void SummonWorkers()
-        {
-            if (NPC.CountNPCS(ModContent.NPCType<FactoryWorker>()) > 6)
-            {
-                attackTimer = 0;
-                attackType = 0;
-                return;
-            }
-            Vector2 spawnadjust = new(950, 480);
-            if (Main.rand.NextBool())
-            {
-                spawnadjust.X *= -1;
-            }
-            Vector2 spawnPos = NPC.Center + spawnadjust;
-            if (Main.rand.NextBool(20))
-            {
-                int index = NPC.NewNPC(NPC.GetSource_FromAI(), (int)spawnPos.X, (int)spawnPos.Y, ModContent.NPCType<FactoryWorker>());
-                if (Main.netMode == NetmodeID.Server && index < Main.maxNPCs)
-                {
-                    NetMessage.SendData(MessageID.SyncNPC, number: index);
-                }
-            }
-        }
-
         float rotation;
         public void ShootLasers()
         {
             int projectileAmount = 3;
             for (int i = 0; i < projectileAmount; i++)
             {
-                Vector2 vel = new Vector2(0, -1).RotatedBy(MathHelper.ToRadians(360 / projectileAmount * i) + rotation);
+                Vector2 vel = new Vector2(0, -1).RotatedBy(
+                    MathHelper.ToRadians(360 / projectileAmount * i) + rotation);
                 SoundEngine.PlaySound(SoundID.Item33);
                 Projectile.NewProjectileDirect(NPC.GetSource_FromThis(), NPC.Center, vel * 32, laserType, damage, 4, Main.myPlayer);
             }
@@ -398,13 +368,14 @@ namespace NotEnoughFlareGuns.NPCs.TheFactoryOnslaught
         {
             for (int i = 0; i < projectileAmount; i++)
             {
-                Vector2 vel = new Vector2(0, -1).RotatedBy(MathHelper.ToRadians(360 / projectileAmount * i) + rotation);
+                Vector2 vel = new Vector2(0, -1).RotatedBy(
+                    MathHelper.ToRadians(360 / projectileAmount * i) + rotation);
                 SoundEngine.PlaySound(SoundID.Item20);
                 Projectile fire = Projectile.NewProjectileDirect(NPC.GetSource_FromThis(), NPC.Center + vel * 200, vel * 8,
-                    ProjectileID.Fireball, damage, 4, Main.myPlayer);
-                fire.friendly = true;
+                    ProjectileID.Flames, damage, 4, Main.myPlayer);
+                fire.hostile = true;
             }
-            rotation += MathHelper.ToRadians(10);
+            rotation += MathHelper.ToRadians(22.5f);
         }
 
         public void DecrimentAttackTimer()
@@ -434,12 +405,22 @@ namespace NotEnoughFlareGuns.NPCs.TheFactoryOnslaught
             }
         }
 
-        public override void HitEffect(int hitDirection, double damage)
+        public override void OnHitByItem(Player player, Item item, NPC.HitInfo hit, int damageDone)
+        {
+            HitEffect(damageDone);
+        }
+
+        public override void OnHitByProjectile(Projectile projectile, NPC.HitInfo hit, int damageDone)
+        {
+            HitEffect(damageDone);
+        }
+
+        void HitEffect(int damageTaken)
         {
             if (coreClosed)
             {
                 int maxCoreDamage = 400;
-                coreDamage += (int)damage;
+                coreDamage += damageTaken;
                 if (coreDamage >= maxCoreDamage)
                 {
                     coreDamage = 0;

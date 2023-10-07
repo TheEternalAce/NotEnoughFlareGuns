@@ -19,7 +19,7 @@ namespace NotEnoughFlareGuns.Items.Misc
 
         public override void SetStaticDefaults()
         {
-            SacrificeTotal = 1;
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()
@@ -88,9 +88,9 @@ namespace NotEnoughFlareGuns.Items.Misc
                         Dust.NewDustDirect(player.Center, 4, 4, DustID.SandstormInABottle, .2f, .2f, 0, default, 1.2f);
                     Lighting.AddLight(player.Center, TorchID.Yellow);
                 }
-                if (!(bool)shards.Call("checkHasSoulCrystal", player, Type))
+                if (!(bool)shards.Call("checkHasSoulCrystal", player, Name))
                 {
-                    shards.Call("addSoulCrystal", player, Type);
+                    shards.Call("addSoulCrystal", player, Name);
                     Item.TurnToAir();
                     SoundEngine.PlaySound(SoundID.Item4);
                 }

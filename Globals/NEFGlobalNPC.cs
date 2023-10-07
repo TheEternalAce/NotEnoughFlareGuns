@@ -1,5 +1,6 @@
 ﻿using NotEnoughFlareGuns.Items.Accessories;
 using NotEnoughFlareGuns.Items.Materials;
+using NotEnoughFlareGuns.Items.Placeable;
 using NotEnoughFlareGuns.Items.Weapons.Ranged.FlareGuns;
 using NotEnoughFlareGuns.Items.Weapons.Ranged.Launchers;
 using Terraria;
@@ -11,32 +12,21 @@ namespace NotEnoughFlareGuns.Globals
 {
     public class NEFGlobalNPC : GlobalNPC
     {
-        public override void SetupShop(int type, Chest shop, ref int nextSlot)
+        public override void ModifyShop(NPCShop shop)
         {
-            if (type == NPCID.Merchant)
+            if (shop.NpcType == NPCID.Merchant)
             {
-                for (int i = 0; i < ItemLoader.ItemCount; i++)
-                {
-                    if (NEFGlobalItem.FlareGuns.Contains(i))
-                    {
-                        shop.item[nextSlot].SetDefaults(ItemID.Flare);
-                        nextSlot++;
-                        shop.item[nextSlot].SetDefaults(ItemID.BlueFlare);
-                        nextSlot++;
-                    }
-                }
-                shop.item[nextSlot].SetDefaults(ModContent.ItemType<HeatResistantPlastic>());
-                nextSlot++;
+                shop.Add<HeatResistantPlastic>();
             }
-            if (type == NPCID.Steampunker)
+            if (shop.NpcType == NPCID.Steampunker)
             {
-                shop.item[nextSlot].SetDefaults(ModContent.ItemType<PressurizedNozzle>());
-                nextSlot++;
+                shop.Add<PressurizedNozzle>();
+                shop.Add<FactoryWorkstationItem>();
+                shop.Add<SoulstonePlating>();
             }
-            if (type == NPCID.TravellingMerchant && WorldGen.shadowOrbSmashed)
+            if (shop.NpcType == NPCID.TravellingMerchant)
             {
-                shop.item[nextSlot].SetDefaults(ModContent.ItemType<Revolnade>());
-                nextSlot++;
+                shop.Add<Revolnade>(Condition.SmashedShadowOrb);
             }
         }
 
@@ -57,10 +47,6 @@ namespace NotEnoughFlareGuns.Globals
             if (npc.type == NPCID.GolemHead)
             {
                 npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<SolarStorm>(), 7));
-            }
-            if (npc.type == NPCID.SkeletronHead)
-            {
-                npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<SkillShot>(), 6));
             }
         }
     }

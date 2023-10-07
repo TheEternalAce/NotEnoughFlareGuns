@@ -1,4 +1,5 @@
 ﻿using NotEnoughFlareGuns.Projectiles.TheFactoryOnslaught;
+using NotEnoughFlareGuns.Utilities;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -14,6 +15,7 @@ namespace NotEnoughFlareGuns.NPCs.TheFactoryOnslaught
             laserDamage = 14;
             laserSpeed = 32f;
             fireRate = 3;
+            NPC.ElementMultipliers(new[] { 0.8f, 2.5f, 0.8f, 0.5f });
             base.SetDefaults();
         }
     }

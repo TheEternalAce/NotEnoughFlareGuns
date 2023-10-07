@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
-using MMZeroElements.Utilities;
 using NotEnoughFlareGuns.Globals;
+using NotEnoughFlareGuns.Utilities;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -15,7 +15,7 @@ namespace NotEnoughFlareGuns.Projectiles.Ranged.Flares
         {
             ProjectileID.Sets.CultistIsResistantTo[Projectile.type] = true; // Make the cultist resistant to this projectile, as it's resistant to all homing projectiles.
             NEFGlobalProjectile.Flare.Add(Type);
-            Projectile.AddFire();
+            Projectile.AddElementFire();
         }
 
         // Setting the default parameters of the projectile
@@ -25,22 +25,24 @@ namespace NotEnoughFlareGuns.Projectiles.Ranged.Flares
             Projectile.width = 8; // The width of projectile hitbox
             Projectile.height = 8; // The height of projectile hitbox
 
-            Projectile.aiStyle = 0; // The ai style of the projectile (0 means custom AI). For more please reference the source code of Terraria
+            Projectile.aiStyle = 33; // The ai style of the projectile (0 means custom AI). For more please reference the source code of Terraria
             Projectile.DamageType = DamageClass.Ranged; // What type of damage does this projectile affect?
             Projectile.friendly = true; // Can the projectile deal damage to enemies?
             Projectile.hostile = false; // Can the projectile deal damage to the player?
             Projectile.ignoreWater = true; // Does the projectile's speed be influenced by water?
             Projectile.light = 1f; // How much light emit around the projectile
+
+            AIType = ProjectileID.BlueFlare; // Act exactly like default Flare
         }
 
         // Custom AI
         public override void AI()
         {
+            base.AI();
             Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.ToRadians(90);
             if (Projectile.velocity == Vector2.Zero)
                 return;
             float maxDetectRadius = 200f; // The maximum radius at which a projectile can detect a target
-            float projSpeed = 5f; // The speed at which the projectile moves towards the target
 
             // Trying to find NPC closest to the projectile
             NPC closestNPC = FindClosestNPC(maxDetectRadius);
@@ -49,7 +51,7 @@ namespace NotEnoughFlareGuns.Projectiles.Ranged.Flares
 
             // If found, change the velocity of the projectile and turn it in the direction of the target
             // Use the SafeNormalize extension method to avoid NaNs returned by Vector2.Normalize when the vector is zero
-            Projectile.velocity = (closestNPC.Center - Projectile.Center).SafeNormalize(Vector2.Zero) * projSpeed;
+            Projectile.Track(closestNPC.Center, maxDetectRadius);
         }
 
         public override bool OnTileCollide(Vector2 oldVelocity)
