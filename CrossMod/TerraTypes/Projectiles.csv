@@ -21,6 +21,7 @@ ConvertibleFlare,Fire,
 FrostbiteExplosion,Fire,Ice
 FrostbiteFlare,Fire,Ice
 HighVelocityFlare,Fire,
+PaydayDrillHeat,Fire,
 PoisonFlare,Fire,Poison
 ScorchShotExplosion,Fire,
 ShadowFlare,Ghost,Fire

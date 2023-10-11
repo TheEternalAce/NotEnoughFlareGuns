@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Newtonsoft.Json;
 using NotEnoughFlareGuns.Projectiles.Ranged.Flares;
-//using StructureHelper;
+using StructureHelper;
 using System.Collections.Generic;
 using System.IO;
 using Terraria;
@@ -38,7 +38,7 @@ namespace NotEnoughFlareGuns
         {
             Instance = this;
             Point16 point = new(0, 0);
-            //Generator.GetDimensions("Subworlds/TheFactoryCoreRoom", ModContent.GetInstance<NEFG>(), ref point);
+            Generator.GetDimensions("Subworlds/TheFactoryCoreRoom", ModContent.GetInstance<NEFG>(), ref point);
             ModLoader.TryGetMod("Wikithis", out Mod wikithis);
             if (wikithis != null && !Main.dedServ)
             {
@@ -57,6 +57,7 @@ namespace NotEnoughFlareGuns
                     Language.GetTextValue("Mods.NotEnoughFlareGuns.ItemTooltip.FactorySoulCrystal"), Color.Red, "FactorySoulCrystal");
             }
             ConvertibleFlare = ModContent.ProjectileType<ConvertibleFlare>();
+            /*
             //if (ModLoader.TryGetMod("BossChecklist", out Mod checklist))
             //{
             //    List<int> enemyList = new List<int>()
@@ -76,6 +77,7 @@ namespace NotEnoughFlareGuns
             //        $"Create and use [i:{ModContent.ItemType<SoulstoneKeys>()}] and interact with the " +
             //        $"[i:{ModContent.ItemType<OnslaughtTerminalItem>()}] once you enter.");
             //}
+            */
 
             if (ModLoader.TryGetMod("TerraTyping", out Mod terratyping))
             {

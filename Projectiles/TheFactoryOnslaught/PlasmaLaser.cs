@@ -29,10 +29,15 @@ namespace NotEnoughFlareGuns.Projectiles.TheFactoryOnslaught
             Projectile.ignoreWater = true; // Does the projectile's speed be influenced by water?
             Projectile.tileCollide = false; // Can the projectile collide with tiles?
             Projectile.netImportant = true;
+            Projectile.alpha = 255;
         }
 
         public override void AI()
         {
+            if (Projectile.alpha > 0)
+            {
+                Projectile.alpha -= 25;
+            }
             if (Projectile.ai[0] == 0)
             {
                 SoundEngine.PlaySound(SoundID.Item33);

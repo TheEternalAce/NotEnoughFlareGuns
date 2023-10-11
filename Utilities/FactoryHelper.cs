@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Linq;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
 
@@ -26,6 +27,23 @@ namespace NotEnoughFlareGuns.Utilities
         {
             int result = seconds * 60;
             return result;
+        }
+
+        public static Projectile[] ProjectileRing(IEntitySource source, Vector2 center,
+            int amount, float radius, float speed, int type, int damage, float knockback,
+            int owner, float rotationAdd = 0f, float ai0 = 0f, float ai1 = 0f,
+            float ai2 = 0f)
+        {
+            Projectile[] projectiles = new Projectile[amount];
+            float rotation = MathHelper.ToRadians(360 / amount);
+            for (int i = 0; i < amount; i++)
+            {
+                Vector2 position = center + Vector2.One.RotatedBy(rotation * i + rotationAdd) * radius;
+                Vector2 velocity = Vector2.Normalize(center - position) * speed;
+                projectiles[i] = Projectile.NewProjectileDirect(source, position, velocity,
+                    type, damage, knockback, owner, ai0, ai1, ai2);
+            }
+            return projectiles;
         }
 
         public static int ConvertFlareTo(this int type, int flareOutput, int flareTypeOverride = ProjectileID.Flare, bool convertAllFlares = false)

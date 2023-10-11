@@ -26,9 +26,6 @@ namespace NotEnoughFlareGuns.NPCs.TheFactoryOnslaught
         int attackCooldown;
         int attackType;
 
-        int turretType;
-        int laserType;
-
         const int NoAttack = -1;
 
         const int SpawnDrones = 0;
@@ -168,8 +165,11 @@ namespace NotEnoughFlareGuns.NPCs.TheFactoryOnslaught
             if (NPC.ai[1] == 0)
             {
                 NPC.defense = 34;
-                turret1.ToggleActive();
-                turret2.ToggleActive();
+                if (!Main.expertMode)
+                {
+                    turret1.SetActive(false);
+                    turret2.SetActive(false);
+                }
                 NPC.ai[1] = 1;
             }
             Vector2 vector = Vector2.One.RotatedByRandom(MathHelper.ToRadians(360)) * 8 * Main.rand.NextFloat();
@@ -188,8 +188,8 @@ namespace NotEnoughFlareGuns.NPCs.TheFactoryOnslaught
 
             if (++openCoreTimer >= openCoreTimerMax && attackCooldown <= 0)
             {
-                turret1.ToggleActive();
-                turret2.ToggleActive();
+                turret1.SetActive(true);
+                turret2.SetActive(true);
                 openCoreTimer = 0;
                 coreClosed = true;
                 NPC.defense = 150;
@@ -203,7 +203,7 @@ namespace NotEnoughFlareGuns.NPCs.TheFactoryOnslaught
             }
             else if (attackTimer > 0)
             {
-                Vector2 toPlayer = Vector2.Normalize(player.Center - NPC.Center);
+                //Vector2 toPlayer = Vector2.Normalize(player.Center - NPC.Center);
                 CycleOpenAttack();
             }
             DecrimentAttackTimer();
@@ -261,6 +261,7 @@ namespace NotEnoughFlareGuns.NPCs.TheFactoryOnslaught
         int damage = 0;
         public void CycleClosedAttack()
         {
+            SummonTurrets();
             switch (attackType)
             {
                 case SpawnDrones:
@@ -275,16 +276,10 @@ namespace NotEnoughFlareGuns.NPCs.TheFactoryOnslaught
             switch (attackType)
             {
                 case LaserBarrage:
-                    if (attackTimer % 8 == 0)
-                    {
-                        ShootLasers();
-                    }
+                    ShootLasers();
                     break;
                 case SpreadFire:
-                    if (attackTimer % 20 == 0)
-                    {
-                        ShootFire(8);
-                    }
+                    ShootFire(8);
                     break;
             }
         }
@@ -319,30 +314,18 @@ namespace NotEnoughFlareGuns.NPCs.TheFactoryOnslaught
 
         public void SummonTurrets()
         {
-            int type = turretType;
+            int type = ModContent.NPCType<PlasmaTurret>();
             int y = (int)NPC.Center.Y - 160;
             int x = (int)NPC.Center.X + 888;
             int x2 = (int)NPC.Center.X - 888;
 
-            if (turrets[0] == null)
+            if (turrets[0] == null || !turrets[0].active || turrets[0].life <= 0)
             {
                 NPC turret = NPC.NewNPCDirect(NPC.GetSource_FromThis(), x, y, type);
                 turrets[0] = turret;
                 turret1 = turret.ModNPC as FactoryTurret;
             }
-            else if (!turrets[0].active)
-            {
-                NPC turret = NPC.NewNPCDirect(NPC.GetSource_FromThis(), x, y, type);
-                turrets[0] = turret;
-                turret1 = turret.ModNPC as FactoryTurret;
-            }
-            if (turrets[1] == null)
-            {
-                NPC turret = NPC.NewNPCDirect(NPC.GetSource_FromThis(), x2, y, type);
-                turrets[1] = turret;
-                turret2 = turret.ModNPC as FactoryTurret;
-            }
-            else if (!turrets[1].active)
+            if (turrets[1] == null || !turrets[1].active || turrets[1].life <= 0)
             {
                 NPC turret = NPC.NewNPCDirect(NPC.GetSource_FromThis(), x2, y, type);
                 turrets[1] = turret;
@@ -353,29 +336,28 @@ namespace NotEnoughFlareGuns.NPCs.TheFactoryOnslaught
         float rotation;
         public void ShootLasers()
         {
-            int projectileAmount = 3;
-            for (int i = 0; i < projectileAmount; i++)
+            if (attackTimer % 8 == 0)
             {
-                Vector2 vel = new Vector2(0, -1).RotatedBy(
-                    MathHelper.ToRadians(360 / projectileAmount * i) + rotation);
-                SoundEngine.PlaySound(SoundID.Item33);
-                Projectile.NewProjectileDirect(NPC.GetSource_FromThis(), NPC.Center, vel * 32, laserType, damage, 4, Main.myPlayer);
+                FactoryHelper.ProjectileRing(NPC.GetSource_FromThis(), NPC.Center, 4, 1f,
+                    32f, ModContent.ProjectileType<PlasmaLaser>(), damage, 0,
+                    Main.myPlayer, rotation);
+                rotation += MathHelper.ToRadians(15);
             }
-            rotation += MathHelper.ToRadians(15);
         }
 
         public void ShootFire(int projectileAmount = 6)
         {
-            for (int i = 0; i < projectileAmount; i++)
+            if (attackTimer % 20 == 0)
             {
-                Vector2 vel = new Vector2(0, -1).RotatedBy(
-                    MathHelper.ToRadians(360 / projectileAmount * i) + rotation);
-                SoundEngine.PlaySound(SoundID.Item20);
-                Projectile fire = Projectile.NewProjectileDirect(NPC.GetSource_FromThis(), NPC.Center + vel * 200, vel * 8,
-                    ProjectileID.Flames, damage, 4, Main.myPlayer);
-                fire.hostile = true;
+                var flames = FactoryHelper.ProjectileRing(NPC.GetSource_FromThis(), NPC.Center,
+                    8, 1f, 12f, ProjectileID.Flames, damage, 0, Main.myPlayer, rotation);
+                foreach (var flame in flames)
+                {
+                    flame.hostile = true;
+                    flame.friendly = false;
+                }
+                rotation += MathHelper.ToRadians(22.5f);
             }
-            rotation += MathHelper.ToRadians(22.5f);
         }
 
         public void DecrimentAttackTimer()
@@ -393,16 +375,6 @@ namespace NotEnoughFlareGuns.NPCs.TheFactoryOnslaught
         public void Reset()
         {
             rotation = 0;
-            if (NPC.downedGolemBoss)
-            {
-                turretType = ModContent.NPCType<IonTurret>();
-                laserType = ModContent.ProjectileType<IonLaser>();
-            }
-            else
-            {
-                turretType = ModContent.NPCType<PlasmaTurret>();
-                laserType = ModContent.ProjectileType<PlasmaLaser>();
-            }
         }
 
         public override void OnHitByItem(Player player, Item item, NPC.HitInfo hit, int damageDone)

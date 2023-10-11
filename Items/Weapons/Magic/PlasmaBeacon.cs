@@ -26,6 +26,7 @@ namespace NotEnoughFlareGuns.Items.Weapons.Magic
             Item.DamageType = DamageClass.Magic;
             Item.knockBack = 0;
             Item.crit = 14;
+            Item.mana = 20;
 
             Item.useTime = 20;
             Item.useAnimation = 20;

@@ -4,6 +4,7 @@ using NotEnoughFlareGuns.Items.Accessories.Backtanks;
 using NotEnoughFlareGuns.Items.Tools;
 using NotEnoughFlareGuns.NPCs.TheFactoryOnslaught;
 using NotEnoughFlareGuns.Utilities;
+using SubworldLibrary;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
@@ -217,7 +218,7 @@ namespace NotEnoughFlareGuns
 
         public override void OnRespawn()
         {
-            //SubworldSystem.Exit();
+            SubworldSystem.Exit();
         }
 
         public override void ModifyScreenPosition()

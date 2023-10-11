@@ -60,7 +60,7 @@ namespace NotEnoughFlareGuns.NPCs.TheFactoryOnslaught
         {
             NPC.TargetClosest();
             Player player = Main.player[NPC.target];
-            NPC.dontTakeDamage = NPC.AnyNPCs(ModContent.NPCType<SoulstoneCore>());
+            NPC.dontTakeDamage = NPC.AnyNPCs(ModContent.NPCType<SoulstoneCore>()) && !Main.expertMode;
             if (!active && fireTimer == 0)
             {
                 return;

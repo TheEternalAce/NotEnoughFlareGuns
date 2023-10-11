@@ -328,6 +328,15 @@ Mods: {
 				DisplayName: Veinsinge
 				Tooltip: ""
 			}
+
+			InfernalDrill: {
+				DisplayName: Infernal Drill
+				Tooltip:
+					'''
+					Hold Right Click to break tiles with the heat projectiles
+					'Guys- Oh, you already have it'
+					'''
+			}
 		}
 
 		FactoryIntercom: {
@@ -389,6 +398,8 @@ Mods: {
 			PoisonFlame.DisplayName: Poison Flame
 			ShadowFlame.DisplayName: Shadow Flame
 			BloodFlame.DisplayName: Blood Flame
+			PaydayDrill.DisplayName: Payday Drill
+			PaydayDrillHeat.DisplayName: Payday Drill Heat
 		}
 
 		Buffs: {
